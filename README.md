@@ -1,5 +1,7 @@
 # SINF1920
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6ef4b21c-eb7e-4558-9117-1b2cbe13364e/deploy-status)](https://app.netlify.com/sites/dreamy-austin-c5d295/deploys)
+
 Project for FEUP MIEIC's curricular unit SINF.
 
 
