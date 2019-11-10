@@ -25,6 +25,7 @@ mongoose
 
 // Register routes
 app.use('/api/items', require('./routes/api/items'));
+app.use('/api/auth', require('./routes/api/auth'));
 
 // Set static folder in production
 if (process.env.NODE_ENV === 'production') {
