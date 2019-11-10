@@ -178,9 +178,13 @@ const SignIn = ({ isAuthenticated, doLogin, error }) => {
   );
 };
 
+SignIn.defaultProps = {
+  isAuthenticated: null,
+};
+
 SignIn.propTypes = {
   doLogin: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   error: PropTypes.shape({
     id: PropTypes.string,
     msg: PropTypes.objectOf(PropTypes.string),
