@@ -4,13 +4,12 @@ import clsx from 'clsx';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Badge from '@material-ui/core/Badge';
+import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-const Appbar = ({ classes, open, handleDrawerOpen }) => (
+const Appbar = ({ pageName, classes, open, handleDrawerOpen }) => (
   <AppBar
     position="absolute"
     className={clsx(classes.appBar, open && classes.appBarShift)}
@@ -32,18 +31,17 @@ const Appbar = ({ classes, open, handleDrawerOpen }) => (
         noWrap
         className={classes.title}
       >
-        360º Company Dashboard
+        {pageName}
       </Typography>
-      <IconButton color="inherit">
-        <Badge badgeContent={4} color="secondary">
-          <NotificationsIcon />
-        </Badge>
-      </IconButton>
+      <Link color="inherit" href="/login">
+        Log in
+      </Link>
     </Toolbar>
   </AppBar>
 );
 
 Appbar.propTypes = {
+  pageName: PropTypes.string.isRequired,
   classes: PropTypes.node.isRequired,
   open: PropTypes.bool.isRequired,
   handleDrawerOpen: PropTypes.func.isRequired,

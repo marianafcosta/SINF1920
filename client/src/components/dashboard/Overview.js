@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 
 import List from '@material-ui/core/List';
+import FlashOnIcon from '@material-ui/icons/FlashOn';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
+import ListItems from './ListItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
@@ -21,10 +22,10 @@ import Appbar from '../layout/Appbar';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" color="primary" align="center">
       Copyright ©{' '}
       <Link color="inherit" href="/">
-        360º Company Dashboard
+        EEC - 360º Company Dashboard
       </Link>{' '}
       {new Date().getFullYear()}.
     </Typography>
@@ -46,6 +47,9 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
+    backgroundColor: '#262626',
+    color: 'white',
+    borderBottom: '0px solid #FFFBA1!important',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -53,6 +57,8 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: '#262626',
+    borderBottom: '1px solid #FFFBA1!important',
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -70,6 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    fontSize: '32px',
   },
   drawerPaper: {
     position: 'relative',
@@ -79,6 +86,8 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    backgroundColor: '#FFFBA1',
+    borderRight: '0px solid #FFFBA1!important',
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -96,6 +105,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
+    backgroundColor: '#262626',
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -110,9 +120,16 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
+  yellow: {
+    color: '#FFFBA1',
+  },
+  listBorder: {
+    marginLeft: '8px',
+    marginRight: '8px',
+  },
 }));
 
-export default function Dashboard() {
+export default function Overview() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -127,6 +144,7 @@ export default function Dashboard() {
     <div className={classes.root}>
       <CssBaseline />
       <Appbar
+        pageName="Overview"
         handleDrawerOpen={handleDrawerOpen}
         classes={classes}
         open={open}
@@ -139,14 +157,21 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <Typography
+            component="h1"
+            variant="h6"
+            noWrap
+            className="float-right"
+          >
+            <FlashOnIcon className={classes.yellow} />
+            EEC
+          </Typography>
+          <IconButton color="inherit" onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        <List className={classes.listBorder}>{ListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
