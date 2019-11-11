@@ -1,7 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Dashboard from './components/dashboard/Dashboard';
+import Overview from './components/dashboard/Overview';
+import Financial from './components/Financial/Financial';
+import Inventory from './components/Inventory/Inventory';
+import Sales from './components/Sales/Sales';
+import Purchases from './components/Purchases/Purchases';
 import SignIn from './components/SignIn';
 
 const App = () => {
@@ -10,13 +14,22 @@ const App = () => {
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <Dashboard />
+            <Overview />
           </Route>
           <Route exact path="/login">
             <SignIn />
           </Route>
-          <Route exact path="/login">
-            <SignIn />
+          <Route exact path="/Financial">
+            <Financial />
+          </Route>
+          <Route exact path="/Purchases">
+            <Purchases />
+          </Route>
+          <Route exact path="/Inventory">
+            <Inventory />
+          </Route>
+          <Route exact path="/sales">
+            <Sales />
           </Route>
         </Switch>
       </div>
