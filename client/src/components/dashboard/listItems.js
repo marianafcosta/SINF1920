@@ -2,69 +2,46 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import './ListItems.css';
 
-export const mainListItems = (
+const ListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
+    <ListItem button className="list-item active">
+      <ListItemIcon color="inherit">
+        <DashboardIcon color="inherit" />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Overview" />
     </ListItem>
-    <ListItem button>
+    <ListItem button className="list-item">
+      <ListItemIcon>
+        <AttachMoneyIcon />
+      </ListItemIcon>
+      <ListItemText primary="Finance" />
+    </ListItem>
+    <ListItem button className="list-item">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
+      <ListItemText primary="Sales" />
     </ListItem>
-    <ListItem button>
+    <ListItem button className="list-item">
       <ListItemIcon>
-        <PeopleIcon />
+        <ListAltIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
+      <ListItemText primary="Purchases" />
     </ListItem>
-    <ListItem button>
+    <ListItem button className="list-item">
       <ListItemIcon>
-        <BarChartIcon />
+        <ImportContactsIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="Inventory" />
     </ListItem>
   </div>
 );
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItem>
-  </div>
-);
+export default ListItems;
