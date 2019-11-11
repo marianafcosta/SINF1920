@@ -6,16 +6,14 @@ import { useHistory } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import { logout } from '../../actions/authActions';
 
-const Appbar = ({ classes, open, handleDrawerOpen, doLogout }) => {
+const Appbar = ({ pageName, classes, open, handleDrawerOpen, doLogout }) => {
   const history = useHistory();
   return (
     <AppBar
@@ -39,7 +37,7 @@ const Appbar = ({ classes, open, handleDrawerOpen, doLogout }) => {
           noWrap
           className={classes.title}
         >
-          360º Company Dashboard
+          {pageName}
         </Typography>
         <Button
           color="inherit"
@@ -50,17 +48,13 @@ const Appbar = ({ classes, open, handleDrawerOpen, doLogout }) => {
         >
           Logout
         </Button>
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
       </Toolbar>
     </AppBar>
   );
 };
 
 Appbar.propTypes = {
+  pageName: PropTypes.string.isRequired,
   classes: PropTypes.node.isRequired,
   open: PropTypes.bool.isRequired,
   handleDrawerOpen: PropTypes.func.isRequired,
