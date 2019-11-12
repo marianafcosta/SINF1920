@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Sales = () => (
+const Overview = () => (
   <div>
     <h1>HI</h1>
   </div>
 );
 
-export default Sales;
+export default Overview;

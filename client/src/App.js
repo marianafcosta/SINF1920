@@ -19,13 +19,13 @@ const App = () => {
           <Route exact path="/login">
             <SignIn />
           </Route>
-          <Route exact path="/Financial">
+          <Route exact path="/finances">
             <Financial />
           </Route>
-          <Route exact path="/Purchases">
+          <Route exact path="/purchases">
             <Purchases />
           </Route>
-          <Route exact path="/Inventory">
+          <Route exact path="/inventory">
             <Inventory />
           </Route>
           <Route exact path="/sales">
