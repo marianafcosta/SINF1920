@@ -1,9 +1,10 @@
 import React from 'react';
+import Layout from '../layout/Layout';
 
 const Inventory = () => (
-  <div>
+  <Layout>
     <h1>HI</h1>
-  </div>
+  </Layout>
 );
 
 export default Inventory;

@@ -42,7 +42,7 @@ const Appbar = ({ pageName, classes, open, handleDrawerOpen }) => (
 
 Appbar.propTypes = {
   pageName: PropTypes.string.isRequired,
-  classes: PropTypes.node.isRequired,
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   open: PropTypes.bool.isRequired,
   handleDrawerOpen: PropTypes.func.isRequired,
 };

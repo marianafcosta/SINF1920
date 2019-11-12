@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Overview from './components/dashboard/Overview';
+import Overview from './components/Overview/Overview';
 import Financial from './components/Financial/Financial';
 import Inventory from './components/Inventory/Inventory';
 import Sales from './components/Sales/Sales';
