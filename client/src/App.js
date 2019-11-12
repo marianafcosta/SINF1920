@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/authActions';
 
-import Overview from './components/dashboard/Overview';
+import Overview from './components/Overview/Overview';
 import Financial from './components/Financial/Financial';
 import Inventory from './components/Inventory/Inventory';
 import Sales from './components/Sales/Sales';

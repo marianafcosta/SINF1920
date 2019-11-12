@@ -1,0 +1,17 @@
+.list-item {
+  border-radius: 50px !important;
+}
+
+.list-item.active {
+  background-color: #262626 !important;
+  color: #fffba1 !important;
+}
+
+.list-item.active svg {
+  color: #fffba1 !important;
+}
+
+.linkUI > a {
+  text-decoration: none !important;
+  color: inherit;
+}
