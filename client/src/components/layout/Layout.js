@@ -17,6 +17,7 @@ import Link from '@material-ui/core/Link';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Sidebar from './Sidebar';
 import Appbar from './Appbar';
+import './layout.css';
 
 function Copyright() {
   return (
@@ -48,6 +49,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#262626',
     color: 'white',
     borderBottom: '0px solid #FFFBA1!important',
+  },
+  typography: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: '3rem',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -122,8 +129,8 @@ const useStyles = makeStyles(theme => ({
     color: '#FFFBA1',
   },
   listBorder: {
-    marginLeft: '8px',
-    marginRight: '8px',
+    paddingLeft: '8px',
+    paddingRight: '8px',
   },
 }));
 
@@ -159,10 +166,10 @@ export default function Layout({ children }) {
       >
         <div className={classes.toolbarIcon}>
           <Typography
+            className={classes.typography}
             component="h1"
             variant="h6"
             noWrap
-            className="float-right"
           >
             <FlashOnIcon className={classes.yellow} />
             EEC
@@ -172,7 +179,7 @@ export default function Layout({ children }) {
           </IconButton>
         </div>
         <Divider />
-        <List className={classes.listBorder}>
+        <List className="listBorder">
           <Sidebar pageName={pageName} />
         </List>
       </Drawer>
