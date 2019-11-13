@@ -1,41 +1,89 @@
-const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const jsonServer = require('json-server');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+
+const auth = require('./middleware/auth');
 
 dotenv.config();
 
-const app = express();
+const server = jsonServer.create();
+const router = jsonServer.router('db.json');
+const middlewares = jsonServer.defaults({
+  static: 'client/build',
+});
 const PORT = process.env.PORT || 5000;
-const db = process.env.MONGODB_URI;
 
-app.use(cors());
-app.use(express.json());
+server.use(cors());
+server.use(middlewares);
+server.use(jsonServer.bodyParser);
 
-// Connect to Mongo
-mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));
+// @route   POST api/auth
+// @desc    Auth user
+// @access  Public
+server.post('/api/auth', (req, res) => {
+  const { email, password } = req.body;
+  // Simple validation
+  if (!email || !password) {
+    return res.status(400).json({ msg: 'Please enter all fields' });
+  }
 
-// Register routes
-app.use('/api/items', require('./routes/api/items'));
-app.use('/api/auth', require('./routes/api/auth'));
+  const data = fs.readFileSync('db.json', 'utf8');
+  const { users } = JSON.parse(data);
+  const user = users.find(usr => usr.email === email);
+
+  // Check for existing user
+  if (!user) return res.status(400).json({ msg: 'User Does not exist' });
+
+  // Validate password
+  bcrypt.compare(password, user.password).then(isMatch => {
+    if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
+
+    jwt.sign(
+      { id: user.id },
+      process.env.JWT_SECRET,
+      { expiresIn: 3600 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({
+          token,
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+          },
+        });
+      },
+    );
+    return true;
+  });
+
+  return true;
+});
+
+// @route   GET api/auth/user
+// @desc    Get user data
+// @access  Private
+server.get('/api/auth/user', auth, (req, res) => {
+  const data = fs.readFileSync('db.json', 'utf8');
+  const { users } = JSON.parse(data);
+  const user = users.find(usr => usr.id === req.user.id);
+  delete user.password;
+  res.json(user);
+});
 
 // Set static folder in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-
-  app.get('*', (req, res) => {
+  server.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
 
-app.listen(PORT, () => {
+server.use(router);
+
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
