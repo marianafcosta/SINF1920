@@ -34,13 +34,13 @@ const App = () => {
                 store.getState().auth.isAuthenticated ? (
                   <Overview />
                 ) : (
-                    <Redirect
-                      to={{
-                        pathname: '/login',
-                        state: { from: location },
-                      }}
-                    />
-                  )
+                  <Redirect
+                    to={{
+                      pathname: '/login',
+                      state: { from: location },
+                    }}
+                  />
+                )
               }
             />
             <Route exact path="/login">
