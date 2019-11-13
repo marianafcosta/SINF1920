@@ -1,30 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { useLocation } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 
 import List from '@material-ui/core/List';
+import Container from '@material-ui/core/Container';
+import FlashOnIcon from '@material-ui/icons/FlashOn';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
-import Appbar from '../layout/Appbar';
+import Sidebar from './Sidebar';
+import Appbar from './Appbar';
+import './layout.css';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" color="primary" align="center">
       Copyright ©{' '}
       <Link color="inherit" href="/">
-        360º Company Dashboard
+        EEC - 360º Company Dashboard
       </Link>{' '}
       {new Date().getFullYear()}.
     </Typography>
@@ -46,6 +46,15 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
+    backgroundColor: '#262626',
+    color: 'white',
+    borderBottom: '0px solid #FFFBA1!important',
+  },
+  typography: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: '3rem',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -53,6 +62,8 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: '#262626',
+    borderBottom: '1px solid #FFFBA1!important',
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -70,6 +81,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    fontSize: '32px',
   },
   drawerPaper: {
     position: 'relative',
@@ -79,6 +91,8 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    backgroundColor: '#FFFBA1',
+    borderRight: '0px solid #FFFBA1!important',
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -96,6 +110,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
+    backgroundColor: '#262626',
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -110,9 +125,16 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
+  yellow: {
+    color: '#FFFBA1',
+  },
+  listBorder: {
+    paddingLeft: '8px',
+    paddingRight: '8px',
+  },
 }));
 
-export default function Dashboard() {
+export default function Layout({ children }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -121,12 +143,16 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const location = useLocation();
+  let pageName = location.pathname.substr(1);
+  pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+  pageName = pageName || 'Overview';
   return (
     <div className={classes.root}>
       <CssBaseline />
       <Appbar
+        pageName={pageName}
         handleDrawerOpen={handleDrawerOpen}
         classes={classes}
         open={open}
@@ -139,41 +165,35 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <Typography
+            className={classes.typography}
+            component="h1"
+            variant="h6"
+            noWrap
+          >
+            <FlashOnIcon className={classes.yellow} />
+            EEC
+          </Typography>
+          <IconButton color="inherit" onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        <List className="listBorder">
+          <Sidebar pageName={pageName} />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
+          {children}
         </Container>
         <Copyright />
       </main>
     </div>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
