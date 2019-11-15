@@ -16,9 +16,22 @@
   color: inherit;
 }
 
+.menu-items > div.MuiPaper-root {
+  background-color: #262626;
+  color: white;
+}
+
 @media screen and (min-width: 600px) {
   .listBorder {
     padding-left: 8px !important;
     padding-right: 8px !important;
   }
+}
+
+.yellow {
+  color: #FFFBA1;
+}
+
+.fontSize {
+  font-size: 40px !important;
 }
