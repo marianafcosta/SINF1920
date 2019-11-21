@@ -9,12 +9,69 @@ import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import { withStyles } from '@material-ui/core/styles';
+import InputBase from '@material-ui/core/InputBase';
+import './layout.css';
+import { NativeSelect } from '@material-ui/core';
 
 import { logout } from '../../actions/authActions';
 
+const BootstrapInput = withStyles(theme => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 12,
+    position: 'relative',
+    backgroundColor: '#FFFBA1',
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '5px 44px 5px 12px',
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 12,
+      borderColor: '#80bdff',
+      backgroundColor: '#FFFBA1',
+    },
+  },
+}))(InputBase);
+
 const Appbar = ({ pageName, classes, open, handleDrawerOpen, doLogout }) => {
   const history = useHistory();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [date, setDate] = React.useState('');
+  const openUser = Boolean(anchorEl);
+
+  const handleChange = event => {
+    setDate(event.target.value);
+  };
+
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <AppBar
       position="absolute"
@@ -39,15 +96,54 @@ const Appbar = ({ pageName, classes, open, handleDrawerOpen, doLogout }) => {
         >
           {pageName}
         </Typography>
-        <Button
-          color="inherit"
-          onClick={() => {
-            doLogout();
-            history.push('/login');
-          }}
-        >
-          Logout
-        </Button>
+        <div>
+          <NativeSelect
+            value={date}
+            onChange={handleChange}
+            input={<BootstrapInput />}
+          >
+            <option value={2019}>2019</option>
+            <option value={2018}>2018</option>
+            <option value={2017}>2017</option>
+            <option value={2016}>2016</option>
+          </NativeSelect>
+        </div>
+        <div>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
+            <AccountCircle className="yellow fontSize" />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={openUser}
+            onClose={handleClose}
+            className="menu-items"
+          >
+            <MenuItem
+              onClick={() => {
+                doLogout();
+                history.push('/login');
+              }}
+            >
+              Logout
+            </MenuItem>
+          </Menu>
+        </div>
       </Toolbar>
     </AppBar>
   );
