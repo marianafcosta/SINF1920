@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     backgroundColor: '#262626',
     borderRadius: '25px',
     padding: '15px',
+    position: 'relative',
   },
   cardContainer: {
     border: '2px #fffba1',
@@ -23,6 +24,20 @@ const useStyles = makeStyles({
     color: 'white',
     padding: '5px',
   },
+  overlay: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    height: '100%',
+    width: '100%',
+    flex: '1',
+    zIndex: '9999',
+    minWidth: 275,
+    boxShadow: 'none !important',
+    backgroundColor: '#262626',
+    borderRadius: '25px',
+    padding: '15px',
+  },
 });
 
 const CustomCard = ({ children, title, overlayInfo, isOverlaySet }) => {
@@ -30,8 +45,12 @@ const CustomCard = ({ children, title, overlayInfo, isOverlaySet }) => {
 
   return (
     <div className={classes.cardContainer}>
-      {isOverlaySet && <h1>{overlayInfo}</h1>}
       <Card className={classes.card}>
+        {isOverlaySet && (
+          <Card className={classes.overlay}>
+            <p>{overlayInfo}</p>
+          </Card>
+        )}
         <h1 className={classes.cardTitle}>{title}</h1>
         {children}
       </Card>
