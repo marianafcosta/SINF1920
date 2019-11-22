@@ -1,9 +1,6 @@
 const parser = require('xml2json');
-// const read = require('read-file');
 const fs = require('fs');
 const options = require('./index.js');
-// imporSSSSt writSSeFile frSom 'write'
-// import shell from 'shelljs'
 
 console.log(options);
 
