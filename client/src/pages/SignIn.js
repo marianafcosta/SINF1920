@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +16,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
+import { login } from '../actions/authActions';
+import { clearErrors } from '../actions/errorActions';
 
 function Copyright() {
   return (
@@ -50,8 +60,28 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+const SignIn = ({ isAuthenticated, doLogin, error }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [msg, setMsg] = useState(null);
   const classes = useStyles();
+  const history = useHistory();
+
+  useEffect(() => {
+    setMsg(error.id === 'LOGIN_FAIL' ? error.msg.msg : null);
+
+    if (isAuthenticated) {
+      history.push('/');
+    }
+  }, [error, history, isAuthenticated]);
+
+  const onSubmit = e => {
+    e.preventDefault();
+    doLogin({
+      email,
+      password,
+    });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -63,7 +93,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={onSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -74,6 +104,8 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -85,6 +117,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -116,6 +150,53 @@ export default function SignIn() {
       <Box mt={8}>
         <Copyright />
       </Box>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        open={msg !== null}
+        autoHideDuration={6000}
+        onClose={() => setMsg(null)}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">{msg}</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="close"
+            color="inherit"
+            className={classes.close}
+            onClick={() => setMsg(null)}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      />
     </Container>
   );
-}
+};
+
+SignIn.defaultProps = {
+  isAuthenticated: null,
+};
+
+SignIn.propTypes = {
+  doLogin: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  error: PropTypes.shape({
+    id: PropTypes.string,
+    msg: PropTypes.objectOf(PropTypes.string),
+  }).isRequired,
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error,
+});
+
+export default connect(
+  mapStateToProps,
+  { doLogin: login, clearErrors },
+)(SignIn);
