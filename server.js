@@ -31,8 +31,8 @@ server.post('/api/auth', (req, res) => {
     return res.status(400).json({ msg: 'Please enter all fields' });
   }
 
-  const data = fs.readFileSync('db.json', 'utf8');
-  const { users } = JSON.parse(data);
+  const data = fs.readFileSync('users.json', 'utf8');
+  const users = JSON.parse(data);
   const user = users.find(usr => usr.email === email);
 
   // Check for existing user
@@ -68,8 +68,8 @@ server.post('/api/auth', (req, res) => {
 // @desc    Get user data
 // @access  Private
 server.get('/api/auth/user', auth, (req, res) => {
-  const data = fs.readFileSync('db.json', 'utf8');
-  const { users } = JSON.parse(data);
+  const data = fs.readFileSync('users.json', 'utf8');
+  const users = JSON.parse(data);
   const user = users.find(usr => usr.id === req.user.id);
   delete user.password;
   res.json(user);
