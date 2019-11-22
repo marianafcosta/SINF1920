@@ -10,12 +10,12 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/authActions';
 
-import Overview from './components/Overview/Overview';
-import Financial from './components/Financial/Financial';
-import Inventory from './components/Inventory/Inventory';
-import Sales from './components/Sales/Sales';
-import Purchases from './components/Purchases/Purchases';
-import SignIn from './components/SignIn';
+import Overview from './pages/Overview';
+import Financial from './pages/Financial';
+import Inventory from './pages/Inventory';
+import Sales from './pages/Sales';
+import Purchases from './pages/Purchases';
+import SignIn from './pages/SignIn';
 
 const App = () => {
   useEffect(() => {
