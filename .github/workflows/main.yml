@@ -19,8 +19,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: lint
       run: |
-        npm i
-        cd client && npm i
-        npm run lint
-        cd client && npm run lint
+        npm ci
+        npm ci --prefix client
+        npm run lint && npm run lint --prefix client
+      env:
+        CI: true
 
