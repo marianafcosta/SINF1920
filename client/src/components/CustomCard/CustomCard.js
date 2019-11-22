@@ -1,9 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
-
-import './CustomCard.css';
 
 const useStyles = makeStyles({
   card: {
@@ -26,11 +25,12 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomCard = ({ children, title }) => {
+const CustomCard = ({ children, title, overlayInfo, isOverlaySet }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.cardContainer}>
+      {isOverlaySet && <h1>{overlayInfo}</h1>}
       <Card className={classes.card}>
         <h1 className={classes.cardTitle}>{title}</h1>
         {children}
@@ -42,11 +42,22 @@ const CustomCard = ({ children, title }) => {
 CustomCard.defaultProps = {
   children: <></>,
   title: '',
+  overlayInfo: 'No description provided',
+  isOverlaySet: false,
 };
 
 CustomCard.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string,
+  overlayInfo: PropTypes.string,
+  isOverlaySet: PropTypes.bool,
 };
 
-export default CustomCard;
+const mapStateToProps = state => ({
+  isOverlaySet: state.overlay,
+});
+
+export default connect(
+  mapStateToProps,
+  {},
+)(CustomCard);
