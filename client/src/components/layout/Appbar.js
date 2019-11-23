@@ -21,6 +21,20 @@ import { NativeSelect } from '@material-ui/core';
 import { logout } from '../../actions/authActions';
 import changeOverlayStatus from '../../actions/overlayActions';
 
+const YellowSwitch = withStyles({
+  switchBase: {
+    color: 'rgba(255,251,161,0.7)',
+    '&$checked': {
+      color: 'rgba(255,251,161,1)',
+    },
+    '&$checked + $track': {
+      backgroundColor: 'rgba(255,251,161,0.7)',
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
+
 const BootstrapInput = withStyles(theme => ({
   root: {
     'label + &': {
@@ -111,7 +125,7 @@ const Appbar = ({
         >
           {pageName}
         </Typography>
-        <Switch
+        <YellowSwitch
           checked={isOverlaySet}
           onChange={handleOverlaySwitch}
           value="checkedA"
