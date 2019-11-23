@@ -5,7 +5,8 @@ import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line
 import classNames from 'classnames';
-import './CustomCard.css';
+// eslint-disable-next-line
+import './customCard.css';
 
 const useStyles = makeStyles({
   card: {
