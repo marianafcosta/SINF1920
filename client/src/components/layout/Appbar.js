@@ -181,7 +181,7 @@ Appbar.propTypes = {
 };
 
 const mapStateToProps = ({ overlay }) => ({
-  isOverlaySet: overlay,
+  isOverlaySet: overlay.isSet,
 });
 
 const mapDispatchToProps = {

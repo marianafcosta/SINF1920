@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line
+import classNames from 'classnames';
+import './CustomCard.css';
 
 const useStyles = makeStyles({
   card: {
@@ -24,6 +27,7 @@ const useStyles = makeStyles({
     color: 'white',
     padding: '5px',
   },
+  /*
   overlay: {
     position: 'absolute',
     top: '0',
@@ -34,20 +38,37 @@ const useStyles = makeStyles({
     zIndex: '9999',
     minWidth: 275,
     boxShadow: 'none !important',
-    backgroundColor: '#262626',
+    backgroundColor: '#fffba1',
     borderRadius: '25px',
     padding: '15px',
+    opacity: '0.8',
+    transition: 'opacity 1s ease-in-out',
   },
+  */
 });
 
 const CustomCard = ({ children, title, overlayInfo, isOverlaySet }) => {
   const classes = useStyles();
+  const [isOverlayAnimationRunning, setIsOverlayAnimationRunning] = useState(
+    false,
+  );
+
+  const handleOverlayAnimationStatus = () => {
+    setIsOverlayAnimationRunning(false);
+  };
+
+  useEffect(() => {
+    setIsOverlayAnimationRunning(true);
+  }, [isOverlaySet]);
 
   return (
     <div className={classes.cardContainer}>
       <Card className={classes.card}>
-        {isOverlaySet && (
-          <Card className={classes.overlay}>
+        {(isOverlaySet || isOverlayAnimationRunning) && (
+          <Card
+            className={classNames('overlay', !isOverlaySet ? 'collapsing' : '')}
+            onAnimationEnd={handleOverlayAnimationStatus}
+          >
             <p>{overlayInfo}</p>
           </Card>
         )}
@@ -73,7 +94,7 @@ CustomCard.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isOverlaySet: state.overlay,
+  isOverlaySet: state.overlay.isSet,
 });
 
 export default connect(

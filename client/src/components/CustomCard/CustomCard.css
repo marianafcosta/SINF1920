@@ -1,0 +1,38 @@
+@keyframes slide-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  z-index: 9999;
+  min-width: 275;
+  box-shadow: none !important;
+  background-color: #fffba1;
+  border-radius: 25px;
+  padding: 15px;
+  opacity: 0.8;
+  animation: slide-right 0.5s ease-in-out;
+}
+
+.overlay.collapsing {
+  animation: slide-left 0.5s ease-in-out;
+}
