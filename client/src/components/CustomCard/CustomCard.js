@@ -27,24 +27,6 @@ const useStyles = makeStyles({
     color: 'white',
     padding: '5px',
   },
-  /*
-  overlay: {
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    height: '100%',
-    width: '100%',
-    flex: '1',
-    zIndex: '9999',
-    minWidth: 275,
-    boxShadow: 'none !important',
-    backgroundColor: '#fffba1',
-    borderRadius: '25px',
-    padding: '15px',
-    opacity: '0.8',
-    transition: 'opacity 1s ease-in-out',
-  },
-  */
 });
 
 const CustomCard = ({ children, title, overlayInfo, isOverlaySet }) => {
@@ -69,7 +51,10 @@ const CustomCard = ({ children, title, overlayInfo, isOverlaySet }) => {
             className={classNames('overlay', !isOverlaySet ? 'collapsing' : '')}
             onAnimationEnd={handleOverlayAnimationStatus}
           >
-            <p>{overlayInfo}</p>
+            <p>
+              <strong>{title}: </strong>
+              {overlayInfo}
+            </p>
           </Card>
         )}
         <h1 className={classes.cardTitle}>{title}</h1>
