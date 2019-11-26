@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
-// eslint-disable-next-line
-import CustomCard from '../components/customCard/CustomCard';
+import CustomCard from '../components/CustomCard/CustomCard';
 
 const Overview = () => (
   <Layout>

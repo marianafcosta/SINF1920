@@ -3,10 +3,8 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line
 import classNames from 'classnames';
-// eslint-disable-next-line
-import './customCard.css';
+import './CustomCard.css';
 
 const useStyles = makeStyles({
   card: {
