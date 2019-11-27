@@ -1,9 +1,13 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
+import CustomCard from '../components/CustomCard/CustomCard';
 
 const Overview = () => (
   <Layout>
-    <h1>HI</h1>
+    <CustomCard
+      title="Sales vs Expenses"
+      overlayInfo="testing overlay descriptions"
+    />
   </Layout>
 );
 

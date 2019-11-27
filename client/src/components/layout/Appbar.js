@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
+import Switch from '@material-ui/core/Switch';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
@@ -18,6 +19,21 @@ import './layout.css';
 import { NativeSelect } from '@material-ui/core';
 
 import { logout } from '../../actions/authActions';
+import changeOverlayStatus from '../../actions/overlayActions';
+
+const YellowSwitch = withStyles({
+  switchBase: {
+    color: 'rgba(255,251,161,0.7)',
+    '&$checked': {
+      color: 'rgba(255,251,161,1)',
+    },
+    '&$checked + $track': {
+      backgroundColor: 'rgba(255,251,161,0.7)',
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 
 const BootstrapInput = withStyles(theme => ({
   root: {
@@ -53,7 +69,16 @@ const BootstrapInput = withStyles(theme => ({
   },
 }))(InputBase);
 
-const Appbar = ({ pageName, classes, open, handleDrawerOpen, doLogout }) => {
+const Appbar = ({
+  pageName,
+  classes,
+  open,
+  handleDrawerOpen,
+  doLogout,
+  isOverlaySet,
+  // eslint-disable-next-line
+  changeOverlayStatus,
+}) => {
   const history = useHistory();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -70,6 +95,10 @@ const Appbar = ({ pageName, classes, open, handleDrawerOpen, doLogout }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleOverlaySwitch = () => {
+    changeOverlayStatus();
   };
 
   return (
@@ -96,6 +125,12 @@ const Appbar = ({ pageName, classes, open, handleDrawerOpen, doLogout }) => {
         >
           {pageName}
         </Typography>
+        <YellowSwitch
+          checked={isOverlaySet}
+          onChange={handleOverlaySwitch}
+          value="checkedA"
+          inputProps={{ 'aria-label': 'secondary checkbox' }}
+        />
         <div>
           <NativeSelect
             value={date}
@@ -155,9 +190,20 @@ Appbar.propTypes = {
   open: PropTypes.bool.isRequired,
   handleDrawerOpen: PropTypes.func.isRequired,
   doLogout: PropTypes.func.isRequired,
+  isOverlaySet: PropTypes.bool.isRequired,
+  changeOverlayStatus: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = ({ overlay }) => ({
+  isOverlaySet: overlay.isSet,
+});
+
+const mapDispatchToProps = {
+  doLogout: logout,
+  changeOverlayStatus,
 };
 
 export default connect(
-  null,
-  { doLogout: logout },
+  mapStateToProps,
+  mapDispatchToProps,
 )(Appbar);
