@@ -115,6 +115,8 @@ server.get('/api/expenses', auth, (req, res) => {
     },
   };
 
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
   primaveraRequests(options, function(error, response, body) {
     if (error) throw new Error(error);
     res.json(body);
