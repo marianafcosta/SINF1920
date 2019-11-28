@@ -17,6 +17,9 @@ const middlewares = jsonServer.defaults({
   static: 'client/build',
 });
 const PORT = process.env.PORT || 5000;
+const basePrimaveraUrl = `https://my.jasminsoftware.com/api/${process.env.TENANT}/${process.env.ORGANIZATION}`;
+
+let primaveraRequests;
 
 server.use(cors());
 server.use(middlewares);
@@ -40,16 +43,14 @@ const loginPrimavera = () => {
   request(options, function(error, response, body) {
     if (error) throw new Error(error);
 
-    // fs.appendFileSync('.env', `\nJASMIN_TOKEN=${body.access_token}`);
-    // console.log(response.body);
     const jsonF = JSON.parse(response.body);
-    console.log(jsonF.access_token);
-    process.env.JASMIN_TOKEN = jsonF.access_token;
-    console.log(process.env.JASMIN_TOKEN);
-    dotenv.config();
-    console.log(process.env.JASMIN_TOKEN);
+    primaveraRequests = request.defaults({
+      headers: { Authorization: `Bearer ${jsonF.access_token}` },
+    });
   });
 };
+
+loginPrimavera();
 
 // @route   POST api/auth
 // @desc    Auth user
@@ -78,7 +79,6 @@ server.post('/api/auth', (req, res) => {
       { expiresIn: 3600 },
       (err, token) => {
         if (err) throw err;
-        loginPrimavera();
         res.json({
           token,
           user: {
@@ -104,6 +104,21 @@ server.get('/api/auth/user', auth, (req, res) => {
   const user = users.find(usr => usr.id === req.user.id);
   delete user.password;
   res.json(user);
+});
+
+server.get('/api/expenses', auth, (req, res) => {
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/invoiceReceipt/expenses/`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    res.json(body);
+  });
 });
 
 // Set static folder in production
