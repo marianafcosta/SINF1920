@@ -5,6 +5,7 @@ const jsonServer = require('json-server');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const request = require('request');
 
 const auth = require('./middleware/auth');
 
@@ -20,6 +21,35 @@ const PORT = process.env.PORT || 5000;
 server.use(cors());
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
+
+const loginPrimavera = () => {
+  const options = {
+    method: 'POST',
+    url: 'https://identity.primaverabss.com/connect/token',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    formData: {
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      scope: 'application',
+      grant_type: 'client_credentials',
+    },
+  };
+
+  request(options, function(error, response, body) {
+    if (error) throw new Error(error);
+
+    // fs.appendFileSync('.env', `\nJASMIN_TOKEN=${body.access_token}`);
+    // console.log(response.body);
+    const jsonF = JSON.parse(response.body);
+    console.log(jsonF.access_token);
+    process.env.JASMIN_TOKEN = jsonF.access_token;
+    console.log(process.env.JASMIN_TOKEN);
+    dotenv.config();
+    console.log(process.env.JASMIN_TOKEN);
+  });
+};
 
 // @route   POST api/auth
 // @desc    Auth user
@@ -48,6 +78,7 @@ server.post('/api/auth', (req, res) => {
       { expiresIn: 3600 },
       (err, token) => {
         if (err) throw err;
+        loginPrimavera();
         res.json({
           token,
           user: {
