@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -60,20 +59,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignIn = ({ isAuthenticated, doLogin, error }) => {
+const SignIn = ({ doLogin, error }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [msg, setMsg] = useState(null);
   const classes = useStyles();
-  const history = useHistory();
 
   useEffect(() => {
     setMsg(error.id === 'LOGIN_FAIL' ? error.msg.msg : null);
-
-    if (isAuthenticated) {
-      history.push('/');
-    }
-  }, [error, history, isAuthenticated]);
+  }, [error]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -178,13 +172,8 @@ const SignIn = ({ isAuthenticated, doLogin, error }) => {
   );
 };
 
-SignIn.defaultProps = {
-  isAuthenticated: null,
-};
-
 SignIn.propTypes = {
   doLogin: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
   error: PropTypes.shape({
     id: PropTypes.string,
     msg: PropTypes.objectOf(PropTypes.string),
