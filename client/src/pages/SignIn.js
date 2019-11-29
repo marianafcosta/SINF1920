@@ -34,7 +34,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     color: '#FFF',
-    marginTop: '0.2rem',
   },
   avatar: {
     margin: theme.spacing(1),
@@ -72,7 +71,6 @@ const useStyles = makeStyles(theme => ({
   link: {
     color: '#FFFBA1',
     fontSize: '0.7rem',
-    marginBottom: '1rem',
   },
   formGroup: {
     alignItems: 'center',
@@ -80,6 +78,9 @@ const useStyles = makeStyles(theme => ({
   label: {
     color: '#FFF',
     fontSize: '1.1rem',
+  },
+  card: {
+    padding: '30px 50px',
   },
 }));
 
@@ -117,8 +118,8 @@ const SignIn = ({ isAuthenticated, doLogin, error }) => {
         justify="center"
         style={{ minHeight: '100vh' }}
       >
-        <Grid item xs={3}>
-          <CustomCard animation={false}>
+        <Grid item xs={4}>
+          <CustomCard animation={false} padding={classes.card}>
             <Typography
               className={classes.typography}
               component="h1"
@@ -136,7 +137,7 @@ const SignIn = ({ isAuthenticated, doLogin, error }) => {
                 <Grid item xs={9}>
                   <BootstrapInput
                     className={classes.input}
-                    margin="normal"
+                    margin="none"
                     required
                     fullWidth
                     id="email"
@@ -217,7 +218,7 @@ SignIn.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.shape({
     id: PropTypes.string,
-    msg: PropTypes.objectOf(PropTypes.string),
+    msg: PropTypes.string,
   }).isRequired,
 };
 
