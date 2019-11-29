@@ -92,7 +92,7 @@ const SignIn = ({ isAuthenticated, doLogin, error }) => {
   const history = useHistory();
 
   useEffect(() => {
-    setMsg(error.id === 'LOGIN_FAIL' ? error.msg.msg : null);
+    setMsg(error.id === 'LOGIN_FAIL' ? error.msg : null);
 
     if (isAuthenticated) {
       history.push('/');
