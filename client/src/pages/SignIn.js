@@ -9,7 +9,6 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -18,23 +17,14 @@ import FlashOnIcon from '@material-ui/icons/FlashOn';
 import { login } from '../actions/authActions';
 import { clearErrors } from '../actions/errorActions';
 
-import BootstrapInput from './common/BootstrapInput';
+import BootstrapInput from '../components/common/BootstrapInput';
+import CustomCard from '../components/CustomCard/CustomCard';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
       backgroundColor: '#262626',
     },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: '1px solid #FFFBA1',
-    borderRadius: '39px',
-    boxSizing: 'border-box',
   },
   yellow: {
     color: '#FFFBA1',
@@ -44,6 +34,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     color: '#FFF',
+    marginTop: '0.2rem',
   },
   avatar: {
     margin: theme.spacing(1),
@@ -65,20 +56,30 @@ const useStyles = makeStyles(theme => ({
     margin: '1rem 0',
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(4, 0, 1),
     backgroundColor: '#FFFBA1',
     color: '#262626',
     borderRadius: '23px',
-    padding: '0.5rem 4rem',
+    padding: '0.5rem 3rem',
+    textTransform: 'none',
+    fontFamily: 'Anaheim, sans-serif',
+    fontSize: '1.5rem',
+    lineHeight: '1.5rem',
+    '&:hover': {
+      backgroundColor: '#fff96e',
+    },
   },
   link: {
     color: '#FFFBA1',
+    fontSize: '0.7rem',
+    marginBottom: '1rem',
   },
   formGroup: {
     alignItems: 'center',
   },
   label: {
     color: '#FFF',
+    fontSize: '1.1rem',
   },
 }));
 
@@ -106,67 +107,79 @@ const SignIn = ({ isAuthenticated, doLogin, error }) => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <>
       <CssBaseline />
-      <div className={classes.paper}>
-        <Typography
-          className={classes.typography}
-          component="h1"
-          variant="h5"
-          noWrap
-        >
-          <FlashOnIcon className={classes.yellow} fontSize="large" />
-          EEC
-        </Typography>
-        <form className={classes.form} onSubmit={onSubmit}>
-          <Grid container spacing={3} className={classes.formGroup}>
-            <Grid item>
-              <span className={classes.label}>Username:</span>
-            </Grid>
-            <Grid item>
-              <BootstrapInput
-                className={classes.input}
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={3} className={classes.formGroup}>
-            <Grid item>
-              <span className={classes.label}>Password:</span>
-            </Grid>
-            <Grid item>
-              <BootstrapInput
-                required
-                id="password"
-                name="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
-            </Grid>
-          </Grid>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '100vh' }}
+      >
+        <Grid item xs={3}>
+          <CustomCard animation={false}>
+            <Typography
+              className={classes.typography}
+              component="h1"
+              variant="h5"
+              noWrap
+            >
+              <FlashOnIcon className={classes.yellow} fontSize="large" />
+              EEC
+            </Typography>
+            <form className={classes.form} onSubmit={onSubmit}>
+              <Grid container spacing={4} className={classes.formGroup}>
+                <Grid item xs={3} className={classes.label}>
+                  Username:
+                </Grid>
+                <Grid item xs={9}>
+                  <BootstrapInput
+                    className={classes.input}
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={3} className={classes.formGroup}>
+                <Grid item xs={3} className={classes.label}>
+                  Password:
+                </Grid>
+                <Grid item xs={9}>
+                  <BootstrapInput
+                    required
+                    id="password"
+                    name="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                  />
+                </Grid>
+              </Grid>
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="default"
-            className={classes.submit}
-          >
-            Login
-          </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                color="default"
+                className={classes.submit}
+              >
+                Login
+              </Button>
 
-          <Link className={classes.link} href="/" variant="body2">
-            Forgot password?
-          </Link>
-        </form>
-      </div>
+              <Link className={classes.link} href="/" variant="body2">
+                Forgot your password?
+              </Link>
+            </form>
+          </CustomCard>
+        </Grid>
+      </Grid>
+
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
@@ -191,7 +204,7 @@ const SignIn = ({ isAuthenticated, doLogin, error }) => {
           </IconButton>,
         ]}
       />
-    </Container>
+    </>
   );
 };
 

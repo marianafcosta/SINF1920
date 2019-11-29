@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -17,51 +18,59 @@ import Sales from './pages/Sales';
 import Purchases from './pages/Purchases';
 import SignIn from './pages/SignIn';
 
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: '"Anaheim", sans-serif',
+  },
+});
+
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
   });
 
   return (
-    <Provider store={store}>
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={({ location }) =>
-                store.getState().auth.isAuthenticated ? (
-                  <Overview />
-                ) : (
-                  <Redirect
-                    to={{
-                      pathname: '/login',
-                      state: { from: location },
-                    }}
-                  />
-                )
-              }
-            />
-            <Route exact path="/login">
-              <SignIn />
-            </Route>
-            <Route exact path="/Finances">
-              <Financial />
-            </Route>
-            <Route exact path="/Purchases">
-              <Purchases />
-            </Route>
-            <Route exact path="/Inventory">
-              <Inventory />
-            </Route>
-            <Route exact path="/sales">
-              <Sales />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    </Provider>
+    <MuiThemeProvider theme={theme}>
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={({ location }) =>
+                  store.getState().auth.isAuthenticated ? (
+                    <Overview />
+                  ) : (
+                    <Redirect
+                      to={{
+                        pathname: '/login',
+                        state: { from: location },
+                      }}
+                    />
+                  )
+                }
+              />
+              <Route exact path="/login">
+                <SignIn />
+              </Route>
+              <Route exact path="/Finances">
+                <Financial />
+              </Route>
+              <Route exact path="/Purchases">
+                <Purchases />
+              </Route>
+              <Route exact path="/Inventory">
+                <Inventory />
+              </Route>
+              <Route exact path="/sales">
+                <Sales />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </Provider>
+    </MuiThemeProvider>
   );
 };
 
