@@ -147,6 +147,7 @@ const SignInForm = ({ isAuthenticated, doLogin, error }) => {
                 required
                 id="password"
                 name="password"
+                type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
