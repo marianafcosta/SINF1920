@@ -17,7 +17,15 @@ const middlewares = jsonServer.defaults({
 });
 const PORT = process.env.PORT || 5000;
 
+// eslint-disable-next-line no-underscore-dangle
+const db = router.db.__wrapped__;
+
+const productsController = require('./modules/products');
+
 server.use(cors());
+
+productsController(server, db);
+
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
@@ -87,3 +95,5 @@ server.use(router);
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = server;
