@@ -11,13 +11,72 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
+import Switch from '@material-ui/core/Switch';
 import Menu from '@material-ui/core/Menu';
 import './layout.css';
 import { NativeSelect } from '@material-ui/core';
 import BootstrapInput from '../common/BootstrapInput';
 import { logout } from '../../actions/authActions';
+import changeOverlayStatus from '../../actions/overlayActions';
 
-const Appbar = ({ pageName, classes, open, handleDrawerOpen, doLogout }) => {
+const YellowSwitch = withStyles({
+  switchBase: {
+    color: 'rgba(255,251,161,0.7)',
+    '&$checked': {
+      color: 'rgba(255,251,161,1)',
+    },
+    '&$checked + $track': {
+      backgroundColor: 'rgba(255,251,161,0.7)',
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
+
+const BootstrapInput = withStyles(theme => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 12,
+    position: 'relative',
+    backgroundColor: '#FFFBA1',
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '5px 44px 5px 12px',
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 12,
+      borderColor: '#80bdff',
+      backgroundColor: '#FFFBA1',
+    },
+  },
+}))(InputBase);
+
+const Appbar = ({
+  pageName,
+  classes,
+  open,
+  handleDrawerOpen,
+  doLogout,
+  isOverlaySet,
+  // eslint-disable-next-line
+  changeOverlayStatus,
+}) => {
   const history = useHistory();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -34,6 +93,10 @@ const Appbar = ({ pageName, classes, open, handleDrawerOpen, doLogout }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleOverlaySwitch = () => {
+    changeOverlayStatus();
   };
 
   return (
@@ -60,6 +123,12 @@ const Appbar = ({ pageName, classes, open, handleDrawerOpen, doLogout }) => {
         >
           {pageName}
         </Typography>
+        <YellowSwitch
+          checked={isOverlaySet}
+          onChange={handleOverlaySwitch}
+          value="checkedA"
+          inputProps={{ 'aria-label': 'secondary checkbox' }}
+        />
         <div>
           <NativeSelect
             value={date}
@@ -119,9 +188,20 @@ Appbar.propTypes = {
   open: PropTypes.bool.isRequired,
   handleDrawerOpen: PropTypes.func.isRequired,
   doLogout: PropTypes.func.isRequired,
+  isOverlaySet: PropTypes.bool.isRequired,
+  changeOverlayStatus: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = ({ overlay }) => ({
+  isOverlaySet: overlay.isSet,
+});
+
+const mapDispatchToProps = {
+  doLogout: logout,
+  changeOverlayStatus,
 };
 
 export default connect(
-  null,
-  { doLogout: logout },
+  mapStateToProps,
+  mapDispatchToProps,
 )(Appbar);

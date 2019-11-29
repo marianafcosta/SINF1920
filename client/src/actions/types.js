@@ -7,3 +7,5 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+
+export const CHANGE_OVERLAY_STATUS = 'SET_OVERLAY';

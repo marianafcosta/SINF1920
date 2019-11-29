@@ -1,0 +1,16 @@
+ [
+        {
+            "id": 1,
+            "name": "Pedro Fernandes",
+            "role": "CEO",
+            "password": "$2y$12$dWpkPa7210ruVWrtNpKC9.8u9.DL923kPMlDJVkUYvlbHUyYDB.e.",
+            "email": "test@test.com"
+        },
+        {
+            "id": 2,
+            "name": "Pedro Silva",
+            "role": "Sales Manager",
+            "password": "$2y$12$0Uj9TusOyaPnylPxQJ9F7.T7yjX0pCtP7lAVlaeg6qQ.NAt2xZoHy",
+            "email": "test2@test.com"
+        }
+]
