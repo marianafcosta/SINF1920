@@ -1,5 +1,4 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
 import {
   BarChart,
   CartesianGrid,
@@ -9,6 +8,7 @@ import {
   Legend,
   Bar,
 } from 'recharts';
+import CustomCard from '../CustomCard/CustomCard';
 
 const data = [
   {
@@ -55,6 +55,7 @@ const data = [
   },
 ];
 
+/*
 const theme = createMuiTheme({
   overrides: {
     MuiTooltip: {
@@ -72,11 +73,11 @@ const styles = {
     backgroundColor: 'green',
   },
 };
+*/
 
 const SalesAndExpenses = () => (
-  <Card>
-    <h1>Sales VS Expenses</h1>
-    <BarChart width={730} height={250} data={data}>
+  <CustomCard title="Sales vs Expenses" overlay="Testing">
+    <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
       <YAxis />
@@ -85,7 +86,7 @@ const SalesAndExpenses = () => (
       <Bar dataKey="pv" fill="#fffba1" />
       <Bar dataKey="uv" fill="#BE6E46" />
     </BarChart>
-  </Card>
+  </CustomCard>
 );
 
 export default SalesAndExpenses;
