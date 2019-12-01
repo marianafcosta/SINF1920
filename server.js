@@ -17,9 +17,15 @@ const middlewares = jsonServer.defaults({
 });
 const PORT = process.env.PORT || 5000;
 
+const SalesController = require('./sales');
+// eslint-disable-next-line no-underscore-dangle
+const db = router.db.__wrapped__;
+
 server.use(cors());
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
+
+SalesController(server, db);
 
 // @route   POST api/auth
 // @desc    Auth user
@@ -87,3 +93,5 @@ server.use(router);
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = server;
