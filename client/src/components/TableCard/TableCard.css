@@ -1,0 +1,11 @@
+.labelColor {
+  color: #FFFBA1 !important;
+}
+
+.labelColor:hover {
+  color: rgb(255, 242, 0) !important;
+}
+
+.labelColor svg {
+  color: #FFFBA1 !important;
+}

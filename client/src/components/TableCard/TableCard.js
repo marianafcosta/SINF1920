@@ -9,8 +9,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+import './TableCard.css';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -47,13 +46,15 @@ const EnhancedTableHead = ({ headers, classes, order, orderBy, numSelected, rowC
         {headers.map(({ name, label }) => (
           <TableCell
             key={name}
-            align='right'
+            align='left'
             padding='default'
+            className={classes.head}
             sortDirection={orderBy === name ? order : false}
           >
             <TableSortLabel
               active={orderBy === name}
               direction={order}
+              className="labelColor"
               onClick={createSortHandler(name)}
             >
               {label}
@@ -90,13 +91,14 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     width: '100%',
-    marginBottom: theme.spacing(2),
   },
   table: {
     minWidth: 750,
+    backgroundColor: 'rgba(0, 0, 0, 0.87)',
+    color: 'white',
   },
   tableWrapper: {
-    maxHeight: 520,
+    maxHeight: 320,
     overflowX: 'auto',
   },
   visuallyHidden: {
@@ -110,6 +112,23 @@ const useStyles = makeStyles(theme => ({
     top: 20,
     width: 1,
   },
+  head: {
+    backgroundColor: '#262626',
+    color: 'inherit',
+    padding: '7px 14px 7px 4rem',
+    borderBottom: '1px solid #FFFBA1',
+  },
+  cells: {
+    backgroundColor: '#262626',
+    color: 'inherit',
+    padding: '18px 14px 6px 4rem',
+    border: 'none',
+  },
+  pagination: {
+    backgroundColor: '#262626',
+    color: 'white',
+    border: 'none',
+  }
 }));
 
 const TableCard = ({ headers, data }) => {
@@ -118,7 +137,6 @@ const TableCard = ({ headers, data }) => {
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
@@ -156,10 +174,6 @@ const TableCard = ({ headers, data }) => {
     setPage(0);
   };
 
-  const handleChangeDense = event => {
-    setDense(event.target.checked);
-  };
-
   const isSelected = name => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
@@ -172,7 +186,7 @@ const TableCard = ({ headers, data }) => {
             stickyHeader
             className={classes.table}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+            size='medium'
             aria-label="sticky table"
           >
             <EnhancedTableHead
@@ -189,7 +203,6 @@ const TableCard = ({ headers, data }) => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
                   return (
                     <TableRow
                       hover
@@ -199,12 +212,12 @@ const TableCard = ({ headers, data }) => {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      {Object.keys(row).map(key => <TableCell key={key} align="right">{row[key]}</TableCell>)}
+                      {Object.keys(row).map(key => <TableCell key={key} className={classes.cells}>{row[key]}</TableCell>)}
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                <TableRow style={{ height: 44 * emptyRows, backgroundColor: '#262626' }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
@@ -212,6 +225,7 @@ const TableCard = ({ headers, data }) => {
           </Table>
         </div>
         <TablePagination
+          className={classes.pagination}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={data.length}
@@ -221,10 +235,6 @@ const TableCard = ({ headers, data }) => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </div>
   );
 }
