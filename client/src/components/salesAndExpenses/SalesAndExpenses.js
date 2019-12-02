@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BarChart,
   CartesianGrid,
@@ -8,7 +8,15 @@ import {
   Legend,
   Bar,
 } from 'recharts';
+
 import CustomCard from '../CustomCard/CustomCard';
+
+import fetchAccountBalance from '../../services/financialService';
+
+const accountCodes = {
+  sales: '61611', // FOR TEST PURPOSES; in reality, all account codes that start with 61 are related to expenses
+  expenses: '7111', // FOR TEST PURPOSES; in reality, all account codes that start with 71 are related to revenue
+};
 
 const data = [
   {
@@ -75,18 +83,47 @@ const styles = {
 };
 */
 
-const SalesAndExpenses = () => (
-  <CustomCard title="Sales vs Expenses" overlay="Testing">
-    <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="pv" fill="#fffba1" />
-      <Bar dataKey="uv" fill="#BE6E46" />
-    </BarChart>
-  </CustomCard>
-);
+const SalesAndExpenses = () => {
+  // eslint-disable-next-line
+  const [salesAccountBalance, setSalesAccountBalance] = useState(null);
+  // eslint-disable-next-line
+  const [expensesAccountBalance, setExpensesAccountBalance] = useState(null);
+
+  async function fetchData() {
+    const salesResponse = await fetchAccountBalance(
+      accountCodes.sales,
+      2018,
+      true,
+    ); // TODO
+    setSalesAccountBalance(salesResponse.data);
+    const expensesResponse = await fetchAccountBalance(
+      accountCodes.expenses,
+      2018,
+      true,
+    ); // TODO
+    setExpensesAccountBalance(expensesResponse.data);
+    console.log(salesResponse.data);
+    console.log(expensesResponse.data);
+  }
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line
+  }, []);
+
+  return (
+    <CustomCard title="Sales vs Expenses" overlay="Testing">
+      <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="pv" fill="#fffba1" />
+        <Bar dataKey="uv" fill="#BE6E46" />
+      </BarChart>
+    </CustomCard>
+  );
+};
 
 export default SalesAndExpenses;
