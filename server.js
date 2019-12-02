@@ -138,6 +138,11 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+process.on('SIGINT', () => {
+  console.log('Bye bye!');
+  process.exit();
+});
+
 server.use(router);
 
 server.listen(PORT, () => {
