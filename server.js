@@ -22,14 +22,13 @@ const basePrimaveraUrl = `https://my.jasminsoftware.com/api/${process.env.TENANT
 let primaveraRequests;
 
 const SalesController = require('./sales');
+const FinancialController = require('./financial');
 // eslint-disable-next-line no-underscore-dangle
 const db = router.db.__wrapped__;
 
 server.use(cors());
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
-
-SalesController(server, db);
 
 const loginPrimavera = () => {
   const options = {
@@ -57,6 +56,9 @@ const loginPrimavera = () => {
 };
 
 loginPrimavera();
+
+SalesController(server, db);
+FinancialController(server, db);
 
 // @route   POST api/auth
 // @desc    Auth user

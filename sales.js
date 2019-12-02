@@ -1,5 +1,5 @@
 module.exports = (server, db) => {
-  server.get('/api/sales', (req, res) => {
+  server.get('/api/sales/revenue', (req, res) => {
     const salesInvoices = db.SourceDocuments.SalesInvoices.Invoice;
     const monthlyCumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let invoiceDate;
