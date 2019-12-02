@@ -151,8 +151,22 @@ const processJournalEntries = (entries, accountId, year, monthly) => {
 };
 
 module.exports = (server, db) => {
+  /**
+   * @param year (required)
+   * @param monthly (required) if true, returns the total credit and debit values
+   * for the year; otherwise, it returns an array for the credit and debit values
+   * for each month
+   */
   server.get('/api/financial/accountBalance', (req, res) => {
     const journalEntries = db.GeneralLedgerEntries.Journal;
+
+    if (!req.query.monthly || !req.query.year || !req.query.accountId) {
+      res.json({
+        error:
+          'The request should be as follows: /api/financial/accountBalance?accountId=<accountId>&year=<year>&monthly=<true|false>',
+      });
+      return;
+    }
 
     const totalJournalValues = processJournalEntries(
       journalEntries,
