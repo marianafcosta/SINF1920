@@ -32,10 +32,18 @@ function stableSort(array, cmp) {
 }
 
 function getSorting(order, orderBy) {
-  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+  return order === 'desc'
+    ? (a, b) => desc(a, b, orderBy)
+    : (a, b) => -desc(a, b, orderBy);
 }
 
-const EnhancedTableHead = ({ headers, classes, order, orderBy, numSelected, rowCount, onRequestSort }) => {
+const EnhancedTableHead = ({
+  headers,
+  classes,
+  order,
+  orderBy,
+  onRequestSort,
+}) => {
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
@@ -46,8 +54,8 @@ const EnhancedTableHead = ({ headers, classes, order, orderBy, numSelected, rowC
         {headers.map(({ name, label }) => (
           <TableCell
             key={name}
-            align='left'
-            padding='default'
+            align="left"
+            padding="default"
             className={classes.head}
             sortDirection={orderBy === name ? order : false}
           >
@@ -69,19 +77,19 @@ const EnhancedTableHead = ({ headers, classes, order, orderBy, numSelected, rowC
       </TableRow>
     </TableHead>
   );
-}
+};
 
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-  headers: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    label: PropTypes.string
-  })).isRequired
+  headers: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      label: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 const useStyles = makeStyles(theme => ({
@@ -128,7 +136,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#262626',
     color: 'white',
     border: 'none',
-  }
+  },
 }));
 
 const TableCard = ({ headers, data }) => {
@@ -176,7 +184,8 @@ const TableCard = ({ headers, data }) => {
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -186,17 +195,15 @@ const TableCard = ({ headers, data }) => {
             stickyHeader
             className={classes.table}
             aria-labelledby="tableTitle"
-            size='medium'
+            size="medium"
             aria-label="sticky table"
           >
             <EnhancedTableHead
               headers={headers}
               classes={classes}
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={data.length}
             />
             <TableBody>
               {stableSort(data, getSorting(order, orderBy))
@@ -212,12 +219,18 @@ const TableCard = ({ headers, data }) => {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      {Object.keys(row).map(key => <TableCell key={key} className={classes.cells}>{row[key]}</TableCell>)}
+                      {Object.keys(row).map(key => (
+                        <TableCell key={key} className={classes.cells}>
+                          {row[key]}
+                        </TableCell>
+                      ))}
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: 44 * emptyRows, backgroundColor: '#262626' }}>
+                <TableRow
+                  style={{ height: 44 * emptyRows, backgroundColor: '#262626' }}
+                >
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
@@ -237,6 +250,6 @@ const TableCard = ({ headers, data }) => {
       </Paper>
     </div>
   );
-}
+};
 
 export default TableCard;
