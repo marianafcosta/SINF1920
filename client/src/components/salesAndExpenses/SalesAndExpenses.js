@@ -14,11 +14,26 @@ import CustomCard from '../CustomCard/CustomCard';
 import fetchAccountBalance from '../../services/financialService';
 
 const accountCodes = {
-  sales: '61611', // FOR TEST PURPOSES; in reality, all account codes that start with 61 are related to expenses
-  expenses: '7111', // FOR TEST PURPOSES; in reality, all account codes that start with 71 are related to revenue
+  sales: '7111', // FOR TEST PURPOSES; in reality, all account codes that start with 71 are related to expenses
+  expenses: '61611', // FOR TEST PURPOSES; in reality, all account codes that start with 61 are related to revenue
 };
 
-const data = [
+const monthNames = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Set',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+const testData = [
   {
     name: 'Page A',
     uv: 4000,
@@ -84,43 +99,67 @@ const styles = {
 */
 
 const SalesAndExpenses = () => {
-  // eslint-disable-next-line
-  const [salesAccountBalance, setSalesAccountBalance] = useState(null);
-  // eslint-disable-next-line
-  const [expensesAccountBalance, setExpensesAccountBalance] = useState(null);
+  const [accountBalances, setAccountBalances] = useState(null);
+  const [graphData, setGraphData] = useState(null);
 
-  async function fetchData() {
+  const updateGraph = () => {
+    // both sales and expenses should have an equal amount of months, so you can use either one as a map
+    if (accountBalances) {
+      console.log(accountBalances);
+      setGraphData(
+        accountBalances.sales.totalCredit.map((monthly, index) => {
+          return {
+            name: monthNames[index],
+            sales: monthly,
+            expenses: accountBalances.expenses.totalDebit[index],
+          };
+        }),
+      );
+    }
+  };
+
+  const fetchData = async () => {
     const salesResponse = await fetchAccountBalance(
       accountCodes.sales,
       2018,
       true,
     ); // TODO
-    setSalesAccountBalance(salesResponse.data);
     const expensesResponse = await fetchAccountBalance(
       accountCodes.expenses,
       2018,
       true,
     ); // TODO
-    setExpensesAccountBalance(expensesResponse.data);
-    console.log(salesResponse.data);
-    console.log(expensesResponse.data);
-  }
+    setAccountBalances({
+      sales: salesResponse.data,
+      expenses: expensesResponse.data,
+    });
+  };
 
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    updateGraph();
+    // eslint-disable-next-line
+  }, [accountBalances]);
+
   return (
     <CustomCard title="Sales vs Expenses" overlay="Testing">
-      <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
+      <BarChart
+        width={730}
+        height={250}
+        data={graphData ? graphData : testData}
+        styles={{ margin: '0' }}
+      >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="pv" fill="#fffba1" />
-        <Bar dataKey="uv" fill="#BE6E46" />
+        <Bar dataKey="sales" fill="#fffba1" />
+        <Bar dataKey="expenses" fill="#BE6E46" />
       </BarChart>
     </CustomCard>
   );
