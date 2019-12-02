@@ -100,12 +100,11 @@ const styles = {
 
 const SalesAndExpenses = () => {
   const [accountBalances, setAccountBalances] = useState(null);
-  const [graphData, setGraphData] = useState(null);
+  const [graphData, setGraphData] = useState(testData);
 
   const updateGraph = () => {
     // both sales and expenses should have an equal amount of months, so you can use either one as a map
     if (accountBalances) {
-      console.log(accountBalances);
       setGraphData(
         accountBalances.sales.totalCredit.map((monthly, index) => {
           return {
@@ -150,7 +149,7 @@ const SalesAndExpenses = () => {
       <BarChart
         width={730}
         height={250}
-        data={graphData ? graphData : testData}
+        data={graphData}
         styles={{ margin: '0' }}
       >
         <CartesianGrid strokeDasharray="3 3" />
