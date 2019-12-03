@@ -80,7 +80,7 @@ const EnhancedTableHead = ({
 };
 
 EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
@@ -145,7 +145,7 @@ const TableCard = ({ headers, data }) => {
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const rowsPerPage = 5;
 
   const handleRequestSort = (event, property) => {
     const isDesc = orderBy === property && order === 'desc';
@@ -177,11 +177,6 @@ const TableCard = ({ headers, data }) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const isSelected = name => selected.indexOf(name) !== -1;
 
   const emptyRows =
@@ -208,7 +203,7 @@ const TableCard = ({ headers, data }) => {
             <TableBody>
               {stableSort(data, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
+                .map(row => {
                   const isItemSelected = isSelected(row.id);
                   return (
                     <TableRow
@@ -231,7 +226,7 @@ const TableCard = ({ headers, data }) => {
                 <TableRow
                   style={{ height: 44 * emptyRows, backgroundColor: '#262626' }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell style={{ border: 'none' }} colSpan={6} />
                 </TableRow>
               )}
             </TableBody>
@@ -239,17 +234,32 @@ const TableCard = ({ headers, data }) => {
         </div>
         <TablePagination
           className={classes.pagination}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[]}
           component="div"
           count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
     </div>
   );
 };
 
+TableCard.propTypes = {
+  headers: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      label: PropTypes.string,
+    }),
+  ).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      topProduct: PropTypes.string,
+      amount: PropTypes.number,
+    }),
+  ).isRequired,
+};
 export default TableCard;

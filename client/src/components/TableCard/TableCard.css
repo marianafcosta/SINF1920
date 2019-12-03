@@ -8,4 +8,6 @@
 
 .labelColor svg {
   color: #FFFBA1 !important;
+  width: 18px;
+  height: 18px;
 }
