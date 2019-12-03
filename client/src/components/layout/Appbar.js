@@ -44,6 +44,7 @@ const Appbar = ({
   isOverlaySet,
   // eslint-disable-next-line
   changeOverlayStatus,
+  user,
 }) => {
   const history = useHistory();
 
@@ -70,7 +71,7 @@ const Appbar = ({
   return (
     <AppBar
       position="absolute"
-      className={clsx(classes.appBar, open && classes.appBarShift)}
+      className={clsx(classes.appBar, open && (user.role === 'CEO' ? classes.appBarShiftCEO : classes.appBarShift))}
     >
       <Toolbar className={classes.toolbar}>
         <IconButton

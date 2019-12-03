@@ -33,19 +33,19 @@ const AppRouter = ({ isAuthenticated, user }) => (
   <Router>
     <Switch>
       <PrivateRoute exact path="/" roles={["CEO"]}>
-        <Overview />
+        <Overview user={user} />
       </PrivateRoute>
       <PrivateRoute exact path="/finances" roles={["CEO", "Head of Finances"]}>
-        <Financial />
+        <Financial user={user} />
       </PrivateRoute>
       <PrivateRoute exact path="/purchases" roles={["CEO", "Purchases Manager"]}>
-        <Purchases />
+        <Purchases user={user} />
       </PrivateRoute>
       <PrivateRoute exact path="/inventory" roles={["CEO", "Inventory Manager"]}>
-        <Inventory />
+        <Inventory user={user} />
       </PrivateRoute>
       <PrivateRoute exact path="/sales" roles={["CEO", "Sales Manager"]}>
-        <Sales />
+        <Sales user={user} />
       </PrivateRoute>
       <Route exact path="/login">
         {isAuthenticated ? redirectTo(user.role) : <SignIn />}

@@ -67,6 +67,10 @@ const useStyles = makeStyles(theme => ({
     borderBottom: '1px solid #FFFBA1!important',
   },
   appBarShift: {
+    marginLeft: 0,
+    width: '100%',
+  },
+  appBarShiftCEO: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -158,33 +162,37 @@ const Layout = ({ children, user }) => {
         handleDrawerOpen={handleDrawerOpen}
         classes={classes}
         open={open}
+        user={user}
       />
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <Typography
-            className={classes.typography}
-            component="h1"
-            variant="h6"
-            noWrap
-          >
-            <FlashOnIcon className={classes.yellow} />
-            EEC
-          </Typography>
-          <IconButton color="inherit" onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List className="listBorder">
-          <Sidebar pageName={pageName} />
-        </List>
-      </Drawer>
+      {
+        user.role === 'CEO' &&
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          }}
+          open={open}
+        >
+          <div className={classes.toolbarIcon}>
+            <Typography
+              className={classes.typography}
+              component="h1"
+              variant="h6"
+              noWrap
+            >
+              <FlashOnIcon className={classes.yellow} />
+              EEC
+            </Typography>
+            <IconButton color="inherit" onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List className="listBorder">
+            <Sidebar pageName={pageName} />
+          </List>
+        </Drawer>
+      }
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
