@@ -129,7 +129,7 @@ const useStyles = makeStyles(theme => ({
   cells: {
     backgroundColor: '#262626',
     color: 'inherit',
-    padding: '18px 14px 6px 4rem',
+    padding: '12px 14px 6px 4rem',
     border: 'none',
   },
   pagination: {
