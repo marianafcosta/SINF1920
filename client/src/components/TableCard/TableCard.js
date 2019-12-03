@@ -215,9 +215,9 @@ const TableCard = ({ headers, data }) => {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      {Object.keys(row).map(key => (
-                        <TableCell key={key} className={classes.cells}>
-                          {row[key]}
+                      {headers.map(({ name }) => (
+                        <TableCell key={name} className={classes.cells}>
+                          {row[name]}
                         </TableCell>
                       ))}
                     </TableRow>
@@ -234,7 +234,7 @@ const TableCard = ({ headers, data }) => {
           </Table>
         </div>
         <TablePagination
-          className={clsx(classes.pagination, "pagination")}
+          className={clsx(classes.pagination, 'pagination')}
           rowsPerPageOptions={[]}
           component="div"
           count={data.length}
