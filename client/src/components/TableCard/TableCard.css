@@ -1,0 +1,29 @@
+.labelColor {
+  color: #FFFBA1 !important;
+}
+
+.labelColor:hover {
+  color: rgb(255, 242, 0) !important;
+}
+
+.labelColor svg {
+  color: #FFFBA1 !important;
+  width: 18px;
+  height: 18px;
+}
+
+.pagination button:disabled {
+  color: rgb(151, 151, 151);
+}
+
+.pagination>div {
+  justify-content: center;
+}
+
+.pagination>div>div.MuiTablePagination-spacer {
+  flex: none;
+}
+
+.MuiTableCell-root {
+  font-size: 1.1rem !important;
+}
