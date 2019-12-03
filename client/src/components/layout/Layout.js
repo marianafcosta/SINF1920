@@ -18,6 +18,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Sidebar from './Sidebar';
 import Appbar from './Appbar';
 import './layout.css';
+import { connect } from 'react-redux';
 
 function Copyright() {
   return (
@@ -135,7 +136,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Layout({ children }) {
+const Layout = ({ children, user }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -195,6 +196,16 @@ export default function Layout({ children }) {
   );
 }
 
+
+Layout.defaultProps = {
+  user: null,
+};
+
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  user: PropTypes.shape({ role: PropTypes.string })
 };
+
+export default connect(({ auth }) => ({
+  user: auth.user,
+}))(Layout)

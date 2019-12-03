@@ -14,7 +14,8 @@ const initialState = {
   user: null,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
+  console.log(action)
   switch (action.type) {
     case USER_LOADING:
       return {
@@ -32,7 +33,7 @@ export default function(state = initialState, action) {
       localStorage.setItem('eec-token', action.payload.token);
       return {
         ...state,
-        ...action.payload,
+        user: action.payload.user,
         isAuthenticated: true,
         isLoading: false,
       };

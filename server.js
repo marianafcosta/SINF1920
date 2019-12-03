@@ -40,7 +40,7 @@ const loginPrimavera = () => {
     },
   };
 
-  request(options, function(error, response, body) {
+  request(options, function (error, response, body) {
     if (error) throw new Error(error);
 
     const jsonF = JSON.parse(response.body);
@@ -85,6 +85,7 @@ server.post('/api/auth', (req, res) => {
             id: user.id,
             name: user.name,
             email: user.email,
+            role: user.role,
           },
         });
       },
@@ -117,7 +118,7 @@ server.get('/api/expenses', auth, (req, res) => {
 
   if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
 
-  return primaveraRequests(options, function(error, response, body) {
+  return primaveraRequests(options, function (error, response, body) {
     if (error) throw new Error(error);
     res.json(body);
   });
