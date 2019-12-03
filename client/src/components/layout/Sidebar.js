@@ -43,16 +43,16 @@ const Sidebar = ({ pageName, user }) => {
   ];
 
   const pathsForRole = {
-    "CEO": ["/", "/finances", "/sales", "/purchases", "/inventory"],
-    "Head of Finances": ["/finances"],
-    "Sales Manager": ["/sales"],
-    "Purchases Manager": ["/purchases"],
-    "Inventory Manager": ["/inventory"],
-  }
+    `CEO`: ['/', '/finances', '/sales', '/purchases', '/inventory'],
+    'Head of Finances': ['/finances'],
+    'Sales Manager': ['/sales'],
+    'Purchases Manager': ['/purchases'],
+    'Inventory Manager': ['/inventory'],
+  };
 
   return (
     <div className="linkUI">
-      {links.filter(({ link }) => pathsForRole[user.role].includes(link)).map(({ name, link, icon }) => (
+      {links.filter(({link}) => pathsForRole[user.role].includes(link)).map(({ name, link, icon }) => (
         <Link to={link} key={name}>
           <ListItem
             button

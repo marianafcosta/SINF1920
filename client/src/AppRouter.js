@@ -17,34 +17,33 @@ import Purchases from './pages/Purchases';
 import SignIn from './pages/SignIn';
 
 const redirectTo = role => {
-  console.log(role)
   const paths = {
-    "CEO": "/",
-    "Head of Finances": "/finances",
-    "Sales Manager": "/sales",
-    "Purchases Manager": "/purchases",
-    "Inventory Manager": "/inventory",
-  }
+    'CEO': '/',
+    'Head of Finances': '/finances',
+    'Sales Manager': '/sales',
+    'Purchases Manager': '/purchases',
+    'Inventory Manager': '/inventory',
+  };
 
   return <Redirect to={paths[role]} />;
-}
+};
 
 const AppRouter = ({ isAuthenticated, user }) => (
   <Router>
     <Switch>
-      <PrivateRoute exact path="/" roles={["CEO"]}>
+      <PrivateRoute exact path="/" roles={['CEO']}>
         <Overview user={user} />
       </PrivateRoute>
-      <PrivateRoute exact path="/finances" roles={["CEO", "Head of Finances"]}>
+      <PrivateRoute exact path="/finances" roles={['CEO', 'Head of Finances']}>
         <Financial user={user} />
       </PrivateRoute>
-      <PrivateRoute exact path="/purchases" roles={["CEO", "Purchases Manager"]}>
+      <PrivateRoute exact path="/purchases" roles={['CEO', 'Purchases Manager']}>
         <Purchases user={user} />
       </PrivateRoute>
-      <PrivateRoute exact path="/inventory" roles={["CEO", "Inventory Manager"]}>
+      <PrivateRoute exact path="/inventory" roles={['CEO', 'Inventory Manager']}>
         <Inventory user={user} />
       </PrivateRoute>
-      <PrivateRoute exact path="/sales" roles={["CEO", "Sales Manager"]}>
+      <PrivateRoute exact path="/sales" roles={['CEO', 'Sales Manager']}>
         <Sales user={user} />
       </PrivateRoute>
       <Route exact path="/login">
@@ -62,11 +61,11 @@ AppRouter.defaultProps = {
 AppRouter.propTypes = {
   isAuthenticated: PropTypes.bool,
   user: PropTypes.shape({
-    role: PropTypes.string
-  })
+    role: PropTypes.string,
+  }),
 };
 
 export default connect(({ auth }) => ({
   isAuthenticated: auth.isAuthenticated,
-  user: auth.user
+  user: auth.user,
 }))(AppRouter);

@@ -159,6 +159,9 @@ Appbar.propTypes = {
   doLogout: PropTypes.func.isRequired,
   isOverlaySet: PropTypes.bool.isRequired,
   changeOverlayStatus: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    role: PropTypes.string,
+  }),
 };
 
 const mapStateToProps = ({ overlay }) => ({

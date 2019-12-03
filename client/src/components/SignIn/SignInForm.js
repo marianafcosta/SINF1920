@@ -102,14 +102,14 @@ const SignInForm = ({ isAuthenticated, doLogin, error, user }) => {
 
     if (isAuthenticated) {
       const paths = {
-        "CEO": "/",
-        "Head of Finances": "/finances",
-        "Sales Manager": "/sales",
-        "Purchases Manager": "/purchases",
-        "Inventory Manager": "/inventory",
-      }
-      history.push(paths[user.role]);
+        'CEO': '/',
+        'Head of Finances': '/finances',
+        'Sales Manager': '/sales',
+        'Purchases Manager': '/purchases',
+        'Inventory Manager': '/inventory',
+      },
 
+      history.push(paths[user.role]);
     }
   }, [error, history, isAuthenticated, user]);
 
@@ -228,8 +228,8 @@ SignInForm.propTypes = {
     msg: PropTypes.string,
   }).isRequired,
   user: PropTypes.shape({
-    role: PropTypes.string
-  })
+    role: PropTypes.string,
+  }),
 };
 
 const mapStateToProps = state => ({

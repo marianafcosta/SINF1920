@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,7 +19,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Sidebar from './Sidebar';
 import Appbar from './Appbar';
 import './layout.css';
-import { connect } from 'react-redux';
 
 function Copyright() {
   return (
@@ -164,8 +164,7 @@ const Layout = ({ children, user }) => {
         open={open}
         user={user}
       />
-      {
-        user.role === 'CEO' &&
+      {user.role === 'CEO' && (
         <Drawer
           variant="permanent"
           classes={{
@@ -189,10 +188,10 @@ const Layout = ({ children, user }) => {
           </div>
           <Divider />
           <List className="listBorder">
-            <Sidebar pageName={pageName} />
+            <Sidebar pageName={pageName} user={user} />
           </List>
         </Drawer>
-      }
+      )}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
@@ -202,8 +201,7 @@ const Layout = ({ children, user }) => {
       </main>
     </div>
   );
-}
-
+};
 
 Layout.defaultProps = {
   user: null,
@@ -211,9 +209,9 @@ Layout.defaultProps = {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  user: PropTypes.shape({ role: PropTypes.string })
+  user: PropTypes.shape({ role: PropTypes.string }),
 };
 
 export default connect(({ auth }) => ({
   user: auth.user,
-}))(Layout)
+}))(Layout);
