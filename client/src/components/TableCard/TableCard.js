@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -224,7 +225,7 @@ const TableCard = ({ headers, data }) => {
                 })}
               {emptyRows > 0 && (
                 <TableRow
-                  style={{ height: 44 * emptyRows, backgroundColor: '#262626' }}
+                  style={{ height: 43 * emptyRows, backgroundColor: '#262626' }}
                 >
                   <TableCell style={{ border: 'none' }} colSpan={6} />
                 </TableRow>
@@ -233,7 +234,7 @@ const TableCard = ({ headers, data }) => {
           </Table>
         </div>
         <TablePagination
-          className={classes.pagination}
+          className={clsx(classes.pagination, "pagination")}
           rowsPerPageOptions={[]}
           component="div"
           count={data.length}

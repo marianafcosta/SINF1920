@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: '15px',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -52,6 +52,13 @@ const useStyles = makeStyles(theme => ({
     outline: 'none',
     borderRadius: '23px',
     margin: '1rem 0',
+  },
+  passwordInput: {
+    backgroundColor: '#FFFBA1',
+    border: 'none',
+    outline: 'none',
+    borderRadius: '23px',
+    margin: '.3rem 0',
   },
   submit: {
     margin: theme.spacing(4, 0, 1),
@@ -125,7 +132,7 @@ const SignInForm = ({ isAuthenticated, doLogin, error }) => {
             </Grid>
             <Grid item xs={9}>
               <BootstrapInput
-                className={classes.input}
+                className={classes.passwordInput}
                 margin="none"
                 required
                 fullWidth
@@ -138,13 +145,16 @@ const SignInForm = ({ isAuthenticated, doLogin, error }) => {
               />
             </Grid>
           </Grid>
-          <Grid container spacing={3} className={classes.formGroup}>
+          <Grid container spacing={4} className={classes.formGroup}>
             <Grid item xs={3} className={classes.label}>
               Password:
             </Grid>
             <Grid item xs={9}>
               <BootstrapInput
+                className={classes.input}
+                margin="none"
                 required
+                fullWidth
                 id="password"
                 name="password"
                 type="password"
