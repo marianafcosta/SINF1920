@@ -21,6 +21,11 @@ const basePrimaveraUrl = `https://my.jasminsoftware.com/api/${process.env.TENANT
 
 let primaveraRequests;
 
+const SalesController = require('./sales');
+const FinancialController = require('./financial');
+// eslint-disable-next-line no-underscore-dangle
+const db = router.db.__wrapped__;
+
 server.use(cors());
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
@@ -51,6 +56,9 @@ const loginPrimavera = () => {
 };
 
 loginPrimavera();
+
+SalesController(server, db);
+FinancialController(server, db);
 
 // @route   POST api/auth
 // @desc    Auth user
@@ -131,8 +139,15 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+process.on('SIGINT', () => {
+  console.log('Bye bye!');
+  process.exit();
+});
+
 server.use(router);
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = server;

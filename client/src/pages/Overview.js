@@ -1,10 +1,12 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
+import SalesExpenses from '../components/salesAndExpenses';
 import CustomCard from '../components/CustomCard/CustomCard';
 import TableCard from '../components/TableCard/TableCard';
 
 const Overview = () => (
   <Layout>
+    <SalesExpenses />
     <CustomCard
       title="Sales vs Expenses"
       overlayInfo="testing overlay descriptions"
