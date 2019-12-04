@@ -21,8 +21,8 @@ const basePrimaveraUrl = `https://my.jasminsoftware.com/api/${process.env.TENANT
 
 let primaveraRequests;
 
-const SalesController = require('./sales');
-const FinancialController = require('./financial');
+const SalesController = require('./modules/sales');
+const FinancialController = require('./modules/financial');
 // eslint-disable-next-line no-underscore-dangle
 const db = router.db.__wrapped__;
 
