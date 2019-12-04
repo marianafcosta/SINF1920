@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -66,6 +67,10 @@ const useStyles = makeStyles(theme => ({
     borderBottom: '1px solid #FFFBA1!important',
   },
   appBarShift: {
+    marginLeft: 0,
+    width: '100%',
+  },
+  appBarShiftCEO: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -135,7 +140,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Layout({ children }) {
+const Layout = ({ children, user }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -157,33 +162,36 @@ export default function Layout({ children }) {
         handleDrawerOpen={handleDrawerOpen}
         classes={classes}
         open={open}
+        user={user}
       />
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <Typography
-            className={classes.typography}
-            component="h1"
-            variant="h6"
-            noWrap
-          >
-            <FlashOnIcon className={classes.yellow} />
-            EEC
-          </Typography>
-          <IconButton color="inherit" onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List className="listBorder">
-          <Sidebar pageName={pageName} />
-        </List>
-      </Drawer>
+      {user.role === 'CEO' && (
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          }}
+          open={open}
+        >
+          <div className={classes.toolbarIcon}>
+            <Typography
+              className={classes.typography}
+              component="h1"
+              variant="h6"
+              noWrap
+            >
+              <FlashOnIcon className={classes.yellow} />
+              EEC
+            </Typography>
+            <IconButton color="inherit" onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List className="listBorder">
+            <Sidebar pageName={pageName} user={user} />
+          </List>
+        </Drawer>
+      )}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
@@ -193,8 +201,17 @@ export default function Layout({ children }) {
       </main>
     </div>
   );
-}
+};
+
+Layout.defaultProps = {
+  user: null,
+};
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  user: PropTypes.shape({ role: PropTypes.string }),
 };
+
+export default connect(({ auth }) => ({
+  user: auth.user,
+}))(Layout);

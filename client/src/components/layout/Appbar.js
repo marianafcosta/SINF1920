@@ -17,6 +17,7 @@ import './layout.css';
 import { NativeSelect } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
+import FlashOnIcon from '@material-ui/icons/FlashOn';
 import BootstrapInput from '../common/BootstrapInput';
 import { logout } from '../../actions/authActions';
 import changeOverlayStatus from '../../actions/overlayActions';
@@ -44,6 +45,7 @@ const Appbar = ({
   isOverlaySet,
   // eslint-disable-next-line
   changeOverlayStatus,
+  user,
 }) => {
   const history = useHistory();
 
@@ -70,7 +72,11 @@ const Appbar = ({
   return (
     <AppBar
       position="absolute"
-      className={clsx(classes.appBar, open && classes.appBarShift)}
+      className={clsx(
+        classes.appBar,
+        open &&
+          (user.role === 'CEO' ? classes.appBarShiftCEO : classes.appBarShift),
+      )}
     >
       <Toolbar className={classes.toolbar}>
         <IconButton
@@ -82,6 +88,17 @@ const Appbar = ({
         >
           <MenuIcon />
         </IconButton>
+        {user.role !== 'CEO' && (
+          <Typography
+            className={classes.typography}
+            component="h1"
+            variant="h6"
+            noWrap
+          >
+            <FlashOnIcon className={classes.yellow} />
+            EEC
+          </Typography>
+        )}
         <Typography
           component="h1"
           variant="h6"
@@ -150,6 +167,10 @@ const Appbar = ({
   );
 };
 
+Appbar.defaultProps = {
+  user: null,
+};
+
 Appbar.propTypes = {
   pageName: PropTypes.string.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -158,6 +179,9 @@ Appbar.propTypes = {
   doLogout: PropTypes.func.isRequired,
   isOverlaySet: PropTypes.bool.isRequired,
   changeOverlayStatus: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    role: PropTypes.string,
+  }),
 };
 
 const mapStateToProps = ({ overlay }) => ({

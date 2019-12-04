@@ -32,7 +32,7 @@ export default function(state = initialState, action) {
       localStorage.setItem('eec-token', action.payload.token);
       return {
         ...state,
-        ...action.payload,
+        user: action.payload.user,
         isAuthenticated: true,
         isLoading: false,
       };

@@ -90,7 +90,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignInForm = ({ isAuthenticated, doLogin, error }) => {
+const SignInForm = ({ isAuthenticated, doLogin, error, user }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [msg, setMsg] = useState(null);
@@ -101,9 +101,17 @@ const SignInForm = ({ isAuthenticated, doLogin, error }) => {
     setMsg(error.id === 'LOGIN_FAIL' ? error.msg : null);
 
     if (isAuthenticated) {
-      history.push('/');
+      const paths = {
+        CEO: '/',
+        'Head of Finances': '/finances',
+        'Sales Manager': '/sales',
+        'Purchases Manager': '/purchases',
+        'Inventory Manager': '/inventory',
+      };
+
+      history.push(paths[user.role]);
     }
-  }, [error, history, isAuthenticated]);
+  }, [error, history, isAuthenticated, user]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -209,6 +217,7 @@ const SignInForm = ({ isAuthenticated, doLogin, error }) => {
 
 SignInForm.defaultProps = {
   isAuthenticated: null,
+  user: null,
 };
 
 SignInForm.propTypes = {
@@ -218,11 +227,15 @@ SignInForm.propTypes = {
     id: PropTypes.string,
     msg: PropTypes.string,
   }).isRequired,
+  user: PropTypes.shape({
+    role: PropTypes.string,
+  }),
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
+  user: state.auth.user,
 });
 
 export default connect(
