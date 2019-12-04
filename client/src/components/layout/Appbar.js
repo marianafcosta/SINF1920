@@ -17,6 +17,7 @@ import './layout.css';
 import { NativeSelect } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
+import FlashOnIcon from '@material-ui/icons/FlashOn';
 import BootstrapInput from '../common/BootstrapInput';
 import { logout } from '../../actions/authActions';
 import changeOverlayStatus from '../../actions/overlayActions';
@@ -87,6 +88,17 @@ const Appbar = ({
         >
           <MenuIcon />
         </IconButton>
+        {user.role !== 'CEO' && (
+          <Typography
+            className={classes.typography}
+            component="h1"
+            variant="h6"
+            noWrap
+          >
+            <FlashOnIcon className={classes.yellow} />
+            EEC
+          </Typography>
+        )}
         <Typography
           component="h1"
           variant="h6"
