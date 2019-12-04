@@ -71,7 +71,11 @@ const Appbar = ({
   return (
     <AppBar
       position="absolute"
-      className={clsx(classes.appBar, open && (user.role === 'CEO' ? classes.appBarShiftCEO : classes.appBarShift))}
+      className={clsx(
+        classes.appBar,
+        open &&
+          (user.role === 'CEO' ? classes.appBarShiftCEO : classes.appBarShift),
+      )}
     >
       <Toolbar className={classes.toolbar}>
         <IconButton
@@ -149,6 +153,10 @@ const Appbar = ({
       </Toolbar>
     </AppBar>
   );
+};
+
+Appbar.defaultProps = {
+  user: null,
 };
 
 Appbar.propTypes = {

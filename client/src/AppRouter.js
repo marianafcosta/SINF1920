@@ -18,7 +18,7 @@ import SignIn from './pages/SignIn';
 
 const redirectTo = role => {
   const paths = {
-    'CEO': '/',
+    CEO: '/',
     'Head of Finances': '/finances',
     'Sales Manager': '/sales',
     'Purchases Manager': '/purchases',
@@ -37,10 +37,18 @@ const AppRouter = ({ isAuthenticated, user }) => (
       <PrivateRoute exact path="/finances" roles={['CEO', 'Head of Finances']}>
         <Financial user={user} />
       </PrivateRoute>
-      <PrivateRoute exact path="/purchases" roles={['CEO', 'Purchases Manager']}>
+      <PrivateRoute
+        exact
+        path="/purchases"
+        roles={['CEO', 'Purchases Manager']}
+      >
         <Purchases user={user} />
       </PrivateRoute>
-      <PrivateRoute exact path="/inventory" roles={['CEO', 'Inventory Manager']}>
+      <PrivateRoute
+        exact
+        path="/inventory"
+        roles={['CEO', 'Inventory Manager']}
+      >
         <Inventory user={user} />
       </PrivateRoute>
       <PrivateRoute exact path="/sales" roles={['CEO', 'Sales Manager']}>

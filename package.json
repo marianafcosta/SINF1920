@@ -8,7 +8,8 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "lint": "eslint '**/*.{js,jsx}' --quiet",
+    "lint": "eslint '**/*.{js,jsx}'",
+    "lint:fix": "eslint '**/*.{js,jsx}' --fix",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },

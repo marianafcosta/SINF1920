@@ -43,7 +43,7 @@ const Sidebar = ({ pageName, user }) => {
   ];
 
   const pathsForRole = {
-    `CEO`: ['/', '/finances', '/sales', '/purchases', '/inventory'],
+    CEO: ['/', '/finances', '/sales', '/purchases', '/inventory'],
     'Head of Finances': ['/finances'],
     'Sales Manager': ['/sales'],
     'Purchases Manager': ['/purchases'],
@@ -52,33 +52,34 @@ const Sidebar = ({ pageName, user }) => {
 
   return (
     <div className="linkUI">
-      {links.filter(({link}) => pathsForRole[user.role].includes(link)).map(({ name, link, icon }) => (
-        <Link to={link} key={name}>
-          <ListItem
-            button
-            className={clsx('list-item', pageName === name ? 'active' : '')}
-          >
-            <ListItemIcon>{icon}</ListItemIcon>
-            <ListItemText primary={name} />
-          </ListItem>
-        </Link>
-      ))}
+      {links
+        .filter(({ link }) => pathsForRole[user.role].includes(link))
+        .map(({ name, link, icon }) => (
+          <Link to={link} key={name}>
+            <ListItem
+              button
+              className={clsx('list-item', pageName === name ? 'active' : '')}
+            >
+              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemText primary={name} />
+            </ListItem>
+          </Link>
+        ))}
     </div>
   );
 };
 
 Sidebar.defaultProps = {
-  user: null
-}
+  user: null,
+};
 
 Sidebar.propTypes = {
   pageName: PropTypes.string.isRequired,
   user: PropTypes.shape({
-    role: PropTypes.string
-  })
+    role: PropTypes.string,
+  }),
 };
 
-
 export default connect(({ auth }) => ({
-  user: auth.user
+  user: auth.user,
 }))(Sidebar);

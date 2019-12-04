@@ -102,12 +102,12 @@ const SignInForm = ({ isAuthenticated, doLogin, error, user }) => {
 
     if (isAuthenticated) {
       const paths = {
-        'CEO': '/',
+        CEO: '/',
         'Head of Finances': '/finances',
         'Sales Manager': '/sales',
         'Purchases Manager': '/purchases',
         'Inventory Manager': '/inventory',
-      },
+      };
 
       history.push(paths[user.role]);
     }
