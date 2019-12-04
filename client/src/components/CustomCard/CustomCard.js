@@ -28,7 +28,14 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomCard = ({ children, title, overlayInfo, isOverlaySet }) => {
+const CustomCard = ({
+  children,
+  title,
+  overlayInfo,
+  isOverlaySet,
+  animation,
+  padding,
+}) => {
   const classes = useStyles();
   const [isOverlayAnimationRunning, setIsOverlayAnimationRunning] = useState(
     false,
@@ -44,8 +51,8 @@ const CustomCard = ({ children, title, overlayInfo, isOverlaySet }) => {
 
   return (
     <div className={classes.cardContainer}>
-      <Card className={classes.card}>
-        {(isOverlaySet || isOverlayAnimationRunning) && (
+      <Card className={classNames(classes.card, padding)}>
+        {animation && (isOverlaySet || isOverlayAnimationRunning) && (
           <Card
             className={classNames('overlay', !isOverlaySet ? 'collapsing' : '')}
             onAnimationEnd={handleOverlayAnimationStatus}
@@ -68,6 +75,8 @@ CustomCard.defaultProps = {
   title: '',
   overlayInfo: 'No description provided',
   isOverlaySet: false,
+  animation: true,
+  padding: '',
 };
 
 CustomCard.propTypes = {
@@ -75,6 +84,8 @@ CustomCard.propTypes = {
   title: PropTypes.string,
   overlayInfo: PropTypes.string,
   isOverlaySet: PropTypes.bool,
+  animation: PropTypes.bool,
+  padding: PropTypes.string,
 };
 
 const mapStateToProps = state => ({

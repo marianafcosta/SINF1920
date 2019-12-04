@@ -1,9 +1,17 @@
 import React, { useEffect } from 'react';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/authActions';
 
 import AppRouter from './AppRouter';
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: '"Anaheim", sans-serif',
+  },
+});
 
 const App = () => {
   useEffect(() => {
@@ -11,9 +19,11 @@ const App = () => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <AppRouter />
-    </Provider>
+    <MuiThemeProvider theme={theme}>
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
+    </MuiThemeProvider>
   );
 };
 
