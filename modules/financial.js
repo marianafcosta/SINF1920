@@ -150,8 +150,11 @@ const processJournalEntries = (entries, accountId, year, monthly) => {
   return totalLedgerValues;
 };
 
+const processAccount = () => {};
+
 module.exports = (server, db) => {
   /**
+   * @param accountId
    * @param year (required)
    * @param monthly (required) if true, returns the total credit and debit values
    * for the year; otherwise, it returns an array for the credit and debit values
@@ -176,5 +179,32 @@ module.exports = (server, db) => {
     );
 
     res.json(totalJournalValues);
+  });
+
+  /**
+   * @param accountId
+   */
+  server.get('/api/financial/accounts', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+
+    if (!req.query.accountId) {
+      res.json({
+        error:
+          'The request should be as follows: /api/financial/accountBalance?accountId=<accountId>',
+      });
+      return;
+    }
+
+    const accountValues = processAccount(accounts, req.queryId);
+
+    /**
+     * return {
+     *    openingCreditBalance:
+     *    openingDebitBalance:
+     *    closingCreditBalance:
+     *    closingDebitBalance:
+     * }
+     */
+    res.json(accountValues);
   });
 };
