@@ -40,8 +40,8 @@ KpiBarChart.propTypes = {
       dataKey: PropTypes.string,
       fill: PropTypes.string,
     }),
-  ),
-  data: PropTypes.arrayOf(PropTypes.any),
+  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default KpiBarChart;
