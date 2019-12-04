@@ -11,6 +11,12 @@ import {
 import PropTypes from 'prop-types';
 
 const KpiBarChart = ({ bars, data }) => {
+  const renderLegend = (value, entry) => {
+    const { color } = entry;
+
+    return <span style={{ color }}>{value}</span>;
+  };
+
   return (
     <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
       <CartesianGrid strokeDasharray="3 3" />
@@ -20,7 +26,7 @@ const KpiBarChart = ({ bars, data }) => {
         contentStyle={{ backgroundColor: '#262626' }}
         wrapperStyle={{ color: 'white' }}
       />
-      <Legend />
+      <Legend formatter={renderLegend} />
       {bars.map(bar => (
         <Bar dataKey={bar.dataKey} fill={bar.fill} />
       ))}
