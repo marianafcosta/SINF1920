@@ -9,8 +9,6 @@ const processTransactionLines = (lines, accountId) => {
   if (lines.CreditLine) {
     if (Array.isArray(lines.CreditLine)) {
       lines.CreditLine.forEach(credit => {
-        console.log(accountId);
-        console.log(credit.AccountID);
         if (credit.AccountID.indexOf(accountId) === 0) {
           totalTransactionValues.totalCredit += parseFloat(credit.CreditAmount);
         }
@@ -25,8 +23,6 @@ const processTransactionLines = (lines, accountId) => {
   if (lines.DebitLine) {
     if (Array.isArray(lines.DebitLine)) {
       lines.DebitLine.forEach(debit => {
-        console.log(accountId);
-        console.log(debit.AccountID);
         if (debit.AccountID.indexOf(accountId) === 0) {
           totalTransactionValues.totalDebit += parseFloat(debit.DebitAmount);
         }
@@ -241,7 +237,7 @@ const calculateEbitda = accounts => {
     earningsSalesValue +
     earningsServicesValue -
     (expensesCogsValue + expensesServicesValue + expensesPersonnelValue)
-  );
+  ).toFixed(2);
 };
 
 const processAccounts = (accounts, accountId) => {
