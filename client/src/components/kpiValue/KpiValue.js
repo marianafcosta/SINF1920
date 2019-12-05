@@ -13,7 +13,7 @@ const KpiValue = ({ value, title, overlayInfo }) => {
   );
 };
 
-KpiValue.PropTypes = {
+KpiValue.propTypes = {
   value: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   overlayInfo: PropTypes.string.isRequired,
