@@ -8,17 +8,13 @@ const Ebitda = () => {
   const [ebitda, setEbitda] = useState(0);
 
   const fetchData = async () => {
-    const ebitda = await fetchEbitda(2018); // TODO
-    setEbitda(ebitda.data.ebitda);
+    const ebitdaData = await fetchEbitda(2018); // TODO
+    setEbitda(ebitdaData.data.ebitda);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log(ebitda);
-  }, [ebitda]);
 
   return (
     <KpiValue

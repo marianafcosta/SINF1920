@@ -39,6 +39,8 @@ const KpiBarChart = ({ title, overlayInfo, bars, data }) => {
 };
 
 KpiBarChart.propTypes = {
+  title: PropTypes.string.isRequired,
+  overlayInfo: PropTypes.string.isRequired,
   bars: PropTypes.arrayOf(
     PropTypes.shape({
       dataKey: PropTypes.string,

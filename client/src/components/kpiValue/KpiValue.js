@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import CustomCard from '../CustomCard';
 
@@ -10,6 +11,12 @@ const KpiValue = ({ value, title, overlayInfo }) => {
       <h1 className={styles.value}>€{value}</h1>
     </CustomCard>
   );
+};
+
+KpiValue.PropTypes = {
+  value: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  overlayInfo: PropTypes.string.isRequired,
 };
 
 export default KpiValue;

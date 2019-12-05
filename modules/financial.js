@@ -229,6 +229,7 @@ module.exports = (server, db) => {
 
   /**
    * @param accountId
+   * NEED TO ADD THE YEAR PARAMETER
    */
   server.get('/api/financial/accounts', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
