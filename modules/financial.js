@@ -160,6 +160,44 @@ const fetchAccount = (accounts, accountId) => {
   return null;
 };
 
+const calculateEbitda = accounts => {
+  const earningsSales = fetchAccount(accounts, 71);
+  const earningsServices = fetchAccount(accounts, 72);
+  const expensesCogs = fetchAccount(accounts, 61);
+  const expensesServices = fetchAccount(accounts, 62);
+  const expensesPersonnel = fetchAccount(accounts, 63);
+
+  console.log(earningsSales);
+  const earningsSalesValue = !earningsSales
+    ? 0
+    : parseFloat(earningsSales.ClosingCreditBalance) -
+      parseFloat(earningsSales.ClosingDebitBalance);
+  const earningsServicesValue = !earningsServices
+    ? 0
+    : parseFloat(earningsServices.ClosingCreditBalance) -
+      parseFloat(earningsServices.ClosingDebitBalance);
+  const expensesCogsValue = !expensesCogs
+    ? 0
+    : parseFloat(expensesCogs.ClosingCreditBalance) -
+      parseFloat(expensesCogs.ClosingDebitBalance);
+  const expensesServicesValue = !expensesServices
+    ? 0
+    : parseFloat(expensesServices.ClosingCreditBalance) -
+      parseFloat(expensesServices.ClosingDebitBalance);
+  const expensesPersonnelValue = !expensesPersonnel
+    ? 0
+    : parseFloat(expensesPersonnel.ClosingCreditBalance) -
+      parseFloat(expensesPersonnel.ClosingDebitBalance);
+
+  return (
+    earningsSalesValue +
+    earningsServicesValue -
+    expensesServicesValue -
+    expensesPersonnelValue -
+    expensesCogsValue
+  );
+};
+
 module.exports = (server, db) => {
   /**
    * @param accountId
@@ -206,8 +244,29 @@ module.exports = (server, db) => {
     let accountValues = fetchAccount(accounts, req.query.accountId);
     if (!accountValues) {
       accountValues = { error: 'No account was found for the specified ID' };
+    } else {
+      accountValues.OpeningCreditBalance = parseFloat(
+        accountValues.OpeningCreditBalance,
+      );
+      accountValues.OpeningDebitBalance = parseFloat(
+        accountValues.OpeningDebitBalance,
+      );
+      accountValues.ClosingCreditBalance = parseFloat(
+        accountValues.ClosingCreditBalance,
+      );
+      accountValues.ClosingDebitBalance = parseFloat(
+        accountValues.ClosingDebitBalance,
+      );
     }
 
     res.json(accountValues);
+  });
+
+  /**
+   * @param year NOT USED FOR NOW
+   */
+  server.get('/api/financial/ebitda', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json({ ebitda: calculateEbitda(accounts) });
   });
 };

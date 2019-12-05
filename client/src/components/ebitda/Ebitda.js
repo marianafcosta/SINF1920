@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import fetchAccountBalance from '../../services/financialService';
+import { fetchAccount, fetchEbitda } from '../../services/financialService';
 
 import CustomCard from '../CustomCard';
 
@@ -16,42 +16,12 @@ const Ebitda = () => {
   const [ebitda, setEbitda] = useState(null);
 
   const fetchData = async () => {
-    const earningsSalesResponse = await fetchAccountBalance(
-      accountCodes.earningsSales,
-      2018,
-      true,
-    ); // TODO
-    const earningsServicesResponse = await fetchAccountBalance(
-      accountCodes.earningsServices,
-      2018,
-      true,
-    ); // TODO
-    const expensesCogsResponse = await fetchAccountBalance(
-      accountCodes.expensesCogs,
-      2018,
-      true,
-    ); // TODO
-    const expensesServicesResponse = await fetchAccountBalance(
-      accountCodes.expensesServices,
-      2018,
-      true,
-    ); // TODO
-    const expensesPersonnelResponse = await fetchAccountBalance(
-      accountCodes.expensesPersonnel,
-      2018,
-      true,
-    ); // TODO
-    setEbitda({
-      earningsSales: earningsSalesResponse.data,
-      earningsServices: earningsServicesResponse.data,
-      expensesCogs: expensesCogsResponse.data,
-      expensesServices: expensesServicesResponse.data,
-      expensesPersonnel: expensesPersonnelResponse.data,
-    });
+    const ebitda = await fetchEbitda(2018); // TODO
+    setEbitda(ebitda.data.ebitda);
   };
 
   useEffect(() => {
-    //fetchData();
+    fetchData();
   }, []);
 
   useEffect(() => {

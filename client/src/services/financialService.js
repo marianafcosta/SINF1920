@@ -8,4 +8,12 @@ const fetchAccountBalance = (accountId, year, monthly) => {
   );
 };
 
-export default fetchAccountBalance;
+const fetchAccount = accountId => {
+  return axios.get(`${baseUrl}/accounts?accountId=${accountId}`);
+};
+
+const fetchEbitda = year => {
+  return axios.get(`${baseUrl}/ebitda?year=${year}`);
+};
+
+export { fetchAccountBalance, fetchAccount, fetchEbitda };
