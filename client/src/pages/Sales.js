@@ -1,9 +1,10 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
+import TopProducts from '../components/topProducts';
 
 const Sales = () => (
   <Layout>
-    <h1>HI</h1>
+    <TopProducts />
   </Layout>
 );
 
