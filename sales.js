@@ -19,17 +19,12 @@ module.exports = (server, db) => {
 
   server.get('/api/sales/top-products', (req, res) => {
     let products = {};
+    const validTypes = ['FT', 'FS', 'FR', 'VD'];
 
     db.SourceDocuments.SalesInvoices.Invoice.forEach(invoice => {
       const type = invoice.InvoiceType;
 
-      if (
-        !(
-          invoice.Line.length &&
-          (type === 'FT' || type === 'FS' || type === 'FR' || type === 'VD')
-        )
-      )
-        return;
+      if (!(invoice.Line.length && validTypes.includes(type))) return;
 
       invoice.Line.forEach(line => {
         const { ProductCode, UnitPrice, ProductDescription, Quantity } = line;
@@ -47,13 +42,13 @@ module.exports = (server, db) => {
 
     products = Object.keys(products)
       .sort((a, b) => products[b].Quantity - products[a].Quantity)
-      .map(elem => ({
-        id: elem,
-        name: products[elem].ProductDescription,
-        quantity: products[elem].Quantity,
-        amount: `${(products[elem].Quantity * products[elem].UnitPrice).toFixed(
-          2,
-        )} €`,
+      .map(productCode => ({
+        id: productCode,
+        name: products[productCode].ProductDescription,
+        quantity: products[productCode].Quantity,
+        amount: `${(
+          products[productCode].Quantity * products[productCode].UnitPrice
+        ).toFixed(2)} €`,
       }));
 
     res.json(products);
