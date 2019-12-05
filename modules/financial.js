@@ -244,6 +244,42 @@ const calculateEbitda = accounts => {
   );
 };
 
+const processAccounts = (accounts, accountId) => {
+  const totalBalance = {
+    totalCredit: 0,
+    totalDebit: 0,
+    total: 0,
+  };
+
+  if (Array.isArray(accounts)) {
+    accounts.forEach(account => {
+      if (account.AccountID == accountId) {
+        totalBalance.totalDebit =
+          account.ClosingDebitBalance - account.OpeningDebitBalance;
+        totalBalance.totalCredit =
+          account.ClosingCreditBalance - account.OpeningCreditBalance;
+        const total = totalBalance.totalDebit - totalBalance.totalCredit;
+        if (total > 0) {
+          totalBalance.totalDebit = parseFloat(total).toFixed(2);
+          totalBalance.totalCredit = 0;
+        } else {
+          totalBalance.totalDebit = 0;
+          totalBalance.totalCredit = parseFloat(-total).toFixed(2);
+        }
+      }
+    });
+  } else {
+    const accountObj = accounts;
+    totalBalance.totalDebit =
+      accountObj.ClosingDebitBalance - accountObj.OpeningDebitBalance;
+    totalBalance.totalCredit =
+      accountObj.ClosingCreditBalance - accountObj.OpeningCreditBalance;
+    totalBalance.total = totalBalance.totalDebit - totalBalance.totalCredit;
+  }
+
+  return totalBalance;
+};
+
 module.exports = (server, db) => {
   /**
    * @param accountId
@@ -277,6 +313,12 @@ module.exports = (server, db) => {
    * @param accountId
    * NEED TO ADD THE YEAR PARAMETER
    */
+  server.get('/api/financial/accountBalanceSheet', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const balance = processAccounts(accounts, req.query.accountId);
+    res.json(balance);
+  });
+
   server.get('/api/financial/accounts', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
 
