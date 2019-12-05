@@ -150,7 +150,15 @@ const processJournalEntries = (entries, accountId, year, monthly) => {
   return totalLedgerValues;
 };
 
-const processAccount = () => {};
+const fetchAccount = (accounts, accountId) => {
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < accounts.length; i++) {
+    if (accounts[i].AccountID == accountId) {
+      return accounts[i];
+    }
+  }
+  return null;
+};
 
 module.exports = (server, db) => {
   /**
@@ -195,16 +203,11 @@ module.exports = (server, db) => {
       return;
     }
 
-    const accountValues = processAccount(accounts, req.queryId);
+    let accountValues = fetchAccount(accounts, req.query.accountId);
+    if (!accountValues) {
+      accountValues = { error: 'No account was found for the specified ID' };
+    }
 
-    /**
-     * return {
-     *    openingCreditBalance:
-     *    openingDebitBalance:
-     *    closingCreditBalance:
-     *    closingDebitBalance:
-     * }
-     */
     res.json(accountValues);
   });
 };
