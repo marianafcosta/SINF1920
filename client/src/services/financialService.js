@@ -8,4 +8,12 @@ const fetchAccountBalance = (accountId, year, monthly) => {
   );
 };
 
-export default fetchAccountBalance;
+const fetchAccountBalanceSheet = accountId => {
+  return axios.get(`${baseUrl}/accountBalanceSheet`, {
+    params: {
+      accountId,
+    },
+  });
+};
+
+export { fetchAccountBalance, fetchAccountBalanceSheet };
