@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import CustomCard from '../CustomCard/CustomCard';
-
 import KpiBarChart from '../kpiBarChart';
 
 import { fetchAccountBalance } from '../../services/financialService';
@@ -80,15 +78,15 @@ const SalesAndExpenses = () => {
   }, [accountBalances]);
 
   return (
-    <CustomCard title="Sales vs Expenses" overlay="Testing">
-      <KpiBarChart
-        bars={[
-          { dataKey: 'sales', fill: '#fffba1' },
-          { dataKey: 'expenses', fill: '#BE6E46' },
-        ]}
-        data={graphData}
-      />
-    </CustomCard>
+    <KpiBarChart
+      title="Sales vs Expenses"
+      overlay="gemp gemp gemp"
+      bars={[
+        { dataKey: 'sales', fill: '#fffba1' },
+        { dataKey: 'expenses', fill: '#BE6E46' },
+      ]}
+      data={graphData}
+    />
   );
 };
 
