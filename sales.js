@@ -18,11 +18,6 @@ module.exports = (server, db) => {
   });
 
   server.get('/api/sales/top-products', (req, res) => {
-    const startDate =
-      'start-date' in req.query ? new Date(req.query['start-date']) : null;
-    const endDate =
-      'end-date' in req.query ? new Date(req.query['end-date']) : null;
-
     let products = {};
 
     db.SourceDocuments.SalesInvoices.Invoice.forEach(invoice => {
@@ -36,24 +31,18 @@ module.exports = (server, db) => {
       )
         return;
 
-      const invoiceDate = new Date(invoice.InvoiceDate);
-      if (
-        (startDate === null || startDate <= invoiceDate) &&
-        (endDate === null || invoiceDate <= endDate)
-      ) {
-        invoice.Line.forEach(line => {
-          const { ProductCode, UnitPrice, ProductDescription, Quantity } = line;
-          if (Object.prototype.hasOwnProperty.call(products, ProductCode)) {
-            products[ProductCode].Quantity += parseInt(Quantity, 10);
-          } else {
-            products[ProductCode] = {
-              ProductDescription,
-              UnitPrice: parseFloat(UnitPrice, 10),
-              Quantity: parseInt(Quantity, 10),
-            };
-          }
-        });
-      }
+      invoice.Line.forEach(line => {
+        const { ProductCode, UnitPrice, ProductDescription, Quantity } = line;
+        if (Object.prototype.hasOwnProperty.call(products, ProductCode)) {
+          products[ProductCode].Quantity += parseInt(Quantity, 10);
+        } else {
+          products[ProductCode] = {
+            ProductDescription,
+            UnitPrice: parseFloat(UnitPrice, 10),
+            Quantity: parseInt(Quantity, 10),
+          };
+        }
+      });
     });
 
     products = Object.keys(products)
