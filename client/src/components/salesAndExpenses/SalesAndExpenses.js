@@ -4,7 +4,7 @@ import CustomCard from '../CustomCard/CustomCard';
 
 import KpiBarChart from '../kpiBarChart';
 
-import fetchAccountBalance from '../../services/financialService';
+import { fetchAccountBalance } from '../../services/financialService';
 
 const accountCodes = {
   sales: '7111', // FOR TEST PURPOSES; in reality, all account codes that start with 71 are related to expenses
