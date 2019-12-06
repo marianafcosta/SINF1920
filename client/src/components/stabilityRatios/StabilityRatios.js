@@ -5,8 +5,14 @@ import {
   fetchEquity,
   fetchLiabilities,
 } from '../../services/financialService';
+import TableCard from '../TableCard';
 
 import CustomCard from '../CustomCard/CustomCard';
+
+const headers = [
+  { name: 'equityToAssets', label: 'Equity to assets' },
+  { name: 'debtToEquity', label: 'Debt to equity' },
+];
 
 const StabilityRatios = () => {
   const [values, setValues] = useState({
@@ -14,6 +20,7 @@ const StabilityRatios = () => {
     assets: 0,
     liabilities: 0,
   });
+  const [tableData, setTableData] = useState([]);
 
   const fetchData = async () => {
     const equityResponse = await fetchEquity();
@@ -31,12 +38,19 @@ const StabilityRatios = () => {
   }, []);
 
   useEffect(() => {
-    console.log(values);
-  });
+    if (values) {
+      setTableData([
+        {
+          equityToAssets: Math.abs(values.equity / values.assets).toFixed(2),
+          debtToEquity: Math.abs(values.liabilities / values.equity).toFixed(2),
+        },
+      ]);
+    }
+  }, [values]);
 
   return (
     <CustomCard title="Stability Ratios" overlayInfo="oh guess what more gemp">
-      <h1>hmm</h1>
+      <TableCard headers={headers} data={tableData} />
     </CustomCard>
   );
 };

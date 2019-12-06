@@ -483,18 +483,18 @@ module.exports = (server, db) => {
   server.get('/api/financial/equity', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const equity = calculateEquity(accounts);
-    res.json(equity);
+    res.json(parseFloat(equity));
   });
 
   server.get('/api/financial/assets', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const assets = calculateAssets(accounts);
-    res.json(assets);
+    res.json(parseFloat(assets));
   });
 
   server.get('/api/financial/liabilities', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const liabilities = calculateLiabilities(accounts);
-    res.json(liabilities);
+    res.json(parseFloat(liabilities));
   });
 };
