@@ -233,15 +233,17 @@ const TableCard = ({ headers, data }) => {
             </TableBody>
           </Table>
         </div>
-        <TablePagination
-          className={clsx(classes.pagination, 'pagination')}
-          rowsPerPageOptions={[]}
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-        />
+        {data.length > rowsPerPage && (
+          <TablePagination
+            className={clsx(classes.pagination, 'pagination')}
+            rowsPerPageOptions={[]}
+            component="div"
+            count={data.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+          />
+        )}
       </Paper>
     </div>
   );

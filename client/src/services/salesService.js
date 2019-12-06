@@ -4,5 +4,11 @@ const baseUrl = '/api/sales';
 
 const fetchTopProducts = () => axios.get(`${baseUrl}/top-products`);
 
-// eslint-disable-next-line
-export { fetchTopProducts };
+const fetchTopClients = year =>
+  axios.get(`${baseUrl}/topClients`, {
+    params: {
+      year,
+    },
+  });
+
+export { fetchTopProducts, fetchTopClients };
