@@ -46,9 +46,11 @@ module.exports = (server, db) => {
         id: productCode,
         name: products[productCode].ProductDescription,
         quantity: products[productCode].Quantity,
-        value: `${(
-          products[productCode].Quantity * products[productCode].UnitPrice
-        ).toFixed(2)} €`,
+        value: Number(
+          (
+            products[productCode].Quantity * products[productCode].UnitPrice
+          ).toFixed(2),
+        ),
       }));
 
     res.json(products);

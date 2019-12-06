@@ -40,7 +40,7 @@ TopProducts.defaultProps = {
     },
     {
       name: 'value',
-      label: 'Value',
+      label: 'Value (€)',
     },
   ],
 };

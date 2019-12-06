@@ -20,7 +20,7 @@ const Overview = () => (
         },
         {
           name: 'value',
-          label: 'Value',
+          label: 'Value (€)',
         },
       ]}
     />
