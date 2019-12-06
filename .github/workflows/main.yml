@@ -21,7 +21,7 @@ jobs:
       run: |
         npm ci
         npm ci --prefix client
-        npm run lint && npm run lint --prefix client
+        npm run lint -- --fix && npm run lint --prefix client -- --fix
       env:
         CI: true
 

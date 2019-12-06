@@ -9,11 +9,11 @@ const processTransactionLines = (lines, accountId) => {
   if (lines.CreditLine) {
     if (Array.isArray(lines.CreditLine)) {
       lines.CreditLine.forEach(credit => {
-        if (credit.AccountID == accountId) {
+        if (credit.AccountID.indexOf(accountId) === 0) {
           totalTransactionValues.totalCredit += parseFloat(credit.CreditAmount);
         }
       });
-    } else if (lines.CreditLine.AccountID == accountId) {
+    } else if (lines.CreditLine.AccountID.indexOf(accountId) === 0) {
       totalTransactionValues.totalCredit += parseFloat(
         lines.CreditLine.CreditAmount,
       );
@@ -23,11 +23,11 @@ const processTransactionLines = (lines, accountId) => {
   if (lines.DebitLine) {
     if (Array.isArray(lines.DebitLine)) {
       lines.DebitLine.forEach(debit => {
-        if (debit.AccountID == accountId) {
+        if (debit.AccountID.indexOf(accountId) === 0) {
           totalTransactionValues.totalDebit += parseFloat(debit.DebitAmount);
         }
       });
-    } else if (lines.DebitLine.AccountID == accountId) {
+    } else if (lines.DebitLine.AccountID.indexOf(accountId) === 0) {
       totalTransactionValues.totalDebit += parseFloat(
         lines.DebitLine.DebitAmount,
       );
@@ -150,6 +150,96 @@ const processJournalEntries = (entries, accountId, year, monthly) => {
   return totalLedgerValues;
 };
 
+const fetchAccount = (accounts, accountId) => {
+  if (Array.isArray(accounts)) {
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < accounts.length; i++) {
+      if (accounts[i].AccountID == accountId) {
+        return accounts[i];
+      }
+    }
+  } else if (accounts.AccountID == accountId) {
+    return accounts;
+  }
+  return null;
+};
+
+const calculateEbitda = accounts => {
+  // USING MASTER DATA
+
+  /*
+  const earningsSales = fetchAccount(accounts, 71);
+  const earningsServices = fetchAccount(accounts, 72);
+  const expensesCogs = fetchAccount(accounts, 61);
+  const expensesServices = fetchAccount(accounts, 62);
+  const expensesPersonnel = fetchAccount(accounts, 63);
+
+  console.log(earningsSales);
+  const earningsSalesValue = !earningsSales
+    ? 0
+    : parseFloat(earningsSales.ClosingCreditBalance) -
+      parseFloat(earningsSales.OpeningCreditBalance) -
+      (parseFloat(earningsSales.ClosingDebitBalance) -
+        parseFloat(earningsSales.OpeningDebitBalance));
+  const earningsServicesValue = !earningsServices
+    ? 0
+    : parseFloat(earningsServices.ClosingCreditBalance) -
+      parseFloat(earningsServices.OpeningCreditBalance) -
+      (parseFloat(earningsServices.ClosingDebitBalance) -
+        parseFloat(earningsServices.OpeningDebitBalance));
+  const expensesCogsValue = !expensesCogs
+    ? 0
+    : parseFloat(expensesCogs.ClosingDebitBalance) -
+      parseFloat(expensesCogs.OpeningDebitBalance) -
+      (parseFloat(expensesCogs.ClosingCreditBalance) -
+        parseFloat(expensesCogs.OpeningCreditBalance));
+  const expensesServicesValue = !expensesServices
+    ? 0
+    : parseFloat(expensesServices.ClosingDebitBalance) -
+      parseFloat(expensesServices.OpeningDebitBalance) -
+      (parseFloat(expensesServices.ClosingCreditBalance) -
+        parseFloat(expensesServices.OpeningCreditBalance));
+  const expensesPersonnelValue = !expensesPersonnel
+    ? 0
+    : parseFloat(expensesPersonnel.ClosingDebitBalance) -
+      parseFloat(expensesPersonnel.OpeningDebitBalance) -
+      (parseFloat(expensesPersonnel.ClosingCreditBalance) -
+        parseFloat(expensesPersonnel.OpeningCreditBalance));
+
+  return (
+    earningsSalesValue +
+    earningsServicesValue -
+    expensesServicesValue -
+    expensesPersonnelValue -
+    expensesCogsValue
+  );
+  */
+
+  // USING THE SUM OF THE TRANSACTIONS
+
+  const earningsSales = processJournalEntries(accounts, '71', 2018, false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', 2018, false); // TODO date
+  const expensesCogs = processJournalEntries(accounts, '61', 2018, false); // TODO date
+  const expensesServices = processJournalEntries(accounts, '62', 2018, false); // TODO date
+  const expensesPersonnel = processJournalEntries(accounts, '63', 2018, false); // TODO date
+
+  const earningsSalesValue =
+    earningsSales.totalCredit - earningsSales.totalDebit;
+  const earningsServicesValue =
+    earningsServices.totalCredit - earningsServices.totalDebit;
+  const expensesCogsValue = expensesCogs.totalDebit - expensesCogs.totalCredit;
+  const expensesServicesValue =
+    expensesServices.totalDebit - expensesServices.totalCredit;
+  const expensesPersonnelValue =
+    expensesPersonnel.totalDebit - expensesPersonnel.totalDebit;
+
+  return (
+    earningsSalesValue +
+    earningsServicesValue -
+    (expensesCogsValue + expensesServicesValue + expensesPersonnelValue)
+  ).toFixed(2);
+};
+
 const processAccounts = (accounts, accountId) => {
   const totalBalance = {
     totalCredit: 0,
@@ -188,6 +278,7 @@ const processAccounts = (accounts, accountId) => {
 
 module.exports = (server, db) => {
   /**
+   * @param accountId
    * @param year (required)
    * @param monthly (required) if true, returns the total credit and debit values
    * for the year; otherwise, it returns an array for the credit and debit values
@@ -214,7 +305,17 @@ module.exports = (server, db) => {
     res.json(totalJournalValues);
   });
 
+  /**
+   * @param accountId
+   * NEED TO ADD THE YEAR PARAMETER
+   */
   server.get('/api/financial/accountBalanceSheet', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const balance = processAccounts(accounts, req.query.accountId);
+    res.json(balance);
+  });
+
+  server.get('/api/financial/accounts', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
 
     if (!req.query.accountId) {
@@ -225,8 +326,35 @@ module.exports = (server, db) => {
       return;
     }
 
-    const balance = processAccounts(accounts, req.query.accountId);
+    let accountValues = fetchAccount(accounts, req.query.accountId);
+    if (!accountValues) {
+      accountValues = { error: 'No account was found for the specified ID' };
+    } else {
+      accountValues.OpeningCreditBalance = parseFloat(
+        accountValues.OpeningCreditBalance,
+      );
+      accountValues.OpeningDebitBalance = parseFloat(
+        accountValues.OpeningDebitBalance,
+      );
+      accountValues.ClosingCreditBalance = parseFloat(
+        accountValues.ClosingCreditBalance,
+      );
+      accountValues.ClosingDebitBalance = parseFloat(
+        accountValues.ClosingDebitBalance,
+      );
+    }
 
-    res.json(balance);
+    res.json(accountValues);
+  });
+
+  /**
+   * @param year NOT USED FOR NOW
+   */
+  server.get('/api/financial/ebitda', (req, res) => {
+    // USING MASTER DATA
+    // const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    // USING THE SUM OF THE TRANSACTIONS
+    const accounts = db.GeneralLedgerEntries.Journal;
+    res.json({ ebitda: calculateEbitda(accounts) });
   });
 };
