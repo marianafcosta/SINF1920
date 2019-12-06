@@ -11,7 +11,6 @@ const TopProducts = ({ headers }) => {
   useEffect(() => {
     const getTopProducts = async () => {
       const { data } = await fetchTopProducts();
-      console.log(data);
       setTableData(data);
     };
     getTopProducts();
@@ -40,8 +39,8 @@ TopProducts.defaultProps = {
       label: 'Quantity',
     },
     {
-      name: 'amount',
-      label: 'Amount',
+      name: 'value',
+      label: 'Value',
     },
   ],
 };

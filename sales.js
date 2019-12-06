@@ -46,7 +46,7 @@ module.exports = (server, db) => {
         id: productCode,
         name: products[productCode].ProductDescription,
         quantity: products[productCode].Quantity,
-        amount: `${(
+        value: `${(
           products[productCode].Quantity * products[productCode].UnitPrice
         ).toFixed(2)} €`,
       }));

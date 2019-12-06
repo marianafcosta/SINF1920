@@ -19,8 +19,8 @@ const Overview = () => (
           label: 'Name',
         },
         {
-          name: 'amount',
-          label: 'Amount',
+          name: 'value',
+          label: 'Value',
         },
       ]}
     />

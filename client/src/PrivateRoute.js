@@ -43,7 +43,7 @@ PrivateRoute.propTypes = {
   }),
   exact: PropTypes.bool,
   path: PropTypes.string.isRequired,
-  roles: PropTypes.objectOf(PropTypes.object).isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default connect(({ auth }) => ({
