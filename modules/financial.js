@@ -276,20 +276,6 @@ const processAccounts = (accounts, accountId) => {
   return totalBalance;
 };
 
-const fetchAccount = (accounts, accountId) => {
-  if (Array.isArray(accounts)) {
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < accounts.length; i++) {
-      if (accounts[i].AccountID == accountId) {
-        return accounts[i];
-      }
-    }
-  } else if (accounts.AccountID == accountId) {
-    return accounts;
-  }
-  return null;
-};
-
 const calculateEquity = accounts => {
   /*
   'equity': {
