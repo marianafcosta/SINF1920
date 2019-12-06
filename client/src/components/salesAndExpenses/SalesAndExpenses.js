@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import CustomCard from '../CustomCard/CustomCard';
-
 import KpiBarChart from '../kpiBarChart';
 
 import { fetchAccountBalance } from '../../services/financialService';
@@ -38,7 +36,8 @@ const SalesAndExpenses = () => {
   const [graphData, setGraphData] = useState(testData);
 
   const updateGraph = () => {
-    // both sales and expenses should have an equal amount of months, so you can use either one as a map
+    // both sales and expenses should have an equal amount of months,
+    // so you can use either one as a map
     if (accountBalances) {
       setGraphData(
         accountBalances.sales.totalCredit.map((monthly, index) => {
@@ -80,15 +79,15 @@ const SalesAndExpenses = () => {
   }, [accountBalances]);
 
   return (
-    <CustomCard title="Sales vs Expenses" overlay="Testing">
-      <KpiBarChart
-        bars={[
-          { dataKey: 'sales', fill: '#fffba1' },
-          { dataKey: 'expenses', fill: '#BE6E46' },
-        ]}
-        data={graphData}
-      />
-    </CustomCard>
+    <KpiBarChart
+      title="Sales vs Expenses"
+      overlay="gemp gemp gemp"
+      bars={[
+        { dataKey: 'sales', fill: '#fffba1' },
+        { dataKey: 'expenses', fill: '#BE6E46' },
+      ]}
+      data={graphData}
+    />
   );
 };
 

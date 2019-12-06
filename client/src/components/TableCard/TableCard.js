@@ -254,13 +254,6 @@ TableCard.propTypes = {
       label: PropTypes.string,
     }),
   ).isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      topProduct: PropTypes.string,
-      amount: PropTypes.number,
-    }),
-  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
 };
 export default TableCard;
