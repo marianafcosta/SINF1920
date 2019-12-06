@@ -355,6 +355,18 @@ module.exports = (server, db) => {
     // const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     // USING THE SUM OF THE TRANSACTIONS
     const accounts = db.GeneralLedgerEntries.Journal;
-    res.json({ ebitda: calculateEbitda(accounts) });
+    res.json({ ebitda: Number(calculateEbitda(accounts)) });
+  });
+
+  server.get('/api/financial/accounts-receivable', (req, res) => {
+    const accounts = db.GeneralLedgerEntries.Journal;
+    const { totalCredit, totalDebit } = processJournalEntries(
+      accounts,
+      '21',
+      2018,
+      false,
+    ); // TODO date
+
+    res.json(Number((totalDebit - totalCredit).toFixed(2)));
   });
 };

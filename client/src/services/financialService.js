@@ -16,6 +16,9 @@ const fetchEbitda = year => {
   return axios.get(`${baseUrl}/ebitda?year=${year}`);
 };
 
+const fetchAccountsReceivable = year =>
+  axios.get(`${baseUrl}/accounts-receivable?year=${year}`);
+
 const fetchAccountBalanceSheet = accountId => {
   return axios.get(`${baseUrl}/accountBalanceSheet`, {
     params: {
@@ -29,4 +32,5 @@ export {
   fetchAccountBalanceSheet,
   fetchAccount,
   fetchEbitda,
+  fetchAccountsReceivable,
 };
