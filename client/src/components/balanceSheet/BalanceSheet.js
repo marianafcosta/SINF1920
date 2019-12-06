@@ -23,8 +23,8 @@ const accountNames = [
 const headers = [
   { name: 'id', label: 'Account' },
   { name: 'description', label: 'Name' },
-  { name: 'debit', label: 'Debit' },
-  { name: 'credit', label: 'Credit' },
+  { name: 'debit', label: 'Debit (€)' },
+  { name: 'credit', label: 'Credit (€)' },
 ];
 
 const BalanceSheet = () => {
@@ -38,12 +38,8 @@ const BalanceSheet = () => {
         {
           id: accountBalance.id[0],
           description: accountBalance.id[1],
-          debit:
-            accountBalance.res.totalDebit +
-            (accountBalance.res.totalDebit === 0 ? '' : '€'),
-          credit:
-            accountBalance.res.totalCredit +
-            (accountBalance.res.totalCredit === 0 ? '' : '€'),
+          debit: accountBalance.res.totalDebit,
+          credit: accountBalance.res.totalCredit,
         },
       ]);
     }

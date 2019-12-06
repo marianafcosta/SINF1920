@@ -21,7 +21,7 @@ const TopCustomers = () => {
         topAccounts.clients.map(account => {
           return {
             id: account.id,
-            total: `${account.totalPurchased}€`,
+            total: account.totalPurchased,
             purchases: account.nPurchases,
           };
         }),

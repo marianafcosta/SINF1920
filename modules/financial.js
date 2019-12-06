@@ -255,11 +255,11 @@ const processAccounts = (accounts, accountId) => {
           account.ClosingCreditBalance - account.OpeningCreditBalance;
         const total = totalBalance.totalDebit - totalBalance.totalCredit;
         if (total > 0) {
-          totalBalance.totalDebit = parseFloat(total).toFixed(2);
-          totalBalance.totalCredit = 0;
+          totalBalance.totalDebit = Number(parseFloat(total).toFixed(2));
+          totalBalance.totalCredit = Number(0);
         } else {
-          totalBalance.totalDebit = 0;
-          totalBalance.totalCredit = parseFloat(-total).toFixed(2);
+          totalBalance.totalDebit = Number(0);
+          totalBalance.totalCredit = Number(parseFloat(-total).toFixed(2));
         }
       }
     });
