@@ -244,7 +244,6 @@ const processAccounts = (accounts, accountId) => {
   const totalBalance = {
     totalCredit: 0,
     totalDebit: 0,
-    total: 0,
   };
 
   if (Array.isArray(accounts)) {
@@ -256,11 +255,11 @@ const processAccounts = (accounts, accountId) => {
           account.ClosingCreditBalance - account.OpeningCreditBalance;
         const total = totalBalance.totalDebit - totalBalance.totalCredit;
         if (total > 0) {
-          totalBalance.totalDebit = parseFloat(total).toFixed(2);
-          totalBalance.totalCredit = 0;
+          totalBalance.totalDebit = Number(parseFloat(total).toFixed(2));
+          totalBalance.totalCredit = Number(0);
         } else {
-          totalBalance.totalDebit = 0;
-          totalBalance.totalCredit = parseFloat(-total).toFixed(2);
+          totalBalance.totalDebit = Number(0);
+          totalBalance.totalCredit = Number(parseFloat(-total).toFixed(2));
         }
       }
     });
@@ -271,6 +270,14 @@ const processAccounts = (accounts, accountId) => {
     totalBalance.totalCredit =
       accountObj.ClosingCreditBalance - accountObj.OpeningCreditBalance;
     totalBalance.total = totalBalance.totalDebit - totalBalance.totalCredit;
+    const total = totalBalance.totalDebit - totalBalance.totalCredit;
+    if (total > 0) {
+      totalBalance.totalDebit = parseFloat(total).toFixed(2);
+      totalBalance.totalCredit = 0;
+    } else {
+      totalBalance.totalDebit = 0;
+      totalBalance.totalCredit = parseFloat(-total).toFixed(2);
+    }
   }
 
   return totalBalance;
