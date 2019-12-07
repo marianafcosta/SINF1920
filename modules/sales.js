@@ -1,3 +1,46 @@
+const calculateSalesByLocation = sales => {
+  /*
+    [
+      porto: {
+        quantity:
+        netTotal:
+      },
+      lisboa: {
+        quantity:
+        netTotal:
+      },
+    ]
+  */
+
+  const salesByLocation = [];
+  const validTypes = ['FT', 'FS', 'FR', 'VD'];
+
+  if (Array.isArray(sales)) {
+    sales.forEach(sale => {
+      if (!(sale.Line.length && validTypes.includes(sale.InvoiceType))) return;
+      if (salesByLocation[sale.ShipTo.Address.City]) {
+        salesByLocation[sale.ShipTo.Address.City].quantity += 1;
+        salesByLocation[sale.ShipTo.Address.City].netTotal += parseFloat(
+          sale.DocumentTotals.NetTotal,
+        );
+      } else {
+        salesByLocation[sale.ShipTo.Address.City] = {
+          quantity: 1,
+          netTotal: parseFloat(sale.DocumentTotals.NetTotal),
+        };
+      }
+      console.log(salesByLocation);
+    });
+  } else {
+    salesByLocation[sales.ShipTo.Address.City] = {
+      quantity: 1,
+      netTotal: parseFloat(sales.DocumentTotals.NetTotal),
+    };
+  }
+  console.log(salesByLocation);
+  return salesByLocation;
+};
+
 module.exports = (server, db) => {
   server.get('/api/sales/revenue', (req, res) => {
     const salesInvoices = db.SourceDocuments.SalesInvoices.Invoice;
@@ -134,5 +177,12 @@ module.exports = (server, db) => {
 
     const sorted = clients.sort((a, b) => a.totalPurchased > b.totalPurchased);
     res.json(sorted.slice(0, 5));
+  });
+
+  server.get('/api/sales/location', (req, res) => {
+    const sales = db.SourceDocuments.SalesInvoices.Invoice;
+    const salesByLocation = calculateSalesByLocation(sales);
+    console.log(salesByLocation);
+    res.json(salesByLocation);
   });
 };
