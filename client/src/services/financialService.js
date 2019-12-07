@@ -4,7 +4,7 @@ const baseUrl = '/api/financial';
 
 const fetchAccountBalance = (accountId, year, monthly) => {
   return axios.get(
-    `${baseUrl}/accountBalance?accountId=${accountId}&year=${year}&monthly=${monthly}`,
+    `${baseUrl}/account-balance?accountId=${accountId}&year=${year}&monthly=${monthly}`,
   );
 };
 
@@ -17,11 +17,23 @@ const fetchEbitda = year => {
 };
 
 const fetchAccountBalanceSheet = accountId => {
-  return axios.get(`${baseUrl}/accountBalanceSheet`, {
+  return axios.get(`${baseUrl}/account-balance-sheet`, {
     params: {
       accountId,
     },
   });
+};
+
+const fetchWorkingCapital = () => {
+  return axios.get(`${baseUrl}/working-capital`);
+};
+
+const fetchCashRatio = () => {
+  return axios.get(`${baseUrl}/ratios/cash`);
+};
+
+const fetchCurrentRatio = () => {
+  return axios.get(`${baseUrl}/ratios/current`);
 };
 
 export {
@@ -29,4 +41,7 @@ export {
   fetchAccountBalanceSheet,
   fetchAccount,
   fetchEbitda,
+  fetchWorkingCapital,
+  fetchCashRatio,
+  fetchCurrentRatio,
 };

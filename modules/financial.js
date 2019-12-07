@@ -381,7 +381,7 @@ module.exports = (server, db) => {
    * for the year; otherwise, it returns an array for the credit and debit values
    * for each month
    */
-  server.get('/api/financial/accountBalance', (req, res) => {
+  server.get('/api/financial/account-balance', (req, res) => {
     const journalEntries = db.GeneralLedgerEntries.Journal;
 
     if (!req.query.monthly || !req.query.year || !req.query.accountId) {
@@ -406,7 +406,7 @@ module.exports = (server, db) => {
    * @param accountId
    * NEED TO ADD THE YEAR PARAMETER
    */
-  server.get('/api/financial/accountBalanceSheet', (req, res) => {
+  server.get('/api/financial/account-balance-sheet', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const balance = processAccounts(accounts, req.query.accountId);
     res.json(balance);
