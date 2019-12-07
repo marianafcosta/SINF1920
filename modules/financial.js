@@ -297,9 +297,7 @@ const calculateCurrentLiabilities = accounts => {
   currentLiabilitiesCalculations.forEach(asset => {
     sum = 0;
     asset.forEach(account => {
-      console.log(account);
       currentAccount = fetchAccount(accounts, Math.abs(account));
-      console.log(currentAccount);
       if (currentAccount) {
         if (account < 0) {
           sum -=
@@ -314,7 +312,6 @@ const calculateCurrentLiabilities = accounts => {
     });
     total += sum;
   });
-  console.log(total);
   return total;
 };
 
@@ -471,5 +468,30 @@ module.exports = (server, db) => {
   server.get('/api/financial/assets/cash', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     res.json(calculateCash(accounts));
+  });
+
+  server.get('/api/financial/ratios/cash', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const cash = calculateCash(accounts);
+    const currentLiabilities = calculateCurrentLiabilities(accounts);
+    res.json(Number(Math.abs(cash / currentLiabilities).toFixed(2)));
+  });
+
+  server.get('/api/financial/ratios/current', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const currentAssets = calculateCurrentAssets(accounts);
+    const currentLiabilities = calculateCurrentLiabilities(accounts);
+    res.json(Number(Math.abs(currentAssets / currentLiabilities).toFixed(2)));
+  });
+
+  server.get('/api/financial/working-capital', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const currentAssets = calculateCurrentAssets(accounts);
+    const currentLiabilities = calculateCurrentLiabilities(accounts);
+    res.json(
+      Number(
+        (Math.abs(currentAssets) - Math.abs(currentLiabilities)).toFixed(2),
+      ),
+    );
   });
 };
