@@ -5,8 +5,8 @@ import KpiBarChart from '../kpiBarChart';
 import { fetchAccountBalance } from '../../services/financialService';
 
 const accountCodes = {
-  sales: '7111', // FOR TEST PURPOSES; in reality, all account codes that start with 71 are related to expenses
-  expenses: '61611', // FOR TEST PURPOSES; in reality, all account codes that start with 61 are related to revenue
+  sales: '71',
+  expenses: '61',
 };
 
 const monthNames = [
@@ -54,14 +54,14 @@ const SalesAndExpenses = () => {
   const fetchData = async () => {
     const salesResponse = await fetchAccountBalance(
       accountCodes.sales,
-      2018,
+      2019, // TODO
       true,
-    ); // TODO
+    );
     const expensesResponse = await fetchAccountBalance(
       accountCodes.expenses,
-      2018,
+      2019, // TODO
       true,
-    ); // TODO
+    );
     setAccountBalances({
       sales: salesResponse.data,
       expenses: expensesResponse.data,
