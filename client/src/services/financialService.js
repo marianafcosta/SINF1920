@@ -27,9 +27,22 @@ const fetchAccountBalanceSheet = accountId => {
   });
 };
 
+const fetchLiabilities = () => {
+  return axios.get(`${baseUrl}/liabilities`, {});
+};
+const fetchEquity = () => {
+  return axios.get(`${baseUrl}/equity`, {});
+};
+const fetchAssets = () => {
+  return axios.get(`${baseUrl}/assets`, {});
+};
+
 export {
   fetchAccountBalance,
   fetchAccountBalanceSheet,
+  fetchLiabilities,
+  fetchEquity,
+  fetchAssets,
   fetchAccount,
   fetchEbitda,
   fetchAccountsReceivable,
