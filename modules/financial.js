@@ -154,6 +154,10 @@ const fetchAccount = (accounts, accountId) => {
   if (Array.isArray(accounts)) {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < accounts.length; i++) {
+      console.log('fetchaccount');
+      console.log(accounts[i]);
+      console.log(accountId);
+      console.log(accounts[i].AccountID);
       if (accounts[i].AccountID == accountId) {
         return accounts[i];
       }
@@ -217,11 +221,11 @@ const calculateEbitda = accounts => {
 
   // USING THE SUM OF THE TRANSACTIONS
 
-  const earningsSales = processJournalEntries(accounts, '71', 2018, false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', 2018, false); // TODO date
-  const expensesCogs = processJournalEntries(accounts, '61', 2018, false); // TODO date
-  const expensesServices = processJournalEntries(accounts, '62', 2018, false); // TODO date
-  const expensesPersonnel = processJournalEntries(accounts, '63', 2018, false); // TODO date
+  const earningsSales = processJournalEntries(accounts, '71', 2019, false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', 2019, false); // TODO date
+  const expensesCogs = processJournalEntries(accounts, '61', 2019, false); // TODO date
+  const expensesServices = processJournalEntries(accounts, '62', 2019, false); // TODO date
+  const expensesPersonnel = processJournalEntries(accounts, '63', 2019, false); // TODO date
 
   const earningsSalesValue =
     earningsSales.totalCredit - earningsSales.totalDebit;
@@ -274,6 +278,102 @@ const processAccounts = (accounts, accountId) => {
   }
 
   return totalBalance;
+};
+
+const calculateCurrentLiabilities = accounts => {
+  const currentLiabilitiesCalculations = [
+    [221, 222, 225],
+    [218, 27],
+    [24],
+    [264, 265, 268],
+    [25],
+    [231, 238, 2711, 2712, 2722, 278],
+    [282, 283],
+    [14],
+  ];
+  let total = 0;
+  let currentAccount;
+  let sum;
+  currentLiabilitiesCalculations.forEach(asset => {
+    sum = 0;
+    asset.forEach(account => {
+      console.log(account);
+      currentAccount = fetchAccount(accounts, Math.abs(account));
+      console.log(currentAccount);
+      if (currentAccount) {
+        if (account < 0) {
+          sum -=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        } else {
+          sum +=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        }
+      }
+    });
+    total += sum;
+  });
+  console.log(total);
+  return total;
+};
+
+const calculateCurrentAssets = accounts => {
+  const currentAssetsCalculations = [
+    [32, 33, 34, 35, 36, 39],
+    [211, 212, -219],
+    [228, -229, 2713, 279],
+    [24],
+    [263, 268, -269],
+    [232, 238, -239, 2721, 278, -279],
+    [281],
+    [14],
+    [11, 12, 13],
+  ];
+
+  let total = 0;
+  let currentAccount;
+  let sum;
+  currentAssetsCalculations.forEach(asset => {
+    sum = 0;
+    asset.forEach(account => {
+      currentAccount = fetchAccount(accounts, Math.abs(account));
+      if (currentAccount) {
+        if (account < 0) {
+          sum -=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        } else {
+          sum +=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        }
+      }
+    });
+    total += sum;
+  });
+  return total;
+};
+
+const calculateCash = accounts => {
+  const cashCalculations = [11, 12, 13];
+  let total = 0;
+  let currentAccount;
+  cashCalculations.forEach(account => {
+    currentAccount = fetchAccount(accounts, Math.abs(account));
+    if (currentAccount) {
+      if (account < 0) {
+        total -=
+          currentAccount.ClosingDebitBalance -
+          currentAccount.ClosingCreditBalance;
+      } else {
+        total +=
+          currentAccount.ClosingDebitBalance -
+          currentAccount.ClosingCreditBalance;
+      }
+    }
+  });
+  return total;
 };
 
 module.exports = (server, db) => {
@@ -356,5 +456,20 @@ module.exports = (server, db) => {
     // USING THE SUM OF THE TRANSACTIONS
     const accounts = db.GeneralLedgerEntries.Journal;
     res.json({ ebitda: calculateEbitda(accounts) });
+  });
+
+  server.get('/api/financial/liabilities/current', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json(calculateCurrentLiabilities(accounts));
+  });
+
+  server.get('/api/financial/assets/current', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json(calculateCurrentAssets(accounts));
+  });
+
+  server.get('/api/financial/assets/cash', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json(calculateCash(accounts));
   });
 };
