@@ -239,7 +239,7 @@ const TableCard = ({ headers, data }) => {
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
+              {emptyRows > 0 && data.length > rowsPerPage && (
                 <TableRow
                   style={{ height: 43 * emptyRows, backgroundColor: '#262626' }}
                 >
