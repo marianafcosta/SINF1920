@@ -21,7 +21,6 @@ const UnitsSold = ({ id }) => {
       title="Units Sold"
       overlayInfo="something something gemp something"
       value={`${unitsSold} (${value} €)`}
-      money={false}
     />
   );
 };
