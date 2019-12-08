@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import KpiValue from '../../kpiValue';
 
 import { fetchProductUnitsSold } from '../../../services/productService';
@@ -23,6 +24,10 @@ const UnitsSold = ({ id }) => {
       value={`${unitsSold} (${value} €)`}
     />
   );
+};
+
+UnitsSold.propTypes = {
+  id: PropTypes.string.isRequired,
 };
 
 export default UnitsSold;

@@ -19,7 +19,7 @@ const SalesLocation = () => {
       setTableData(
         Object.keys(locations).map(location => {
           return {
-            location: location,
+            location,
             quantity: locations[location].quantity,
             netTotal: locations[location].netTotal,
           };
@@ -29,7 +29,7 @@ const SalesLocation = () => {
   };
 
   const fetchLocations = async () => {
-    const locationsResponse = await fetchSalesByLocation(2018); //TODO
+    const locationsResponse = await fetchSalesByLocation(2018); // TODO
     const locationsData = locationsResponse.data;
     console.log(locationsResponse.data);
     setLocations(locationsData);
