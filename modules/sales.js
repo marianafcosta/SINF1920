@@ -12,7 +12,7 @@ const calculateSalesByLocation = sales => {
     ]
   */
 
-  const salesByLocation = [];
+  const salesByLocation = {};
   const validTypes = ['FT', 'FS', 'FR', 'VD'];
 
   if (Array.isArray(sales)) {
@@ -29,7 +29,6 @@ const calculateSalesByLocation = sales => {
           netTotal: parseFloat(sale.DocumentTotals.NetTotal),
         };
       }
-      console.log(salesByLocation);
     });
   } else {
     salesByLocation[sales.ShipTo.Address.City] = {
@@ -37,7 +36,6 @@ const calculateSalesByLocation = sales => {
       netTotal: parseFloat(sales.DocumentTotals.NetTotal),
     };
   }
-  console.log(salesByLocation);
   return salesByLocation;
 };
 
@@ -182,7 +180,6 @@ module.exports = (server, db) => {
   server.get('/api/sales/location', (req, res) => {
     const sales = db.SourceDocuments.SalesInvoices.Invoice;
     const salesByLocation = calculateSalesByLocation(sales);
-    console.log(salesByLocation);
     res.json(salesByLocation);
   });
 };
