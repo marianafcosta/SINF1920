@@ -55,7 +55,7 @@ const AppRouter = ({ isAuthenticated, user }) => (
         <Sales user={user} />
       </PrivateRoute>
       <Route exact path="/login">
-        {isAuthenticated ? redirectTo(user.role) : <SignIn />}
+        {user ? redirectTo(user.role) : <SignIn />}
       </Route>
     </Switch>
   </Router>
