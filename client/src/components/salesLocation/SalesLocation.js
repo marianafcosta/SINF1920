@@ -30,9 +30,9 @@ const SalesLocation = () => {
 
   const fetchLocations = async () => {
     const locationsResponse = await fetchSalesByLocation(2018); //TODO
-    const locations = locationsResponse.data;
+    const locationsData = locationsResponse.data;
     console.log(locationsResponse.data);
-    setLocations(locations);
+    setLocations(locationsData);
   };
 
   useEffect(() => {
