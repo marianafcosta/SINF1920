@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -215,9 +216,18 @@ const TableCard = ({ headers, data }) => {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      {headers.map(({ name }) => (
+                      {headers.map(({ name, link }) => (
                         <TableCell key={name} className={classes.cells}>
-                          {row[name]}
+                          {link ? (
+                            <Link
+                              style={{ color: '#fffba1' }}
+                              to={`/products/${row[name]}`}
+                            >
+                              {row[name]}
+                            </Link>
+                          ) : (
+                            <>{row[name]}</>
+                          )}
                         </TableCell>
                       ))}
                     </TableRow>

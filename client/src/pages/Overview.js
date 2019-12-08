@@ -13,6 +13,7 @@ const Overview = () => (
         {
           name: 'id',
           label: 'ID',
+          link: true,
         },
         {
           name: 'name',
