@@ -6,7 +6,7 @@ import SalesLocation from '../components/salesLocation';
 import GrossProfitMargin from '../components/grossProfitMargin';
 
 const Sales = () => (
-  <Layout>
+  <Layout pageName="Sales">
     <TopProducts />
     <TopCustomers />
     <SalesLocation />

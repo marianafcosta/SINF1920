@@ -21,6 +21,7 @@ const AccountsReceivable = () => {
       title="Accounts Receivable"
       overlayInfo="something something gemp something"
       value={accountsReceivable}
+      unit="€"
     />
   );
 };

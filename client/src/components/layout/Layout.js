@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -140,7 +139,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Layout = ({ children, user }) => {
+const Layout = ({ children, user, pageName }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -150,10 +149,6 @@ const Layout = ({ children, user }) => {
     setOpen(false);
   };
 
-  const location = useLocation();
-  let pageName = location.pathname.substr(1);
-  pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
-  pageName = pageName || 'Overview';
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -210,6 +205,7 @@ Layout.defaultProps = {
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   user: PropTypes.shape({ role: PropTypes.string }),
+  pageName: PropTypes.string.isRequired,
 };
 
 export default connect(({ auth }) => ({

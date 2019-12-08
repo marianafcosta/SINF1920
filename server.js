@@ -23,6 +23,7 @@ let primaveraRequests;
 
 const SalesController = require('./modules/sales');
 const FinancialController = require('./modules/financial');
+const ProductController = require('./modules/product');
 // eslint-disable-next-line no-underscore-dangle
 const db = router.db.__wrapped__;
 
@@ -59,6 +60,7 @@ loginPrimavera();
 
 SalesController(server, db);
 FinancialController(server, db);
+ProductController(server, db);
 
 // @route   POST api/auth
 // @desc    Auth user
