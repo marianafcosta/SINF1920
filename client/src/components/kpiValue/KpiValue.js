@@ -25,6 +25,7 @@ KpiValue.propTypes = {
   unit: PropTypes.string,
   title: PropTypes.string.isRequired,
   overlayInfo: PropTypes.string.isRequired,
+  money: PropTypes.bool,
 };
 
 export default KpiValue;
