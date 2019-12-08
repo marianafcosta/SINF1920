@@ -7,7 +7,7 @@ import { fetchSalesByLocation } from '../../services/salesService';
 const headers = [
   { name: 'location', label: 'Location' },
   { name: 'quantity', label: 'Quantity' },
-  { name: 'netTotal', label: 'Net total' },
+  { name: 'netTotal', label: 'Net total (€)' },
 ];
 
 const SalesLocation = () => {
