@@ -28,7 +28,7 @@ const redirectTo = role => {
   return <Redirect to={paths[role]} />;
 };
 
-const AppRouter = ({ isAuthenticated, user }) => (
+const AppRouter = ({ user }) => (
   <Router>
     <Switch>
       <PrivateRoute exact path="/" roles={['CEO']}>
@@ -55,25 +55,22 @@ const AppRouter = ({ isAuthenticated, user }) => (
         <Sales user={user} />
       </PrivateRoute>
       <Route exact path="/login">
-        {isAuthenticated ? redirectTo(user.role) : <SignIn />}
+        {user ? redirectTo(user.role) : <SignIn />}
       </Route>
     </Switch>
   </Router>
 );
 
 AppRouter.defaultProps = {
-  isAuthenticated: null,
   user: null,
 };
 
 AppRouter.propTypes = {
-  isAuthenticated: PropTypes.bool,
   user: PropTypes.shape({
     role: PropTypes.string,
   }),
 };
 
 export default connect(({ auth }) => ({
-  isAuthenticated: auth.isAuthenticated,
   user: auth.user,
 }))(AppRouter);

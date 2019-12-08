@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
@@ -96,11 +96,12 @@ const SignInForm = ({ isAuthenticated, doLogin, error, user }) => {
   const [msg, setMsg] = useState(null);
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     setMsg(error.id === 'LOGIN_FAIL' ? error.msg : null);
 
-    if (isAuthenticated) {
+    if (isAuthenticated && user) {
       const paths = {
         CEO: '/',
         'Head of Finances': '/finances',
@@ -109,9 +110,11 @@ const SignInForm = ({ isAuthenticated, doLogin, error, user }) => {
         'Inventory Manager': '/inventory',
       };
 
-      history.push(paths[user.role]);
+      if (location.state && location.state.from)
+        history.push(location.state.from);
+      else history.push(paths[user.role]);
     }
-  }, [error, history, isAuthenticated, user]);
+  }, [error, history, location, isAuthenticated, user]);
 
   const onSubmit = e => {
     e.preventDefault();

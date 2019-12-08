@@ -7,14 +7,26 @@ import {
   LOGOUT_SUCCESS,
 } from '../actions/types';
 
-const initialState = {
-  token: localStorage.getItem('eec-token'),
-  isAuthenticated: null,
-  isLoading: false,
-  user: null,
+const getInitialState = () => {
+  const token = localStorage.getItem('eec-token');
+  const user = JSON.parse(localStorage.getItem('eec-user'));
+  if (token) {
+    return {
+      isAuthenticated: true,
+      token,
+      user,
+      isLoading: false,
+    };
+  }
+  return {
+    isAuthenticated: false,
+    token: '',
+    user: null,
+    isLoading: false,
+  };
 };
 
-export default function(state = initialState, action) {
+export default function(state = getInitialState(), action) {
   switch (action.type) {
     case USER_LOADING:
       return {
@@ -30,6 +42,7 @@ export default function(state = initialState, action) {
       };
     case LOGIN_SUCCESS:
       localStorage.setItem('eec-token', action.payload.token);
+      localStorage.setItem('eec-user', JSON.stringify(action.payload.user));
       return {
         ...state,
         user: action.payload.user,
@@ -40,6 +53,7 @@ export default function(state = initialState, action) {
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
       localStorage.removeItem('eec-token');
+      localStorage.removeItem('eec-user');
       return {
         ...state,
         token: null,
