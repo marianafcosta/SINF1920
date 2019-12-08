@@ -51,6 +51,10 @@ const fetchAssets = () => {
   return axios.get(`${baseUrl}/assets`, {});
 };
 
+const fetchGrossProfitMargin = () => {
+  return axios.get(`${baseUrl}/gross-profit-margin`, {});
+};
+
 export {
   fetchAccountBalance,
   fetchAccountBalanceSheet,
@@ -63,4 +67,5 @@ export {
   fetchCashRatio,
   fetchCurrentRatio,
   fetchAccountsReceivable,
+  fetchGrossProfitMargin,
 };
