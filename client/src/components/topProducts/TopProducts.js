@@ -29,6 +29,7 @@ TopProducts.defaultProps = {
     {
       name: 'id',
       label: 'ID',
+      link: true,
     },
     {
       name: 'name',
