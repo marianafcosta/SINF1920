@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../components/layout/Layout';
 
 const Inventory = () => (
-  <Layout>
+  <Layout pageName="Inventory">
     <h1>HI</h1>
   </Layout>
 );

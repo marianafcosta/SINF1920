@@ -5,7 +5,7 @@ import BalanceSheet from '../components/balanceSheet';
 import TopProducts from '../components/topProducts';
 
 const Overview = () => (
-  <Layout>
+  <Layout pageName="Overview">
     <SalesExpenses />
     <BalanceSheet />
     <TopProducts
