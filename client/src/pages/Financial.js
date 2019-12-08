@@ -7,7 +7,7 @@ import AccountsReceivable from '../components/accountsReceivable';
 import LiquidityRatios from '../components/liquidityRatios';
 
 const Financial = () => (
-  <Layout>
+  <Layout pageName="Financial">
     <StabilityRatios />
     <Ebitda />
     <AccountsReceivable />

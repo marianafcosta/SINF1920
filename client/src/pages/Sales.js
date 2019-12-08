@@ -5,7 +5,7 @@ import TopCustomers from '../components/topCustomers';
 import SalesLocation from '../components/salesLocation';
 
 const Sales = () => (
-  <Layout>
+  <Layout pageName="Sales">
     <TopProducts />
     <TopCustomers />
     <SalesLocation />
