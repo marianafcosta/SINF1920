@@ -620,6 +620,17 @@ const calculateCash = accounts => {
   return total;
 };
 
+const calculateGrossProfitMargin = journal => {
+  const revenueFromSales = processJournalEntries(journal, '71', 2018, false); // TODO year
+  const cogs = processJournalEntries(journal, '61', 2018, false);
+  return (
+    (revenueFromSales.totalCredit -
+      revenueFromSales.totalDebit -
+      (cogs.totalDebit - cogs.totalCredit)) /
+    (revenueFromSales.totalCredit - revenueFromSales.totalDebit)
+  );
+};
+
 module.exports = (server, db) => {
   /**
    * @param accountId
@@ -770,5 +781,11 @@ module.exports = (server, db) => {
         (Math.abs(currentAssets) - Math.abs(currentLiabilities)).toFixed(2),
       ),
     );
+  });
+
+  server.get('/api/financial/gross-profit-margin', (req, res) => {
+    const journal = db.GeneralLedgerEntries.Journal;
+    const grossProfit = calculateGrossProfitMargin(journal);
+    res.json(grossProfit);
   });
 };
