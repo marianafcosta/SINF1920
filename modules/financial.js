@@ -318,19 +318,25 @@ const calculateEquity = accounts => {
   let currentAccount;
   ownersEquityAccounts.forEach(account => {
     currentAccount = fetchAccount(accounts, account);
-    ownersEquityAccountsResults[account] =
-      currentAccount.ClosingDebitBalance - currentAccount.ClosingCreditBalance; // ??
+    if (currentAccount) {
+      ownersEquityAccountsResults[account] =
+        currentAccount.ClosingDebitBalance -
+        currentAccount.ClosingCreditBalance; // ??
+    }
   });
   const realizedCapital =
-    ownersEquityAccountsResults[51] -
-    ownersEquityAccountsResults[261] -
-    ownersEquityAccountsResults[262];
+    (ownersEquityAccountsResults[51] ? ownersEquityAccountsResults[51] : 0) -
+    (ownersEquityAccountsResults[261] ? ownersEquityAccountsResults[261] : 0) -
+    (ownersEquityAccountsResults[262] ? ownersEquityAccountsResults[262] : 0);
   ownersEquityAccountsResults = ownersEquityAccountsResults.filter(
     item => item !== 51 && item !== 261 && item !== 262,
   );
   const totalCapital =
     realizedCapital +
-    ownersEquityAccountsResults.reduce((acc, curr) => acc + curr, 0);
+    ownersEquityAccountsResults.reduce(
+      (acc, curr) => (acc + curr ? curr : 0),
+      0,
+    );
   return totalCapital;
 };
 
@@ -386,14 +392,16 @@ const calculateAssets = accounts => {
     sum = 0;
     asset.forEach(account => {
       currentAccount = fetchAccount(accounts, Math.abs(account));
-      if (account < 0) {
-        sum -=
-          currentAccount.ClosingDebitBalance -
-          currentAccount.ClosingCreditBalance;
-      } else {
-        sum +=
-          currentAccount.ClosingDebitBalance -
-          currentAccount.ClosingCreditBalance;
+      if (currentAccount) {
+        if (account < 0) {
+          sum -=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        } else {
+          sum +=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        }
       }
     });
     total += sum;

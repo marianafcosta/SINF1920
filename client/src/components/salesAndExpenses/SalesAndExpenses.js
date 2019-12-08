@@ -54,12 +54,12 @@ const SalesAndExpenses = () => {
   const fetchData = async () => {
     const salesResponse = await fetchAccountBalance(
       accountCodes.sales,
-      2019, // TODO
+      2018, // TODO
       true,
     );
     const expensesResponse = await fetchAccountBalance(
       accountCodes.expenses,
-      2019, // TODO
+      2018, // TODO
       true,
     );
     setAccountBalances({
