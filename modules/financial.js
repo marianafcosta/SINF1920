@@ -217,11 +217,11 @@ const calculateEbitda = accounts => {
 
   // USING THE SUM OF THE TRANSACTIONS
 
-  const earningsSales = processJournalEntries(accounts, '71', 2018, false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', 2018, false); // TODO date
-  const expensesCogs = processJournalEntries(accounts, '61', 2018, false); // TODO date
-  const expensesServices = processJournalEntries(accounts, '62', 2018, false); // TODO date
-  const expensesPersonnel = processJournalEntries(accounts, '63', 2018, false); // TODO date
+  const earningsSales = processJournalEntries(accounts, '71', 2019, false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', 2019, false); // TODO date
+  const expensesCogs = processJournalEntries(accounts, '61', 2019, false); // TODO date
+  const expensesServices = processJournalEntries(accounts, '62', 2019, false); // TODO date
+  const expensesPersonnel = processJournalEntries(accounts, '63', 2019, false); // TODO date
 
   const earningsSalesValue =
     earningsSales.totalCredit - earningsSales.totalDebit;
@@ -527,6 +527,99 @@ const calculateLiabilities = accounts => {
   return nonCurrentLiability + currentLiability;
 };
 
+const calculateCurrentLiabilities = accounts => {
+  const currentLiabilitiesCalculations = [
+    [221, 222, 225],
+    [218, 27],
+    [24],
+    [264, 265, 268],
+    [25],
+    [231, 238, 2711, 2712, 2722, 278],
+    [282, 283],
+    [14],
+  ];
+  let total = 0;
+  let currentAccount;
+  let sum;
+  currentLiabilitiesCalculations.forEach(asset => {
+    sum = 0;
+    asset.forEach(account => {
+      currentAccount = fetchAccount(accounts, Math.abs(account));
+      if (currentAccount) {
+        if (account < 0) {
+          sum -=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        } else {
+          sum +=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        }
+      }
+    });
+    total += sum;
+  });
+  return total;
+};
+
+const calculateCurrentAssets = accounts => {
+  const currentAssetsCalculations = [
+    [32, 33, 34, 35, 36, 39],
+    [211, 212, -219],
+    [228, -229, 2713, 279],
+    [24],
+    [263, 268, -269],
+    [232, 238, -239, 2721, 278, -279],
+    [281],
+    [14],
+    [11, 12, 13],
+  ];
+
+  let total = 0;
+  let currentAccount;
+  let sum;
+  currentAssetsCalculations.forEach(asset => {
+    sum = 0;
+    asset.forEach(account => {
+      currentAccount = fetchAccount(accounts, Math.abs(account));
+      if (currentAccount) {
+        if (account < 0) {
+          sum -=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        } else {
+          sum +=
+            currentAccount.ClosingDebitBalance -
+            currentAccount.ClosingCreditBalance;
+        }
+      }
+    });
+    total += sum;
+  });
+  return total;
+};
+
+const calculateCash = accounts => {
+  const cashCalculations = [11, 12, 13];
+  let total = 0;
+  let currentAccount;
+  cashCalculations.forEach(account => {
+    currentAccount = fetchAccount(accounts, Math.abs(account));
+    if (currentAccount) {
+      if (account < 0) {
+        total -=
+          currentAccount.ClosingDebitBalance -
+          currentAccount.ClosingCreditBalance;
+      } else {
+        total +=
+          currentAccount.ClosingDebitBalance -
+          currentAccount.ClosingCreditBalance;
+      }
+    }
+  });
+  return total;
+};
+
 module.exports = (server, db) => {
   /**
    * @param accountId
@@ -535,7 +628,7 @@ module.exports = (server, db) => {
    * for the year; otherwise, it returns an array for the credit and debit values
    * for each month
    */
-  server.get('/api/financial/accountBalance', (req, res) => {
+  server.get('/api/financial/account-balance', (req, res) => {
     const journalEntries = db.GeneralLedgerEntries.Journal;
 
     if (!req.query.monthly || !req.query.year || !req.query.accountId) {
@@ -560,7 +653,7 @@ module.exports = (server, db) => {
    * @param accountId
    * NEED TO ADD THE YEAR PARAMETER
    */
-  server.get('/api/financial/accountBalanceSheet', (req, res) => {
+  server.get('/api/financial/account-balance-sheet', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const balance = processAccounts(accounts, req.query.accountId);
     res.json(balance);
@@ -637,5 +730,45 @@ module.exports = (server, db) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const liabilities = calculateLiabilities(accounts);
     res.json(parseFloat(liabilities));
+  });
+
+  server.get('/api/financial/liabilities/current', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json(calculateCurrentLiabilities(accounts));
+  });
+
+  server.get('/api/financial/assets/current', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json(calculateCurrentAssets(accounts));
+  });
+
+  server.get('/api/financial/assets/cash', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json(calculateCash(accounts));
+  });
+
+  server.get('/api/financial/ratios/cash', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const cash = calculateCash(accounts);
+    const currentLiabilities = calculateCurrentLiabilities(accounts);
+    res.json(Number(Math.abs(cash / currentLiabilities).toFixed(2)));
+  });
+
+  server.get('/api/financial/ratios/current', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const currentAssets = calculateCurrentAssets(accounts);
+    const currentLiabilities = calculateCurrentLiabilities(accounts);
+    res.json(Number(Math.abs(currentAssets / currentLiabilities).toFixed(2)));
+  });
+
+  server.get('/api/financial/working-capital', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const currentAssets = calculateCurrentAssets(accounts);
+    const currentLiabilities = calculateCurrentLiabilities(accounts);
+    res.json(
+      Number(
+        (Math.abs(currentAssets) - Math.abs(currentLiabilities)).toFixed(2),
+      ),
+    );
   });
 };
