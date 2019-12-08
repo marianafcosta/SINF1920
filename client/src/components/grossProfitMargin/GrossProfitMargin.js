@@ -17,7 +17,7 @@ const GrossProfitMargin = () => {
 
   return (
     <KpiValue
-      value={margin ? `${margin * 100}` : '0'}
+      value={margin ? `${(margin * 100).toFixed(2)}` : '0'}
       unit="%"
       title="Gross profit margin"
       overlayInfo="akjfnlakdjhfals"
