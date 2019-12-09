@@ -1,13 +1,4 @@
 module.exports = (server, db) => {
-  server.get('/api/products/:id', (req, res) => {
-    const { id } = req.params;
-    const product = db.MasterFiles.Product.find(
-      prod => prod.ProductCode === id,
-    );
-
-    res.json(product);
-  });
-
   server.get('/api/products/:id/units-sold', (req, res) => {
     const { id } = req.params;
     const invoices = db.SourceDocuments.SalesInvoices.Invoice;

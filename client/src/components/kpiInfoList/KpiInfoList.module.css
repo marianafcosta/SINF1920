@@ -1,0 +1,28 @@
+.list {
+  list-style-type: none;
+  color: white;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  align-items: center;
+}
+
+.listItem *:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+
+.listItem .description {
+  margin: 0;
+}
+
+.listItem .label {
+  padding: 0.3em;
+  background-color: #fffba1;
+  color: #262626;
+  border-radius: 50px;
+  margin-right: 0.5em;
+}
