@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import KpiBarChart from '../kpiBarChart';
 import { fetchProductUnitsSold } from '../../services/productService';
@@ -50,6 +51,10 @@ const ProductSales = ({ productId }) => {
       data={graphData}
     />
   );
+};
+
+ProductSales.propTypes = {
+  productId: PropTypes.string.isRequired,
 };
 
 export default ProductSales;
