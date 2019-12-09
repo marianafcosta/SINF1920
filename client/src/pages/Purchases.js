@@ -1,9 +1,10 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
+import ProductBacklog from '../components/purchases/productBacklog';
 
 const Purchases = () => (
   <Layout pageName="Purchases">
-    <h1>HI</h1>
+    <ProductBacklog />
   </Layout>
 );
 
