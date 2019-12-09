@@ -142,6 +142,14 @@ const processProductStock = product => {
   return totalStock;
 };
 
+const processProductInfo = product => {
+  return {
+    barcode: product.barcode,
+    description: product.description,
+    code: product.itemKey,
+  };
+};
+
 // TODO auth
 server.get('/api/products/:id/units-in-stock', (req, res) => {
   const { id } = req.params;
@@ -199,6 +207,32 @@ server.get('/api/inventory/products', (req, res) => {
       products = processProducts(JSON.parse(body));
     }
     res.json(products);
+  });
+});
+
+// TODO auth
+server.get('/api/products/:id', (req, res) => {
+  const { id } = req.params;
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/materialscore/materialsitems/${id}`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  console.log(id);
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    let productInfo;
+    if (!JSON.parse(body).message) {
+      productInfo = processProductInfo(JSON.parse(body));
+    }
+    console.log(productInfo);
+    res.json(productInfo);
   });
 });
 
