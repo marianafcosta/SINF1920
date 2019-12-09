@@ -4,5 +4,6 @@ const baseUrl = '/api/inventory';
 
 const fetchProducts = () => axios.get(`${baseUrl}/products`);
 
-// eslint-disable-next-line
-export { fetchProducts };
+const fetchStock = () => axios.get(`${baseUrl}/stock`);
+
+export { fetchProducts, fetchStock };

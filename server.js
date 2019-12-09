@@ -189,6 +189,17 @@ const processProducts = materials =>
     ),
   }));
 
+const processStock = materials =>
+  materials.reduce(
+    (accum, val) =>
+      accum +
+      val.materialsItemWarehouses.reduce(
+        (accum2, val2) => accum2 + val2.inventoryBalance.amount,
+        0,
+      ),
+    0,
+  );
+
 server.get('/api/inventory/products', (req, res) => {
   const options = {
     method: 'GET',
@@ -207,6 +218,27 @@ server.get('/api/inventory/products', (req, res) => {
       products = processProducts(JSON.parse(body));
     }
     res.json(products);
+  });
+});
+
+server.get('/api/inventory/stock', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/materialsCore/materialsItems`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    let stock = 0;
+    if (!JSON.parse(body).message) {
+      stock = processStock(JSON.parse(body));
+    }
+    res.json(stock);
   });
 });
 
