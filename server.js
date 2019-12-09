@@ -134,6 +134,39 @@ server.get('/api/expenses', auth, (req, res) => {
   });
 });
 
+const processProductStock = product => {
+  console.log(product);
+  const totalStock = product.materialsItemWarehouses.reduce((acc, curr) => {
+    return acc + curr.stockBalance;
+  }, 0);
+  return totalStock;
+};
+
+// TODO auth
+server.get('/api/products/:id/units-in-stock', (req, res) => {
+  const { id } = req.params;
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/materialscore/materialsitems/${id}`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  console.log(primaveraRequests);
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    let totalStock = 0;
+    if (!JSON.parse(body).message) {
+      totalStock = processProductStock(JSON.parse(body));
+    }
+    res.json(totalStock);
+  });
+});
+
 // Set static folder in production
 if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {

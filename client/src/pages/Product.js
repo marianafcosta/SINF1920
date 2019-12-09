@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Layout from '../components/layout/Layout';
-import UnitsSold from '../components/Product/unitsSold';
 
 import { fetchProductInfo } from '../services/productService';
+import UnitsInStock from '../components/unitsInStock';
+import UnitsSold from '../components/Product/unitsSold';
 
 const Product = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const Product = () => {
       pageName={`Product ${product ? `- ${product.ProductDescription}` : ''}`}
     >
       <UnitsSold id={id} />
+      <UnitsInStock productId={id} />
     </Layout>
   );
 };
