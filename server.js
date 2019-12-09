@@ -167,6 +167,38 @@ server.get('/api/products/:id/units-in-stock', (req, res) => {
   });
 });
 
+const processStock = materials =>
+  materials.reduce(
+    (accum, val) =>
+      accum +
+      val.materialsItemWarehouses.reduce(
+        (accum2, val2) => accum2 + val2.inventoryBalance.amount,
+        0,
+      ),
+    0,
+  );
+
+server.get('/api/inventory/stock', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/materialsCore/materialsItems`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    let stock = 0;
+    if (!JSON.parse(body).message) {
+      stock = processStock(JSON.parse(body));
+    }
+    res.json(stock);
+  });
+});
+
 // Set static folder in production
 if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {
