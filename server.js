@@ -200,6 +200,16 @@ const processStock = materials =>
     0,
   );
 
+const processProductAveragePVP = product => {
+  console.log(product);
+  const { priceListLines } = product;
+  const pvpSum = priceListLines.reduce(
+    (acc, curr) => acc + curr.priceAmount.amount,
+    0,
+  );
+  return Number((pvpSum / priceListLines.length).toFixed(2));
+};
+
 server.get('/api/inventory/products', (req, res) => {
   const options = {
     method: 'GET',
@@ -313,6 +323,30 @@ server.get('/api/products/:id', (req, res) => {
     }
     console.log(productInfo);
     res.json(productInfo);
+  });
+});
+
+server.get('/api/products/:id/average-pvp', (req, res) => {
+  const { id } = req.params;
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/salescore/salesitems/${id}`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  console.log(id);
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    let averagePVP;
+    if (!JSON.parse(body).message) {
+      averagePVP = processProductAveragePVP(JSON.parse(body));
+    }
+    res.json(averagePVP);
   });
 });
 
