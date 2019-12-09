@@ -20,7 +20,7 @@ const UnitsInStock = ({ productId }) => {
 
   return (
     <KpiValue
-      value={unitsInStock ? unitsInStock : 0}
+      value={unitsInStock || 0}
       title="Units in stock"
       unit="units"
       overlayInfo="AHHHHHHHHHH"

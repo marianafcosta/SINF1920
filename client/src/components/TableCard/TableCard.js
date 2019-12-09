@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
+import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -181,6 +182,20 @@ const TableCard = ({ headers, data }) => {
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
+  const displayCell = (row, name, link, number) => {
+    if (link) {
+      return (
+        <Link style={{ color: '#fffba1' }} to={`/products/${row[name]}`}>
+          {row[name]}
+        </Link>
+      );
+    }
+    if (number) {
+      return <>{numeral(row[name]).format('0.0a')}</>;
+    }
+    return <>{row[name]}</>;
+  };
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
@@ -216,18 +231,9 @@ const TableCard = ({ headers, data }) => {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      {headers.map(({ name, link }) => (
+                      {headers.map(({ name, link, number }) => (
                         <TableCell key={name} className={classes.cells}>
-                          {link ? (
-                            <Link
-                              style={{ color: '#fffba1' }}
-                              to={`/products/${row[name]}`}
-                            >
-                              {row[name]}
-                            </Link>
-                          ) : (
-                            <>{row[name]}</>
-                          )}
+                          {displayCell(row, name, link, number)}
                         </TableCell>
                       ))}
                     </TableRow>
