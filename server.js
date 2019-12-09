@@ -167,6 +167,41 @@ server.get('/api/products/:id/units-in-stock', (req, res) => {
   });
 });
 
+const processProducts = materials =>
+  materials.map(({ itemKey, description, materialsItemWarehouses }) => ({
+    id: itemKey,
+    name: description,
+    quantity: materialsItemWarehouses.reduce(
+      (accum, val) => accum + val.stockBalance,
+      0,
+    ),
+    value: materialsItemWarehouses.reduce(
+      (accum, val) => accum + val.inventoryBalance.amount,
+      0,
+    ),
+  }));
+
+server.get('/api/inventory/products', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/materialsCore/materialsItems`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    let products = [];
+    if (!JSON.parse(body).message) {
+      products = processProducts(JSON.parse(body));
+    }
+    res.json(products);
+  });
+});
+
 // Set static folder in production
 if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {
