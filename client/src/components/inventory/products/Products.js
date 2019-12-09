@@ -5,7 +5,7 @@ import TableCard from '../../TableCard';
 
 import { fetchProducts } from '../../../services/inventoryService';
 
-const Products = ({ headers }) => {
+const Products = ({ headers, title }) => {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Products = ({ headers }) => {
   }, []);
 
   return (
-    <CustomCard title="Products" overlay="Testing">
+    <CustomCard title={title} overlay="Testing">
       <TableCard headers={headers} data={tableData} />
     </CustomCard>
   );
@@ -38,12 +38,15 @@ Products.defaultProps = {
     {
       name: 'quantity',
       label: 'Quantity',
+      number: true,
     },
     {
       name: 'value',
       label: 'Value (€)',
+      number: true,
     },
   ],
+  title: 'Inventory',
 };
 
 Products.propTypes = {
@@ -53,6 +56,7 @@ Products.propTypes = {
       label: PropTypes.string,
     }),
   ),
+  title: PropTypes.string,
 };
 
 export default Products;

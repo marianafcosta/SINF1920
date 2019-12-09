@@ -4,7 +4,7 @@ import Products from '../components/inventory/products';
 
 const Inventory = () => (
   <Layout pageName="Inventory">
-    <Products />
+    <Products title="Products" />
   </Layout>
 );
 
