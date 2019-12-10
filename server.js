@@ -350,6 +350,22 @@ server.get('/api/products/:id/average-pvp', (req, res) => {
   });
 });
 
+server.get('/api/suppliers/:id', (req, res) => {
+  const { id } = req.params;
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/purchasesCore/supplierParties/${id}`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    res.json(JSON.parse(body));
+  });
+});
+
 // Set static folder in production
 if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {

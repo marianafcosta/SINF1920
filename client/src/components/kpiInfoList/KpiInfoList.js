@@ -9,13 +9,17 @@ const KpiInfoList = ({ title, overlayInfo, data }) => {
   return (
     <CustomCard title={title} overlayInfo={overlayInfo}>
       <ul className={styles.list}>
-        {data.map(item => (
-          <div className={styles.listItem}>
-            <strong className={styles.label}>{item.label}</strong>
-            <strong className={styles.description}>{item.description}</strong>
-          </div>
-        ))}
-        <li></li>
+        {data.map(
+          item =>
+            Object.entries(item).length !== 0 && (
+              <li className={styles.listItem} key={item.label}>
+                <strong className={styles.label}>{item.label}</strong>
+                <strong className={styles.description}>
+                  {item.description}
+                </strong>
+              </li>
+            ),
+        )}
       </ul>
     </CustomCard>
   );

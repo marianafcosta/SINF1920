@@ -18,6 +18,7 @@ const Product = () => {
     const fetchData = async () => {
       const { data } = await fetchProductInfo(id); // TODO
       setProduct(data);
+      console.log(id);
     };
     fetchData();
   }, [id]);
