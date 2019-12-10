@@ -16,6 +16,7 @@ import Sales from './pages/Sales';
 import Purchases from './pages/Purchases';
 import SignIn from './pages/SignIn';
 import Product from './pages/Product';
+import Supplier from './pages/Supplier';
 
 const redirectTo = role => {
   const paths = {
@@ -61,6 +62,13 @@ const AppRouter = ({ user }) => (
         roles={['CEO', 'Sales Manager', 'Inventory Manager']}
       >
         <Product />
+      </PrivateRoute>
+      <PrivateRoute
+        exact
+        path="/suppliers/:id"
+        roles={['CEO', 'Purchases Manager', 'Inventory Manager']}
+      >
+        <Supplier />
       </PrivateRoute>
       <Route exact path="/login">
         {user ? redirectTo(user.role) : <SignIn />}
