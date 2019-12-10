@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import numeral from 'numeral';
 
 import CustomCard from '../CustomCard';
 import TableCard from '../TableCard';
@@ -22,7 +23,7 @@ const ProductSuppliers = ({ productId }) => {
       data.map(supplier => ({
         id: supplier.id,
         name: supplier.name,
-        value: supplier.value,
+        value: numeral(supplier.value).format('0.0a'),
       })),
     );
   };
