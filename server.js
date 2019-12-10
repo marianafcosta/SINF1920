@@ -189,6 +189,27 @@ const processProducts = materials =>
     ),
   }));
 
+const processStock = materials =>
+  materials.reduce(
+    (accum, val) =>
+      accum +
+      val.materialsItemWarehouses.reduce(
+        (accum2, val2) => accum2 + val2.inventoryBalance.amount,
+        0,
+      ),
+    0,
+  );
+
+const processProductAveragePVP = product => {
+  console.log(product);
+  const { priceListLines } = product;
+  const pvpSum = priceListLines.reduce(
+    (acc, curr) => acc + curr.priceAmount.amount,
+    0,
+  );
+  return Number((pvpSum / priceListLines.length).toFixed(2));
+};
+
 server.get('/api/inventory/products', (req, res) => {
   const options = {
     method: 'GET',
@@ -207,6 +228,75 @@ server.get('/api/inventory/products', (req, res) => {
       products = processProducts(JSON.parse(body));
     }
     res.json(products);
+  });
+});
+
+server.get('/api/purchases/product-backlog', (req, res) => {
+  const options2 = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/purchases/orders`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const options1 = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/goodsReceipt/processOrders/1/1000?company=${process.env.COMPANY}`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options1, function(error, response, body) {
+    if (error) throw new Error(error);
+
+    let productBacklog = 0;
+    if (!JSON.parse(body).message) {
+      const keys = JSON.parse(body).map(({ sourceDocKey }) => sourceDocKey);
+
+      primaveraRequests(options2, (error2, response2, body2) => {
+        if (error2) throw new Error(error2);
+
+        if (!JSON.parse(body2).message) {
+          let receipts = JSON.parse(body2);
+
+          receipts = receipts.filter(({ naturalKey }) =>
+            keys.find(key => naturalKey === key),
+          );
+
+          productBacklog = receipts.reduce(
+            (accum, curr) => accum + curr.payableAmount.amount,
+            0,
+          );
+
+          res.json(productBacklog);
+        }
+      });
+    }
+  });
+});
+
+server.get('/api/inventory/stock', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/materialsCore/materialsItems`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    let stock = 0;
+    if (!JSON.parse(body).message) {
+      stock = processStock(JSON.parse(body));
+    }
+    res.json(stock);
   });
 });
 
@@ -233,6 +323,30 @@ server.get('/api/products/:id', (req, res) => {
     }
     console.log(productInfo);
     res.json(productInfo);
+  });
+});
+
+server.get('/api/products/:id/average-pvp', (req, res) => {
+  const { id } = req.params;
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/salescore/salesitems/${id}`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  console.log(id);
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    let averagePVP;
+    if (!JSON.parse(body).message) {
+      averagePVP = processProductAveragePVP(JSON.parse(body));
+    }
+    res.json(averagePVP);
   });
 });
 
