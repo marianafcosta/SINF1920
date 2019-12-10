@@ -389,23 +389,25 @@ server.get('/api/sales/customers/:id', (req, res) => {
 const processProductSuppliers = (product, orders) => {
   const suppliers = {};
   orders.forEach(order => {
-    order.documentLines.forEach(line => {
-      if (line.purchasesItem === product) {
+    order.documentLines
+      .filter(line => line.purchasesItem === product)
+      .forEach(lineParsed => {
         if (suppliers[order.sellerSupplierParty]) {
           suppliers[order.sellerSupplierParty].value += Number(
-            line.grossValue.amount,
+            lineParsed.grossValue.amount,
           );
-          suppliers[order.sellerSupplierParty].value += Number(line.quantity);
+          suppliers[order.sellerSupplierParty].value += Number(
+            lineParsed.quantity,
+          );
         } else {
           suppliers[order.sellerSupplierParty] = {
             id: order.sellerSupplierParty,
             name: order.sellerSupplierPartyName,
-            value: Number(line.grossValue.amount),
-            units: Number(line.quantity),
+            value: Number(lineParsed.grossValue.amount),
+            units: Number(lineParsed.quantity),
           };
         }
-      }
-    });
+      });
   });
   return Object.keys(suppliers).map(supplier => suppliers[supplier]);
 };
