@@ -9,6 +9,7 @@ import UnitsSold from '../components/Product/unitsSold';
 import ProductInfo from '../components/productInfo';
 import ProductSales from '../components/productSales';
 import ProductAveragePvp from '../components/productAveragePvp';
+import AverageCost from '../components/Product/averageCost/AverageCost';
 
 const Product = () => {
   const { id } = useParams();
@@ -30,6 +31,7 @@ const Product = () => {
       <ProductInfo productId={id} />
       <ProductSales productId={id} />
       <ProductAveragePvp productId={id} />
+      <AverageCost productId={id} />
     </Layout>
   );
 };
