@@ -135,7 +135,6 @@ server.get('/api/expenses', auth, (req, res) => {
 });
 
 const processProductStock = product => {
-  console.log(product);
   const totalStock = product.materialsItemWarehouses.reduce((acc, curr) => {
     return acc + curr.stockBalance;
   }, 0);
@@ -160,8 +159,6 @@ server.get('/api/products/:id/units-in-stock', (req, res) => {
       'Content-Type': 'application/json',
     },
   };
-
-  console.log(primaveraRequests);
 
   if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
 
@@ -208,6 +205,20 @@ const processProductAveragePVP = product => {
     0,
   );
   return Number((pvpSum / priceListLines.length).toFixed(2));
+};
+
+const processProductAverageCost = (orders, id) => {
+  const costs = [];
+
+  orders.forEach(({ documentLines }) => {
+    costs.push(
+      ...documentLines
+        .filter(line => line.purchasesItem === id)
+        .map(line => line.unitPrice.amount),
+    );
+  });
+
+  return costs.reduce((accum, curr) => accum + curr, 0) / costs.length;
 };
 
 server.get('/api/inventory/products', (req, res) => {
@@ -321,7 +332,6 @@ server.get('/api/products/:id', (req, res) => {
     if (!JSON.parse(body).message) {
       productInfo = processProductInfo(JSON.parse(body));
     }
-    console.log(productInfo);
     res.json(productInfo);
   });
 });
@@ -347,6 +357,28 @@ server.get('/api/products/:id/average-pvp', (req, res) => {
       averagePVP = processProductAveragePVP(JSON.parse(body));
     }
     res.json(averagePVP);
+  });
+});
+
+server.get('/api/products/:id/average-cost', (req, res) => {
+  const { id } = req.params;
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/purchases/orders`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    let averageCost = 0;
+    if (!JSON.parse(body).message) {
+      averageCost = processProductAverageCost(JSON.parse(body), id);
+    }
+    res.json(averageCost);
   });
 });
 

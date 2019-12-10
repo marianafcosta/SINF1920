@@ -18,6 +18,7 @@ const fetchProductAveragePvp = id => {
 const fetchProductSuppliers = id => {
   return axios.get(`${baseUrl(id)}/suppliers`);
 };
+const fetchProductAverageCost = id => axios.get(`${baseUrl(id)}/average-cost`);
 
 export {
   fetchProductUnitsSold,
@@ -25,4 +26,5 @@ export {
   fetchUnitsInStock,
   fetchProductAveragePvp,
   fetchProductSuppliers,
+  fetchProductAverageCost,
 };
