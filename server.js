@@ -386,6 +386,44 @@ server.get('/api/sales/customers/:id', (req, res) => {
   });
 });
 
+const processProductSuppliers = (product, orders) => {
+  const suppliers = {};
+  orders.forEach(order => {
+    order.documentLines.forEach(line => {
+      if (line.purchasesItem === product) {
+        if (suppliers[order.sellerSupplierParty]) {
+          suppliers[order.sellerSupplierParty].value += line.grossValue.amount;
+        } else {
+          suppliers[order.sellerSupplierParty] = {
+            id: order.sellerSupplierParty,
+            name: order.sellerSupplierPartyName,
+            value: line.grossValue.amount,
+          };
+        }
+      }
+    });
+  });
+  return Object.keys(suppliers).map(supplier => suppliers[supplier]);
+};
+
+server.get('/api/products/:id/suppliers', (req, res) => {
+  const { id } = req.params;
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/purchases/orders`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    res.json(processProductSuppliers(id, JSON.parse(body)));
+  });
+});
+
 // Set static folder in production
 if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {

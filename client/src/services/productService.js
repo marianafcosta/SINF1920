@@ -15,9 +15,14 @@ const fetchProductAveragePvp = id => {
   return axios.get(`${baseUrl(id)}/average-pvp`);
 };
 
+const fetchProductSuppliers = id => {
+  return axios.get(`${baseUrl(id)}/suppliers`);
+};
+
 export {
   fetchProductUnitsSold,
   fetchProductInfo,
   fetchUnitsInStock,
   fetchProductAveragePvp,
+  fetchProductSuppliers,
 };
