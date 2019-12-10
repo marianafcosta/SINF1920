@@ -7,6 +7,7 @@ import { fetchProductInfo } from '../services/productService';
 import UnitsInStock from '../components/unitsInStock';
 import UnitsSold from '../components/Product/unitsSold';
 import ProductInfo from '../components/productInfo';
+import ProductSales from '../components/productSales';
 import ProductAveragePvp from '../components/productAveragePvp';
 
 const Product = () => {
@@ -26,6 +27,7 @@ const Product = () => {
       <UnitsSold id={id} />
       <UnitsInStock productId={id} />
       <ProductInfo productId={id} />
+      <ProductSales productId={id} />
       <ProductAveragePvp productId={id} />
     </Layout>
   );
