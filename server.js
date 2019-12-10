@@ -360,6 +360,26 @@ server.get('/api/suppliers/:id', (req, res) => {
     },
   };
 
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    res.json(JSON.parse(body));
+  });
+});
+
+server.get('/api/sales/customers/:id', (req, res) => {
+  const { id } = req.params;
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/salescore/customerParties/${id}`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
   return primaveraRequests(options, function(error, response, body) {
     if (error) throw new Error(error);
     res.json(JSON.parse(body));
