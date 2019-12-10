@@ -17,6 +17,7 @@
 
 .listItem .description {
   margin: 0;
+  margin-bottom: 0.5em;
 }
 
 .listItem .label {
