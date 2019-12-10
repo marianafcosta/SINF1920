@@ -392,12 +392,16 @@ const processProductSuppliers = (product, orders) => {
     order.documentLines.forEach(line => {
       if (line.purchasesItem === product) {
         if (suppliers[order.sellerSupplierParty]) {
-          suppliers[order.sellerSupplierParty].value += line.grossValue.amount;
+          suppliers[order.sellerSupplierParty].value += Number(
+            line.grossValue.amount,
+          );
+          suppliers[order.sellerSupplierParty].value += Number(line.quantity);
         } else {
           suppliers[order.sellerSupplierParty] = {
             id: order.sellerSupplierParty,
             name: order.sellerSupplierPartyName,
-            value: line.grossValue.amount,
+            value: Number(line.grossValue.amount),
+            units: Number(line.quantity),
           };
         }
       }

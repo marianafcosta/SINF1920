@@ -11,6 +11,7 @@ const headers = [
   { name: 'id', label: 'ID' },
   { name: 'name', label: 'Name' },
   { name: 'value', label: 'Value (€)' },
+  { name: 'units', label: 'Units' },
 ];
 
 const ProductSuppliers = ({ productId }) => {
@@ -24,6 +25,7 @@ const ProductSuppliers = ({ productId }) => {
         id: supplier.id,
         name: supplier.name,
         value: numeral(supplier.value).format('0.0a'),
+        units: numeral(supplier.units).format('0.0a'),
       })),
     );
   };
