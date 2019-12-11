@@ -4,9 +4,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 
 import SignInForm from '../components/SignIn/SignInForm';
+import Page from '../components/common/Page';
 
 const SignIn = () => (
-  <>
+  <Page title="Login">
     <CssBaseline />
     <Grid
       container
@@ -20,7 +21,7 @@ const SignIn = () => (
         <SignInForm />
       </Grid>
     </Grid>
-  </>
+  </Page>
 );
 
 export default SignIn;
