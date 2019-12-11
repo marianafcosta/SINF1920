@@ -17,6 +17,7 @@ import Link from '@material-ui/core/Link';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Sidebar from './Sidebar';
 import Appbar from './Appbar';
+import Page from '../common/Page';
 import './layout.css';
 
 function Copyright() {
@@ -150,51 +151,56 @@ const Layout = ({ children, user, pageName }) => {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Appbar
-        pageName={pageName}
-        handleDrawerOpen={handleDrawerOpen}
-        classes={classes}
-        open={open}
-        user={user}
-      />
-      {user.role === 'CEO' && (
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
+    <Page title={pageName}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <Appbar
+          pageName={pageName}
+          handleDrawerOpen={handleDrawerOpen}
+          classes={classes}
           open={open}
-        >
-          <div className={classes.toolbarIcon}>
-            <Typography
-              className={classes.typography}
-              component="h1"
-              variant="h6"
-              noWrap
-            >
-              <FlashOnIcon className={classes.yellow} />
-              EEC
-            </Typography>
-            <IconButton color="inherit" onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
-          <List className="listBorder">
-            <Sidebar pageName={pageName} user={user} />
-          </List>
-        </Drawer>
-      )}
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          {children}
-        </Container>
-        <Copyright />
-      </main>
-    </div>
+          user={user}
+        />
+        {user.role === 'CEO' && (
+          <Drawer
+            variant="permanent"
+            classes={{
+              paper: clsx(
+                classes.drawerPaper,
+                !open && classes.drawerPaperClose,
+              ),
+            }}
+            open={open}
+          >
+            <div className={classes.toolbarIcon}>
+              <Typography
+                className={classes.typography}
+                component="h1"
+                variant="h6"
+                noWrap
+              >
+                <FlashOnIcon className={classes.yellow} />
+                EEC
+              </Typography>
+              <IconButton color="inherit" onClick={handleDrawerClose}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </div>
+            <Divider />
+            <List className="listBorder">
+              <Sidebar pageName={pageName} user={user} />
+            </List>
+          </Drawer>
+        )}
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            {children}
+          </Container>
+          <Copyright />
+        </main>
+      </div>
+    </Page>
   );
 };
 
