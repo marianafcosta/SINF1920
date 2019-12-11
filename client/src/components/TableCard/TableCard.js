@@ -185,7 +185,7 @@ const TableCard = ({ headers, data }) => {
   const displayCell = (row, name, link, number) => {
     if (link) {
       return (
-        <Link style={{ color: '#fffba1' }} to={`/products/${row[name]}`}>
+        <Link style={{ color: '#fffba1' }} to={`/${link}/${row[name]}`}>
           {row[name]}
         </Link>
       );
@@ -270,6 +270,8 @@ TableCard.propTypes = {
     PropTypes.shape({
       name: PropTypes.string,
       label: PropTypes.string,
+      link: PropTypes.string,
+      number: PropTypes.bool,
     }),
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
