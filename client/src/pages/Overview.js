@@ -14,7 +14,7 @@ const Overview = () => (
         {
           name: 'id',
           label: 'ID',
-          link: true,
+          link: 'products',
         },
         {
           name: 'name',

@@ -6,7 +6,7 @@ import TableCard from '../TableCard';
 import { fetchTopClients } from '../../services/salesService';
 
 const headers = [
-  { name: 'id', label: 'Consumer' },
+  { name: 'id', label: 'Consumer', link: 'customers' },
   { name: 'total', label: 'Total Spent (€)' },
   { name: 'purchases', label: 'Purchases' },
 ];
