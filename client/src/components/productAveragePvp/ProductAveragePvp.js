@@ -23,6 +23,7 @@ const ProductAveragePvp = ({ productId }) => {
       title="Product average PVP"
       overlayInfo="hmmmmmmmm"
       value={averagePvp}
+      unit="€/unit"
     />
   );
 };

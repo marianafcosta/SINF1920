@@ -5,6 +5,7 @@ import StabilityRatios from '../components/stabilityRatios';
 import Ebitda from '../components/ebitda';
 import AccountsReceivable from '../components/accountsReceivable';
 import LiquidityRatios from '../components/liquidityRatios';
+import SalesAndExpenses from '../components/salesAndExpenses';
 
 const Financial = () => (
   <Layout pageName="Financial">
@@ -12,6 +13,7 @@ const Financial = () => (
     <Ebitda />
     <AccountsReceivable />
     <LiquidityRatios />
+    <SalesAndExpenses />
   </Layout>
 );
 
