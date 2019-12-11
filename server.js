@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const request = require('request');
+const moment = require('moment');
 
 const auth = require('./middleware/auth');
 
@@ -287,6 +288,40 @@ server.get('/api/purchases/product-backlog', (req, res) => {
         }
       });
     }
+  });
+});
+
+const processPurchases = orders => {
+  const monthlyCumulativeValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  orders.forEach(({ documentDate, payableAmount }) => {
+    const month = moment(documentDate).month();
+
+    monthlyCumulativeValue[month] += payableAmount.amount;
+  });
+
+  return monthlyCumulativeValue;
+};
+
+server.get('/api/purchases', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/purchases/orders`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+
+    let monthlyCumulativeValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    if (!JSON.parse(body).message) {
+      monthlyCumulativeValue = processPurchases(JSON.parse(body));
+    }
+    res.json(monthlyCumulativeValue);
   });
 });
 

@@ -8,6 +8,7 @@ import {
   Legend,
   Bar,
 } from 'recharts';
+import numeral from 'numeral';
 import PropTypes from 'prop-types';
 
 import CustomCard from '../CustomCard';
@@ -24,10 +25,11 @@ const KpiBarChart = ({ title, overlayInfo, bars, data }) => {
       <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
-        <YAxis />
+        <YAxis tickFormatter={tick => numeral(tick).format('0.0a')} />
         <Tooltip
           contentStyle={{ backgroundColor: '#262626' }}
           wrapperStyle={{ color: 'white' }}
+          formatter={value => numeral(value).format('0.0a')}
         />
         <Legend formatter={renderLegend} />
         {bars.map(bar => (
