@@ -4,6 +4,7 @@ import TopProducts from '../components/topProducts';
 import TopCustomers from '../components/topCustomers';
 import SalesLocation from '../components/salesLocation';
 import GrossProfitMargin from '../components/grossProfitMargin';
+import MonthlySales from '../components/sales/monthlySales';
 
 const Sales = () => (
   <Layout pageName="Sales">
@@ -11,6 +12,7 @@ const Sales = () => (
     <TopCustomers />
     <SalesLocation />
     <GrossProfitMargin />
+    <MonthlySales />
   </Layout>
 );
 
