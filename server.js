@@ -291,14 +291,17 @@ server.get('/api/purchases/product-backlog', (req, res) => {
   });
 });
 
-const processPurchases = orders => {
+const processPurchases = (orders, year) => {
   const monthlyCumulativeValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-  orders.forEach(({ documentDate, payableAmount }) => {
-    const month = moment(documentDate).month();
+  orders
+    // eslint-disable-next-line eqeqeq
+    .filter(order => moment(order.documentDate).year() == year)
+    .forEach(({ documentDate, payableAmount }) => {
+      const month = moment(documentDate).month();
 
-    monthlyCumulativeValue[month] += payableAmount.amount;
-  });
+      monthlyCumulativeValue[month] += payableAmount.amount;
+    });
 
   return monthlyCumulativeValue;
 };
@@ -319,7 +322,10 @@ server.get('/api/purchases', (req, res) => {
 
     let monthlyCumulativeValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     if (!JSON.parse(body).message) {
-      monthlyCumulativeValue = processPurchases(JSON.parse(body));
+      monthlyCumulativeValue = processPurchases(
+        JSON.parse(body),
+        req.query.year,
+      );
     }
     res.json(monthlyCumulativeValue);
   });
@@ -453,29 +459,34 @@ server.get('/api/sales/customers/:id', (req, res) => {
   });
 });
 
-const processProductSuppliers = (product, orders) => {
+const processProductSuppliers = (product, orders, year) => {
   const suppliers = {};
-  orders.forEach(order => {
-    order.documentLines
-      .filter(line => line.purchasesItem === product)
-      .forEach(lineParsed => {
-        if (suppliers[order.sellerSupplierParty]) {
-          suppliers[order.sellerSupplierParty].value += Number(
-            lineParsed.grossValue.amount,
-          );
-          suppliers[order.sellerSupplierParty].value += Number(
-            lineParsed.quantity,
-          );
-        } else {
-          suppliers[order.sellerSupplierParty] = {
-            id: order.sellerSupplierParty,
-            name: order.sellerSupplierPartyName,
-            value: Number(lineParsed.grossValue.amount),
-            units: Number(lineParsed.quantity),
-          };
-        }
+  if (orders) {
+    orders
+      // eslint-disable-next-line
+      .filter(order => moment(order.documentDate).year() == year)
+      .forEach(order => {
+        order.documentLines
+          .filter(line => (product ? line.purchasesItem === product : true))
+          .forEach(lineParsed => {
+            if (suppliers[order.sellerSupplierParty]) {
+              suppliers[order.sellerSupplierParty].value += Number(
+                lineParsed.grossValue.amount,
+              );
+              suppliers[order.sellerSupplierParty].value += Number(
+                lineParsed.quantity,
+              );
+            } else {
+              suppliers[order.sellerSupplierParty] = {
+                id: order.sellerSupplierParty,
+                name: order.sellerSupplierPartyName,
+                value: Number(lineParsed.grossValue.amount),
+                units: Number(lineParsed.quantity),
+              };
+            }
+          });
       });
-  });
+  }
   return Object.keys(suppliers).map(supplier => suppliers[supplier]);
 };
 
@@ -493,7 +504,24 @@ server.get('/api/products/:id/suppliers', (req, res) => {
 
   return primaveraRequests(options, function(error, response, body) {
     if (error) throw new Error(error);
-    res.json(processProductSuppliers(id, JSON.parse(body)));
+    res.json(processProductSuppliers(id, JSON.parse(body), req.query.year));
+  });
+});
+
+server.get('/api/suppliers', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/purchases/orders`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    res.json(processProductSuppliers(null, JSON.parse(body), req.query.year));
   });
 });
 

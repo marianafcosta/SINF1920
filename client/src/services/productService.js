@@ -16,7 +16,7 @@ const fetchProductAveragePvp = id => {
 };
 
 const fetchProductSuppliers = id => {
-  return axios.get(`${baseUrl(id)}/suppliers`);
+  return axios.get(`${baseUrl(id)}/suppliers`, { params: { year: 2019 } });
 };
 const fetchProductAverageCost = id => axios.get(`${baseUrl(id)}/average-cost`);
 
