@@ -525,6 +525,45 @@ server.get('/api/suppliers', (req, res) => {
   });
 });
 
+const processWarehouses = items => {
+  const warehouses = {};
+  if (items) {
+    items.forEach(item => {
+      item.materialsItemWarehouses.forEach(materialsItem => {
+        if (warehouses[materialsItem.warehouse]) {
+          warehouses[materialsItem.warehouse].amount +=
+            materialsItem.inventoryBalance.reportingAmount; // ?? or just .amount
+        } else {
+          warehouses[materialsItem.warehouse] = {
+            id: materialsItem.warehouse,
+            name: materialsItem.warehouseDescription,
+            amount: materialsItem.inventoryBalance.reportingAmount,
+          };
+        }
+      });
+    });
+  }
+  return Object.keys(warehouses).map(warehouse => warehouses[warehouse]);
+};
+
+server.get('/api/inventory/warehouses', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/materialscore/materialsitems`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+    console.log(processWarehouses(JSON.parse(body)));
+    res.json(processWarehouses(JSON.parse(body)));
+  });
+});
+
 // Set static folder in production
 if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {

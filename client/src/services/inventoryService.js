@@ -6,4 +6,6 @@ const fetchProducts = () => axios.get(`${baseUrl}/products`);
 
 const fetchStock = () => axios.get(`${baseUrl}/stock`);
 
-export { fetchProducts, fetchStock };
+const fetchWarehouses = () => axios.get(`${baseUrl}/warehouses`); // TODO year
+
+export { fetchProducts, fetchStock, fetchWarehouses };
