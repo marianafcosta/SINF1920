@@ -99,17 +99,22 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(3),
+    maxHeight: 'inherit',
   },
   paper: {
     width: '100%',
+    backgroundColor: 'inherit',
+    maxHeight: 'inherit',
+    boxShadow: 'none !important',
   },
   table: {
-    minWidth: 750,
+    minWidth: 'auto',
     backgroundColor: 'rgba(0, 0, 0, 0.87)',
     color: 'white',
+    maxHeight: 'inherit',
   },
   tableWrapper: {
-    maxHeight: 320,
+    maxHeight: 'inherit',
     overflowX: 'auto',
   },
   visuallyHidden: {
@@ -126,13 +131,13 @@ const useStyles = makeStyles(theme => ({
   head: {
     backgroundColor: '#262626',
     color: 'inherit',
-    padding: '7px 14px 7px 4rem',
+    padding: '7px 3px 7px 1em',
     borderBottom: '1px solid #FFFBA1',
   },
   cells: {
     backgroundColor: '#262626',
     color: 'inherit',
-    padding: '12px 14px 6px 4rem',
+    padding: '12px 3px 6px 1em',
     border: 'none',
   },
   pagination: {
@@ -198,6 +203,7 @@ const TableCard = ({ headers, data }) => {
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+  let indexCounter = 0;
 
   return (
     <div className={classes.root}>
@@ -222,13 +228,14 @@ const TableCard = ({ headers, data }) => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(row => {
                   const isItemSelected = isSelected(row.id);
+                  indexCounter += 1;
                   return (
                     <TableRow
                       hover
                       onClick={event => handleClick(event, row.id)}
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.id}
+                      key={indexCounter}
                       selected={isItemSelected}
                     >
                       {headers.map(({ name, link, number }) => (

@@ -1,0 +1,9 @@
+.fullwitdh {
+  width: 600px !important;
+  max-width: 100% !important;
+}
+
+.fullwitdh > svg {
+  width: 600px !important;
+  max-width: 100% !important;
+}

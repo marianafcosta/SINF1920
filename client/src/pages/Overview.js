@@ -21,10 +21,10 @@ const Overview = () => {
     <Layout pageName="Overview">
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item sm={8}>
+          <Grid item sm={8} md={6}>
             <SalesExpenses />
           </Grid>
-          <Grid item sm={4}>
+          <Grid item sm={4} md={6}>
             <Grid container spacing={1}>
               <Grid item xs={6} sm={12}>
                 <Ebitda />

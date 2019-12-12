@@ -12,6 +12,7 @@ import numeral from 'numeral';
 import PropTypes from 'prop-types';
 
 import CustomCard from '../CustomCard';
+import './KpiBarChart.css';
 
 const KpiBarChart = ({ title, overlayInfo, bars, data }) => {
   const renderLegend = (value, entry) => {
@@ -19,10 +20,17 @@ const KpiBarChart = ({ title, overlayInfo, bars, data }) => {
 
     return <span style={{ color }}>{value}</span>;
   };
+  let key = 0;
 
   return (
     <CustomCard title={title} overlayInfo={overlayInfo}>
-      <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
+      <BarChart
+        className="fullwitdh"
+        width={600}
+        height={250}
+        data={data}
+        styles={{ margin: '0' }}
+      >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis tickFormatter={tick => numeral(tick).format('0.0a')} />
@@ -31,10 +39,11 @@ const KpiBarChart = ({ title, overlayInfo, bars, data }) => {
           wrapperStyle={{ color: 'white' }}
           formatter={value => numeral(value).format('0.0a')}
         />
-        <Legend formatter={renderLegend} />
-        {bars.map(bar => (
-          <Bar dataKey={bar.dataKey} fill={bar.fill} />
-        ))}
+        <Legend className="fullwitdh" formatter={renderLegend} />
+        {bars.map(bar => {
+          key += 1;
+          return <Bar key={key} dataKey={bar.dataKey} fill={bar.fill} />;
+        })}
       </BarChart>
     </CustomCard>
   );
