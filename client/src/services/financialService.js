@@ -16,6 +16,10 @@ const fetchEbitda = year => {
   return axios.get(`${baseUrl}/ebitda?year=${year}`);
 };
 
+const fetchEarnings = year => {
+  return axios.get(`${baseUrl}/earnings?year=${year}`);
+};
+
 const fetchEbit = year => {
   return axios.get(`${baseUrl}/ebit?year=${year}`);
 };
@@ -72,5 +76,6 @@ export {
   fetchCurrentRatio,
   fetchAccountsReceivable,
   fetchGrossProfitMargin,
+  fetchEarnings,
   fetchEbit,
 };

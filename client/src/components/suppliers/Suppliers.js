@@ -7,7 +7,7 @@ import TableCard from '../TableCard';
 import { fetchSuppliers } from '../../services/purchasesService';
 
 const headers = [
-  { name: 'id', label: 'ID' },
+  { name: 'id', label: 'ID', link: 'suppliers' },
   { name: 'name', label: 'Name' },
   { name: 'value', label: 'Value (€)' },
   { name: 'units', label: 'Units' },
