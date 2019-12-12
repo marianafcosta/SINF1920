@@ -6,7 +6,9 @@ import SalesExpenses from '../components/salesAndExpenses';
 import TopProducts from '../components/topProducts';
 import Products from '../components/inventory/products/Products';
 import Ebitda from '../components/ebitda';
+import Ebit from '../components/ebit';
 import TopCustomers from '../components/topCustomers';
+import BalanceSheet from '../components/balanceSheet';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -30,39 +32,37 @@ const Overview = () => {
                 <Ebitda />
               </Grid>
               <Grid item xs={6} sm={12}>
-                <Ebitda /> {/* Profit */}
+                <Ebit />
               </Grid>
             </Grid>
           </Grid>
-          <Grid container justify="center" spacing={3}>
-            <Grid item>
-              <TopCustomers />
-            </Grid>
-            <Grid item>
-              <TopProducts
-                headers={[
-                  {
-                    name: 'id',
-                    label: 'ID',
-                    link: true,
-                  },
-                  {
-                    name: 'name',
-                    label: 'Name',
-                  },
-                  {
-                    name: 'value',
-                    label: 'Value (€)',
-                  },
-                ]}
-              />
-            </Grid>
-            <Grid item>
-              <Products />
-            </Grid>
-            <Grid item>
-              <BalanceSheet />
-            </Grid>
+          <Grid item sm={12} lg={6}>
+            <TopCustomers />
+          </Grid>
+          <Grid item sm={12} lg={6}>
+            <Products />
+          </Grid>
+          <Grid item sm={12} lg={6}>
+            <TopProducts
+              headers={[
+                {
+                  name: 'id',
+                  label: 'ID',
+                  link: true,
+                },
+                {
+                  name: 'name',
+                  label: 'Name',
+                },
+                {
+                  name: 'value',
+                  label: 'Value (€)',
+                },
+              ]}
+            />
+          </Grid>
+          <Grid item sm={12} lg={6}>
+            <BalanceSheet />
           </Grid>
         </Grid>
       </div>
