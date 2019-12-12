@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import numeral from 'numeral';
 
 import CustomCard from '../CustomCard';
 import TableCard from '../TableCard';
@@ -20,7 +21,7 @@ const Warehouses = () => {
       data.map(({ id, name, amount }) => ({
         id,
         name,
-        amount,
+        amount: numeral(amount).format('0.000a'),
       })),
     );
   };
