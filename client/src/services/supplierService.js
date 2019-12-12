@@ -1,9 +1,15 @@
 import axios from 'axios';
 
-const baseUrl = '/api/suppliers';
+const baseUrl = id => `/api/suppliers/${id}`;
 
 const fetchPendingPurchases = id =>
-  axios.get(`${baseUrl}/${id}/pending-purchases`);
+  axios.get(`${baseUrl(id)}/pending-purchases`);
 
-// eslint-disable-next-line
-export { fetchPendingPurchases };
+const fetchTotalPurchased = (id, year) =>
+  axios.get(`${baseUrl(id)}/total-purchased`, {
+    params: {
+      year,
+    },
+  });
+
+export { fetchPendingPurchases, fetchTotalPurchased };

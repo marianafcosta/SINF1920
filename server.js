@@ -490,6 +490,41 @@ server.get('/api/suppliers/:id/pending-purchases', (req, res) => {
   });
 });
 
+const processTotalPurchased = (orders, supplier, year) =>
+  orders
+    .filter(
+      ({ sellerSupplierParty, documentDate }) =>
+        sellerSupplierParty === supplier &&
+        moment(documentDate).year() === parseInt(year, 10),
+    )
+    .reduce((accum, order) => accum + order.payableAmount.amount, 0);
+
+server.get('/api/suppliers/:id/total-purchased', (req, res) => {
+  const { id } = req.params;
+  const { year } = req.query;
+
+  const options = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/purchases/orders`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options, function(error, response, body) {
+    if (error) throw new Error(error);
+
+    let totalPurchased = 0;
+    if (!JSON.parse(body).message) {
+      const orders = JSON.parse(body);
+      totalPurchased = processTotalPurchased(orders, id, year);
+    }
+    res.json(totalPurchased);
+  });
+});
+
 server.get('/api/sales/customers/:id', (req, res) => {
   const { id } = req.params;
   const options = {
