@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import numeral from 'numeral';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -182,7 +183,7 @@ const TableCard = ({ headers, data }) => {
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  const displayCell = (row, name, link, number) => {
+  const displayCell = (row, name, link, number, date) => {
     if (link) {
       return (
         <Link style={{ color: '#fffba1' }} to={`/${link}/${row[name]}`}>
@@ -192,6 +193,10 @@ const TableCard = ({ headers, data }) => {
     }
     if (number) {
       return <>{numeral(row[name]).format('0.0a')}</>;
+    }
+
+    if (date) {
+      return <>{moment(row[name]).format('YYYY-MM-DD')}</>;
     }
     return <>{row[name]}</>;
   };
@@ -231,9 +236,9 @@ const TableCard = ({ headers, data }) => {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      {headers.map(({ name, link, number }) => (
+                      {headers.map(({ name, link, number, date }) => (
                         <TableCell key={name} className={classes.cells}>
-                          {displayCell(row, name, link, number)}
+                          {displayCell(row, name, link, number, date)}
                         </TableCell>
                       ))}
                     </TableRow>

@@ -5,6 +5,7 @@ import KpiInfoList from '../components/kpiInfoList';
 import Layout from '../components/layout/Layout';
 
 import fetchSupplierInfo from '../services/suppliersService';
+import PendingPurchases from '../components/supplier/pendingPurchases/PendingPurchases';
 
 const Supplier = () => {
   const { id } = useParams();
@@ -75,9 +76,9 @@ const Supplier = () => {
               : {},
           ]}
         />
-        // pending purchases
         // total purchases
       )}
+      <PendingPurchases id={id} />
     </Layout>
   );
 };
