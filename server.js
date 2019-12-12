@@ -441,6 +441,55 @@ server.get('/api/suppliers/:id', (req, res) => {
   });
 });
 
+server.get('/api/suppliers/:id/pending-purchases', (req, res) => {
+  const { id } = req.params;
+  const options2 = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/purchases/orders`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const options1 = {
+    method: 'GET',
+    url: `${basePrimaveraUrl}/goodsReceipt/processOrders/1/1000?company=${process.env.COMPANY}`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (!primaveraRequests) return res.json({ msg: 'Primavera token missing' });
+
+  return primaveraRequests(options1, function(error, response, body) {
+    if (error) throw new Error(error);
+
+    if (!JSON.parse(body).message) {
+      const keys = JSON.parse(body)
+        .filter(({ party }) => party === id)
+        .map(({ sourceDocKey }) => sourceDocKey);
+
+      primaveraRequests(options2, (error2, response2, body2) => {
+        if (error2) throw new Error(error2);
+
+        if (!JSON.parse(body2).message) {
+          let pendingPurchases = JSON.parse(body2);
+
+          pendingPurchases = pendingPurchases
+            .filter(({ naturalKey }) => keys.find(key => naturalKey === key))
+            .map(({ naturalKey, documentDate, payableAmount }) => ({
+              id: naturalKey,
+              date: documentDate,
+              value: payableAmount.amount,
+            }));
+
+          res.json(pendingPurchases);
+        }
+      });
+    }
+  });
+});
+
 server.get('/api/sales/customers/:id', (req, res) => {
   const { id } = req.params;
   const options = {
