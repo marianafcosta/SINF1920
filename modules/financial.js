@@ -327,6 +327,74 @@ const calculateEbit = accounts => {
   ).toFixed(2);
 };
 
+const calculateEarnings = accounts => {
+  // USING MASTER DATA
+
+  /*
+  const earningsSales = fetchAccount(accounts, 71);
+  const earningsServices = fetchAccount(accounts, 72);
+  const expensesCogs = fetchAccount(accounts, 61);
+  const expensesServices = fetchAccount(accounts, 62);
+  const expensesPersonnel = fetchAccount(accounts, 63);
+
+  console.log(earningsSales);
+  const earningsSalesValue = !earningsSales
+    ? 0
+    : parseFloat(earningsSales.ClosingCreditBalance) -
+      parseFloat(earningsSales.OpeningCreditBalance) -
+      (parseFloat(earningsSales.ClosingDebitBalance) -
+        parseFloat(earningsSales.OpeningDebitBalance));
+  const earningsServicesValue = !earningsServices
+    ? 0
+    : parseFloat(earningsServices.ClosingCreditBalance) -
+      parseFloat(earningsServices.OpeningCreditBalance) -
+      (parseFloat(earningsServices.ClosingDebitBalance) -
+        parseFloat(earningsServices.OpeningDebitBalance));
+  const expensesCogsValue = !expensesCogs
+    ? 0
+    : parseFloat(expensesCogs.ClosingDebitBalance) -
+      parseFloat(expensesCogs.OpeningDebitBalance) -
+      (parseFloat(expensesCogs.ClosingCreditBalance) -
+        parseFloat(expensesCogs.OpeningCreditBalance));
+  const expensesServicesValue = !expensesServices
+    ? 0
+    : parseFloat(expensesServices.ClosingDebitBalance) -
+      parseFloat(expensesServices.OpeningDebitBalance) -
+      (parseFloat(expensesServices.ClosingCreditBalance) -
+        parseFloat(expensesServices.OpeningCreditBalance));
+  const expensesPersonnelValue = !expensesPersonnel
+    ? 0
+    : parseFloat(expensesPersonnel.ClosingDebitBalance) -
+      parseFloat(expensesPersonnel.OpeningDebitBalance) -
+      (parseFloat(expensesPersonnel.ClosingCreditBalance) -
+        parseFloat(expensesPersonnel.OpeningCreditBalance));
+
+  return (
+    earningsSalesValue +
+    earningsServicesValue -
+    expensesServicesValue -
+    expensesPersonnelValue -
+    expensesCogsValue
+  );
+  */
+
+  // USING THE SUM OF THE TRANSACTIONS
+
+  const earningsSales = processJournalEntries(accounts, '71', 2018, false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', 2018, false); // TODO date
+  const expenses = processJournalEntries(accounts, '6', 2018, false); // TODO date
+
+  const earningsSalesValue =
+    earningsSales.totalCredit - earningsSales.totalDebit;
+  const earningsServicesValue =
+    earningsServices.totalCredit - earningsServices.totalDebit;
+  const expensesValue = expenses.totalDebit - expenses.totalCredit;
+
+  return (earningsSalesValue + earningsServicesValue - expensesValue).toFixed(
+    2,
+  );
+};
+
 const processAccounts = (accounts, accountId) => {
   const totalBalance = {
     totalCredit: 0,
@@ -799,6 +867,17 @@ module.exports = (server, db) => {
     // USING THE SUM OF THE TRANSACTIONS
     const accounts = db.GeneralLedgerEntries.Journal;
     res.json(Number(calculateEbit(accounts)));
+  });
+
+  /**
+   * @param year NOT USED FOR NOW
+   */
+  server.get('/api/financial/earnings', (req, res) => {
+    // USING MASTER DATA
+    // const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    // USING THE SUM OF THE TRANSACTIONS
+    const accounts = db.GeneralLedgerEntries.Journal;
+    res.json(Number(calculateEarnings(accounts)));
   });
 
   server.get('/api/financial/accounts-receivable', (req, res) => {
