@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import numeral from 'numeral';
 
 import CustomCard from '../CustomCard';
 
@@ -11,7 +12,7 @@ const KpiValue = ({ value, unit, title, overlayInfo }) => {
       title={`${title}${unit !== null ? ` (${unit})` : ''}`}
       overlayInfo={overlayInfo}
     >
-      <h1 className={styles.value}>{value}</h1>
+      <h1 className={styles.value}>{numeral(value).format('0.000a')}</h1>
     </CustomCard>
   );
 };

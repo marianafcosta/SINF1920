@@ -20,6 +20,10 @@ const fetchEarnings = year => {
   return axios.get(`${baseUrl}/earnings?year=${year}`);
 };
 
+const fetchEbit = year => {
+  return axios.get(`${baseUrl}/ebit?year=${year}`);
+};
+
 const fetchAccountsReceivable = year =>
   axios.get(`${baseUrl}/accounts-receivable?year=${year}`);
 
@@ -73,4 +77,5 @@ export {
   fetchAccountsReceivable,
   fetchGrossProfitMargin,
   fetchEarnings,
+  fetchEbit,
 };

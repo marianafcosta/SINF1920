@@ -33,7 +33,6 @@ const processTransactionLines = (lines, accountId) => {
       );
     }
   }
-
   return totalTransactionValues;
 };
 
@@ -217,11 +216,11 @@ const calculateEbitda = accounts => {
 
   // USING THE SUM OF THE TRANSACTIONS
 
-  const earningsSales = processJournalEntries(accounts, '71', 2019, false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', 2019, false); // TODO date
-  const expensesCogs = processJournalEntries(accounts, '61', 2019, false); // TODO date
-  const expensesServices = processJournalEntries(accounts, '62', 2019, false); // TODO date
-  const expensesPersonnel = processJournalEntries(accounts, '63', 2019, false); // TODO date
+  const earningsSales = processJournalEntries(accounts, '71', 2018, false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', 2018, false); // TODO date
+  const expensesCogs = processJournalEntries(accounts, '61', 2018, false); // TODO date
+  const expensesServices = processJournalEntries(accounts, '62', 2018, false); // TODO date
+  const expensesPersonnel = processJournalEntries(accounts, '63', 2018, false); // TODO date
 
   const earningsSalesValue =
     earningsSales.totalCredit - earningsSales.totalDebit;
@@ -231,12 +230,100 @@ const calculateEbitda = accounts => {
   const expensesServicesValue =
     expensesServices.totalDebit - expensesServices.totalCredit;
   const expensesPersonnelValue =
-    expensesPersonnel.totalDebit - expensesPersonnel.totalDebit;
+    expensesPersonnel.totalDebit - expensesPersonnel.totalCredit;
 
   return (
     earningsSalesValue +
     earningsServicesValue -
     (expensesCogsValue + expensesServicesValue + expensesPersonnelValue)
+  ).toFixed(2);
+};
+
+const calculateEbit = accounts => {
+  // USING MASTER DATA
+
+  /*
+  const earningsSales = fetchAccount(accounts, 71);
+  const earningsServices = fetchAccount(accounts, 72);
+  const expensesCogs = fetchAccount(accounts, 61);
+  const expensesServices = fetchAccount(accounts, 62);
+  const expensesPersonnel = fetchAccount(accounts, 63);
+
+  console.log(earningsSales);
+  const earningsSalesValue = !earningsSales
+    ? 0
+    : parseFloat(earningsSales.ClosingCreditBalance) -
+      parseFloat(earningsSales.OpeningCreditBalance) -
+      (parseFloat(earningsSales.ClosingDebitBalance) -
+        parseFloat(earningsSales.OpeningDebitBalance));
+  const earningsServicesValue = !earningsServices
+    ? 0
+    : parseFloat(earningsServices.ClosingCreditBalance) -
+      parseFloat(earningsServices.OpeningCreditBalance) -
+      (parseFloat(earningsServices.ClosingDebitBalance) -
+        parseFloat(earningsServices.OpeningDebitBalance));
+  const expensesCogsValue = !expensesCogs
+    ? 0
+    : parseFloat(expensesCogs.ClosingDebitBalance) -
+      parseFloat(expensesCogs.OpeningDebitBalance) -
+      (parseFloat(expensesCogs.ClosingCreditBalance) -
+        parseFloat(expensesCogs.OpeningCreditBalance));
+  const expensesServicesValue = !expensesServices
+    ? 0
+    : parseFloat(expensesServices.ClosingDebitBalance) -
+      parseFloat(expensesServices.OpeningDebitBalance) -
+      (parseFloat(expensesServices.ClosingCreditBalance) -
+        parseFloat(expensesServices.OpeningCreditBalance));
+  const expensesPersonnelValue = !expensesPersonnel
+    ? 0
+    : parseFloat(expensesPersonnel.ClosingDebitBalance) -
+      parseFloat(expensesPersonnel.OpeningDebitBalance) -
+      (parseFloat(expensesPersonnel.ClosingCreditBalance) -
+        parseFloat(expensesPersonnel.OpeningCreditBalance));
+
+  return (
+    earningsSalesValue +
+    earningsServicesValue -
+    expensesServicesValue -
+    expensesPersonnelValue -
+    expensesCogsValue
+  );
+  */
+
+  // USING THE SUM OF THE TRANSACTIONS
+
+  const earningsSales = processJournalEntries(accounts, '71', 2018, false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', 2018, false); // TODO date
+  const expensesCogs = processJournalEntries(accounts, '61', 2018, false); // TODO date
+  const expensesServices = processJournalEntries(accounts, '62', 2018, false); // TODO date
+  const expensesPersonnel = processJournalEntries(accounts, '63', 2018, false); // TODO date
+  const expensesDepreciationAmortization = processJournalEntries(
+    accounts,
+    '64',
+    2018,
+    false,
+  ); // TODO date
+
+  const earningsSalesValue =
+    earningsSales.totalCredit - earningsSales.totalDebit;
+  const earningsServicesValue =
+    earningsServices.totalCredit - earningsServices.totalDebit;
+  const expensesCogsValue = expensesCogs.totalDebit - expensesCogs.totalCredit;
+  const expensesServicesValue =
+    expensesServices.totalDebit - expensesServices.totalCredit;
+  const expensesPersonnelValue =
+    expensesPersonnel.totalDebit - expensesPersonnel.totalCredit;
+  const expensesDepreciationAmortizationValue =
+    expensesDepreciationAmortization.totalDebit -
+    expensesDepreciationAmortization.totalCredit;
+
+  return (
+    earningsSalesValue +
+    earningsServicesValue -
+    (expensesCogsValue +
+      expensesServicesValue +
+      expensesPersonnelValue +
+      expensesDepreciationAmortizationValue)
   ).toFixed(2);
 };
 
@@ -430,11 +517,6 @@ const calculateAssets = accounts => {
 
   const currentAssets = total;
 
-  console.log('non current');
-  console.log(nonCurrentAssets);
-  console.log('current');
-  console.log(currentAssets);
-
   return nonCurrentAssets + currentAssets;
 };
 
@@ -518,11 +600,6 @@ const calculateLiabilities = accounts => {
   });
 
   const currentLiability = total;
-
-  console.log('non current');
-  console.log(nonCurrentLiability);
-  console.log('current');
-  console.log(currentLiability);
 
   return nonCurrentLiability + currentLiability;
 };
@@ -711,6 +788,17 @@ module.exports = (server, db) => {
     // USING THE SUM OF THE TRANSACTIONS
     const accounts = db.GeneralLedgerEntries.Journal;
     res.json({ ebitda: Number(calculateEbitda(accounts)) });
+  });
+
+  /**
+   * @param year NOT USED FOR NOW
+   */
+  server.get('/api/financial/ebit', (req, res) => {
+    // USING MASTER DATA
+    // const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    // USING THE SUM OF THE TRANSACTIONS
+    const accounts = db.GeneralLedgerEntries.Journal;
+    res.json(Number(calculateEbit(accounts)));
   });
 
   server.get('/api/financial/accounts-receivable', (req, res) => {
