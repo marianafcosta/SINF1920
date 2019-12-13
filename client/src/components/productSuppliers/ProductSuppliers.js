@@ -17,11 +17,6 @@ const headers = [
 const ProductSuppliers = ({ productId }) => {
   const [tableData, setTableData] = useState([]);
 
-<<<<<<< HEAD
-=======
-  
-
->>>>>>> dd87ee89704e3aad66f4e23f19ee070eb1f1b1d3
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await fetchProductSuppliers(productId);
