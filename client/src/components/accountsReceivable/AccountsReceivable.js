@@ -22,6 +22,7 @@ const AccountsReceivable = () => {
       overlayInfo="something something gemp something"
       value={accountsReceivable}
       unit="€"
+      format="0.000a"
     />
   );
 };

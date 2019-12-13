@@ -5,7 +5,7 @@ import KpiValue from '../kpiValue';
 import { fetchUnitsInStock } from '../../services/productService';
 
 const UnitsInStock = ({ productId }) => {
-  const [unitsInStock, setUnitsInStock] = useState(null);
+  const [unitsInStock, setUnitsInStock] = useState(0);
 
   const fetchData = async () => {
     const response = await fetchUnitsInStock(productId);
@@ -20,10 +20,11 @@ const UnitsInStock = ({ productId }) => {
 
   return (
     <KpiValue
-      value={unitsInStock || 0}
+      value={unitsInStock}
       title="Units in stock"
       unit="units"
       overlayInfo="AHHHHHHHHHH"
+      format="0.000a"
     />
   );
 };

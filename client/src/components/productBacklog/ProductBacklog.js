@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import numeral from 'numeral';
 import { fetchProductBacklog } from '../../services/purchasesService';
 
 import KpiValue from '../kpiValue';
@@ -20,8 +19,9 @@ const ProductBacklog = () => {
     <KpiValue
       title="Product Backlog"
       overlayInfo="something something gemp something"
-      value={numeral(productBacklog).format('0.0a')}
+      value={productBacklog}
       unit="€"
+      format="0.0a"
     />
   );
 };
