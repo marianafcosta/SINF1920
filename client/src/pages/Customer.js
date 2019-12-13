@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import KpiInfoList from '../components/kpiInfoList';
 import Layout from '../components/layout/Layout';
+import CustomerPurchases from '../components/customerPurchases';
 
 import { fetchCustomerInfo } from '../services/salesService';
 
@@ -79,6 +80,7 @@ const Customer = () => {
           ]}
         />
       )}
+      <CustomerPurchases customerId={id} />
     </Layout>
   );
 };
