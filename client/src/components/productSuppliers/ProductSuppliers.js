@@ -17,8 +17,6 @@ const headers = [
 const ProductSuppliers = ({ productId }) => {
   const [tableData, setTableData] = useState([]);
 
-  
-
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await fetchProductSuppliers(productId);
