@@ -21,6 +21,7 @@ const GrossProfitMargin = () => {
       unit="%"
       title="Gross profit margin"
       overlayInfo="akjfnlakdjhfals"
+      format="0.000a"
     />
   );
 };
