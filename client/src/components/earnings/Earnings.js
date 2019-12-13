@@ -22,6 +22,7 @@ const Earnings = () => {
       unit="€"
       title="Earnings"
       overlayInfo="nem sei se isto é relevante"
+      format="0.000a"
     />
   );
 };
