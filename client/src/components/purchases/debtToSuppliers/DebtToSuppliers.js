@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import numeral from 'numeral';
 import { fetchAccountBalance } from '../../../services/financialService';
+import { getYear } from '../../../services/yearService';
 
 import KpiValue from '../../kpiValue';
 
@@ -9,7 +10,8 @@ const DebtToSuppliers = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchAccountBalance('22', 2018, false);
+      const res = await getYear();
+      const { data } = await fetchAccountBalance('22', res.data.year, false);
       setDebtToSuppliers(data.totalCredit - data.totalDebit);
     };
 

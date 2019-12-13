@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CustomCard from '../CustomCard';
 import TableCard from '../TableCard';
 import { fetchSalesByLocation } from '../../services/salesService';
+import { getYear } from '../../services/yearService';
 
 const headers = [
   { name: 'location', label: 'Location' },
@@ -29,7 +30,8 @@ const SalesLocation = () => {
   };
 
   const fetchLocations = async () => {
-    const locationsResponse = await fetchSalesByLocation(2018); // TODO
+    const res = await getYear();
+    const locationsResponse = await fetchSalesByLocation(res.data.year); // TODO
     const locationsData = locationsResponse.data;
     console.log(locationsResponse.data);
     setLocations(locationsData);

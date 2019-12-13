@@ -613,6 +613,10 @@ server.get('/api/inventory/warehouses', (req, res) => {
   });
 });
 
+server.get('/api/year', (req, res) => {
+  res.json({ year: parseInt(db.Header.FiscalYear, 10) });
+});
+
 // Set static folder in production
 if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {

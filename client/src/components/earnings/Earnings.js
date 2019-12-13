@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react';
 import KpiValue from '../kpiValue';
 
 import { fetchEarnings } from '../../services/financialService';
+import { getYear } from '../../services/yearService';
 
 const Earnings = () => {
   const [earnings, setEarnings] = useState(0);
 
   const fetchData = async () => {
-    const { data } = await fetchEarnings(2018);
+    const res = await getYear();
+    const { data } = await fetchEarnings(res.data.year);
     setEarnings(data);
   };
 
