@@ -17,22 +17,23 @@ const headers = [
 const ProductSuppliers = ({ productId }) => {
   const [tableData, setTableData] = useState([]);
 
-  const fetchData = async () => {
-    const { data } = await fetchProductSuppliers(productId);
-    console.log(data);
-    setTableData(
-      data.map(supplier => ({
-        id: supplier.id,
-        name: supplier.name,
-        value: numeral(supplier.value).format('0.0a'),
-        units: numeral(supplier.units).format('0.0a'),
-      })),
-    );
-  };
+  
 
   useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await fetchProductSuppliers(productId);
+      console.log(data);
+      setTableData(
+        data.map(supplier => ({
+          id: supplier.id,
+          name: supplier.name,
+          value: numeral(supplier.value).format('0.0a'),
+          units: numeral(supplier.units).format('0.0a'),
+        })),
+      );
+    };
     fetchData();
-  }, []);
+  }, [productId]);
 
   return (
     <CustomCard title="Product suppliers" overlay="adflksdofhsd">

@@ -14,7 +14,6 @@ const TopProducts = ({ headers }) => {
       setTableData(data);
     };
     getTopProducts();
-    // eslint-disable-next-line
   }, []);
 
   return (
