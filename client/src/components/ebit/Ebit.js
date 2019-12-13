@@ -23,6 +23,7 @@ const Ebit = ({ year }) => {
       unit="€"
       overlayInfo="GEEEEEEEEEEEMMMMPPPP"
       value={ebit}
+      format="0.000a"
     />
   );
 };

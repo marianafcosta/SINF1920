@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchAccountBalance } from '../../../services/financialService';
@@ -22,8 +21,9 @@ const DebtToSuppliers = ({ year }) => {
     <KpiValue
       title="Debt To Suppliers"
       overlayInfo="something something gemp something"
-      value={numeral(debtToSuppliers).format('0.0a')}
+      value={debtToSuppliers}
       unit="€"
+      format="0.0a"
     />
   );
 };

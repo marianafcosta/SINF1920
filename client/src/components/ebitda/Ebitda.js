@@ -23,6 +23,7 @@ const Ebitda = ({ year }) => {
       overlayInfo="something something gemp something"
       value={ebitda}
       unit="€"
+      format="0.000a"
     />
   );
 };

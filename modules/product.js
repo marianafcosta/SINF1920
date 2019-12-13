@@ -1,4 +1,139 @@
-module.exports = (server, db) => {
+const { processProductSuppliers } = require('./utils');
+
+const processProductStock = product => {
+  const totalStock = product.materialsItemWarehouses.reduce((acc, curr) => {
+    return acc + curr.stockBalance;
+  }, 0);
+  return totalStock;
+};
+
+const processProductAverageCost = (orders, id) => {
+  const costs = [];
+
+  orders.forEach(({ documentLines }) => {
+    costs.push(
+      ...documentLines
+        .filter(line => line.purchasesItem === id)
+        .map(line => line.unitPrice.amount),
+    );
+  });
+
+  return costs.reduce((accum, curr) => accum + curr, 0) / costs.length;
+};
+
+const processProductInfo = product => ({
+  barcode: product.barcode,
+  description: product.description,
+  code: product.itemKey,
+});
+
+const processProductAveragePVP = product => {
+  console.log(product);
+  const { priceListLines } = product;
+  const pvpSum = priceListLines.reduce(
+    (acc, curr) => acc + curr.priceAmount.amount,
+    0,
+  );
+  return Number((pvpSum / priceListLines.length).toFixed(2));
+};
+
+module.exports = (server, db, basePrimaveraUrl) => {
+  server.get('/api/products/:id', (req, res) => {
+    const { id } = req.params;
+    const options = {
+      method: 'GET',
+      url: `${basePrimaveraUrl}/materialscore/materialsitems/${id}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    if (!global.primaveraRequests)
+      return res.json({ msg: 'Primavera token missing' });
+
+    console.log(id);
+
+    return global.primaveraRequests(options, function(error, response, body) {
+      if (error) throw new Error(error);
+      let productInfo;
+      if (!JSON.parse(body).message) {
+        productInfo = processProductInfo(JSON.parse(body));
+      }
+      res.json(productInfo);
+    });
+  });
+
+  server.get('/api/products/:id/average-pvp', (req, res) => {
+    const { id } = req.params;
+    const options = {
+      method: 'GET',
+      url: `${basePrimaveraUrl}/salescore/salesitems/${id}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    if (!global.primaveraRequests)
+      return res.json({ msg: 'Primavera token missing' });
+
+    console.log(id);
+
+    return global.primaveraRequests(options, function(error, response, body) {
+      if (error) throw new Error(error);
+      let averagePVP;
+      if (!JSON.parse(body).message) {
+        averagePVP = processProductAveragePVP(JSON.parse(body));
+      }
+      res.json(averagePVP);
+    });
+  });
+
+  server.get('/api/products/:id/units-in-stock', (req, res) => {
+    const { id } = req.params;
+    const options = {
+      method: 'GET',
+      url: `${basePrimaveraUrl}/materialscore/materialsitems/${id}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    if (!global.primaveraRequests)
+      return res.json({ msg: 'Primavera token missing' });
+
+    return global.primaveraRequests(options, function(error, response, body) {
+      if (error) throw new Error(error);
+      let totalStock = 0;
+      if (!JSON.parse(body).message) {
+        totalStock = processProductStock(JSON.parse(body));
+      }
+      res.json(totalStock);
+    });
+  });
+
+  server.get('/api/products/:id/average-cost', (req, res) => {
+    const { id } = req.params;
+    const options = {
+      method: 'GET',
+      url: `${basePrimaveraUrl}/purchases/orders`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    if (!global.primaveraRequests)
+      return res.json({ msg: 'Primavera token missing' });
+
+    return global.primaveraRequests(options, function(error, response, body) {
+      if (error) throw new Error(error);
+      let averageCost = 0;
+      if (!JSON.parse(body).message) {
+        averageCost = processProductAverageCost(JSON.parse(body), id);
+      }
+      res.json(averageCost);
+    });
+  });
+
   server.get('/api/products/:id/units-sold', (req, res) => {
     const { id } = req.params;
     const invoices = db.SourceDocuments.SalesInvoices.Invoice;
@@ -53,5 +188,24 @@ module.exports = (server, db) => {
         value: Number(value.toFixed(2)),
       });
     }
+  });
+
+  server.get('/api/products/:id/suppliers', (req, res) => {
+    const { id } = req.params;
+    const options = {
+      method: 'GET',
+      url: `${basePrimaveraUrl}/purchases/orders`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    if (!global.primaveraRequests)
+      return res.json({ msg: 'Primavera token missing' });
+
+    return global.primaveraRequests(options, function(error, response, body) {
+      if (error) throw new Error(error);
+      res.json(processProductSuppliers(id, JSON.parse(body), req.query.year));
+    });
   });
 };

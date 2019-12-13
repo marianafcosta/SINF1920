@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import numeral from 'numeral';
 import KpiValue from '../../kpiValue';
 
 import { fetchProductAverageCost } from '../../../services/productService';
@@ -20,8 +19,9 @@ const AverageCost = ({ productId }) => {
     <KpiValue
       title="Average Cost"
       overlayInfo="something something gemp something"
-      value={numeral(averageCost).format('0.0a')}
+      value={averageCost}
       unit="€"
+      format="0.0a"
     />
   );
 };

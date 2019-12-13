@@ -1,17 +1,4 @@
 const calculateSalesByLocation = sales => {
-  /*
-    [
-      porto: {
-        quantity:
-        netTotal:
-      },
-      lisboa: {
-        quantity:
-        netTotal:
-      },
-    ]
-  */
-
   const salesByLocation = {};
   const validTypes = ['FT', 'FS', 'FR', 'VD'];
 
@@ -39,7 +26,72 @@ const calculateSalesByLocation = sales => {
   return salesByLocation;
 };
 
-module.exports = (server, db) => {
+const processSalesForCustomerId = (customerId, sales) => {
+  const purchases = {};
+  if (Array.isArray(sales)) {
+    sales.forEach(invoice => {
+      if (invoice.CustomerID === customerId) {
+        if (Array.isArray(invoice.Line)) {
+          invoice.Line.forEach(line => {
+            if (purchases[line.ProductCode]) {
+              purchases[line.ProductCode].units += line.Quantity;
+              purchases[line.ProductCode].value +=
+                line.Quantity * line.UnitPrice;
+            } else {
+              purchases[line.ProductCode] = {
+                id: line.ProductCode,
+                name: line.ProductDescription,
+                units: line.Quantity,
+                value: line.Quantity * line.UnitPrice,
+              };
+            }
+          });
+        } else if (purchases[invoice.Line.ProductCode]) {
+          purchases[invoice.Line.ProductCode].units += invoice.Line.Quantity;
+          purchases[invoice.Line.ProductCode].value +=
+            invoice.Line.Quantity * invoice.Line.UnitPrice;
+        } else {
+          purchases[invoice.Line.ProductCode] = {
+            id: invoice.Line.ProductCode,
+            name: invoice.Line.ProductDescription,
+            units: invoice.Line.Quantity,
+            value: invoice.Line.Quantity * invoice.Line.UnitPrice,
+          };
+        }
+      }
+    });
+  } else if (sales.CustomerID === customerId) {
+    if (Array.isArray(sales.Line)) {
+      sales.Line.forEach(line => {
+        if (purchases[line.ProductCode]) {
+          purchases[line.ProductCode].units += line.Quantity;
+          purchases[line.ProductCode].value += line.Quantity * line.UnitPrice;
+        } else {
+          purchases[line.ProductCode] = {
+            id: line.ProductCode,
+            name: line.ProductDescription,
+            units: line.Quantity,
+            value: line.Quantity * line.UnitPrice,
+          };
+        }
+      });
+    } else if (purchases[sales.Line.ProductCode]) {
+      purchases[sales.Line.ProductCode].units += sales.Line.Quantity;
+      purchases[sales.Line.ProductCode].value +=
+        sales.Line.Quantity * sales.Line.UnitPrice;
+    } else {
+      purchases[sales.Line.ProductCode] = {
+        id: sales.Line.ProductCode,
+        name: sales.Line.ProductDescription,
+        units: sales.Line.Quantity,
+        value: sales.Line.Quantity * sales.Line.UnitPrice,
+      };
+    }
+  }
+  return Object.keys(purchases).map(purchase => purchases[purchase]);
+};
+
+module.exports = (server, db, basePrimaveraUrl) => {
   server.get('/api/sales/revenue', (req, res) => {
     const salesInvoices = db.SourceDocuments.SalesInvoices.Invoice;
     const monthlyCumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -181,5 +233,31 @@ module.exports = (server, db) => {
     const sales = db.SourceDocuments.SalesInvoices.Invoice;
     const salesByLocation = calculateSalesByLocation(sales);
     res.json(salesByLocation);
+  });
+
+  server.get('/api/customers/:id/purchases', (req, res) => {
+    const { id } = req.params;
+    const sales = db.SourceDocuments.SalesInvoices.Invoice;
+    const customerPurchases = processSalesForCustomerId(id, sales);
+    res.json(customerPurchases);
+  });
+
+  server.get('/api/sales/customers/:id', (req, res) => {
+    const { id } = req.params;
+    const options = {
+      method: 'GET',
+      url: `${basePrimaveraUrl}/salescore/customerParties/${id}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    if (!global.primaveraRequests)
+      return res.json({ msg: 'Primavera token missing' });
+
+    return global.primaveraRequests(options, function(error, response, body) {
+      if (error) throw new Error(error);
+      res.json(JSON.parse(body));
+    });
   });
 };

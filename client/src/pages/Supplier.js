@@ -6,6 +6,7 @@ import Layout from '../components/layout/Layout';
 
 import fetchSupplierInfo from '../services/suppliersService';
 import PendingPurchases from '../components/supplier/pendingPurchases/PendingPurchases';
+import TotalPurchased from '../components/supplier/totalPurchased/TotalPurchased';
 
 const Supplier = () => {
   const { id } = useParams();
@@ -76,9 +77,9 @@ const Supplier = () => {
               : {},
           ]}
         />
-        // total purchases
       )}
       <PendingPurchases id={id} />
+      <TotalPurchased id={id} />
     </Layout>
   );
 };
