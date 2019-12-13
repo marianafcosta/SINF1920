@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import KpiValue from '../kpiValue';
 
 import { fetchEbit } from '../../services/financialService';
-import { connect } from 'react-redux';
 
 const Ebit = ({ year }) => {
   const [ebit, setEbit] = useState(0);
@@ -25,6 +25,10 @@ const Ebit = ({ year }) => {
       value={ebit}
     />
   );
+};
+
+Ebit.propTypes = {
+  year: PropTypes.number.isRequired,
 };
 
 export default connect(({ year }) => ({ year }))(Ebit);

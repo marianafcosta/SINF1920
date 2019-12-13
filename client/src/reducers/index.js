@@ -8,5 +8,5 @@ export default combineReducers({
   error: errorReducer,
   auth: authReducer,
   overlay: overlayReducer,
-  year: yearReducer
+  year: yearReducer,
 });

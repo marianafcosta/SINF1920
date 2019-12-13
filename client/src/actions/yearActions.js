@@ -1,13 +1,13 @@
 import { SET_FISCAL_YEAR } from './types';
 
-import { getYear } from '../services/yearService';
+import getYear from '../services/yearService';
 
-const setYear = () => dispatch =>  {
+const setYear = () => dispatch => {
   const { data } = getYear();
   dispatch({
     type: SET_FISCAL_YEAR,
-    payload: data.year
-  })
-}
+    payload: data.year,
+  });
+};
 
 export default setYear;

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import numeral from 'numeral';
-import { fetchAccountBalance } from '../../../services/financialService';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { fetchAccountBalance } from '../../../services/financialService';
 
 import KpiValue from '../../kpiValue';
 
@@ -25,6 +26,10 @@ const DebtToSuppliers = ({ year }) => {
       unit="€"
     />
   );
+};
+
+DebtToSuppliers.propTypes = {
+  year: PropTypes.number.isRequired,
 };
 
 export default connect(({ year }) => ({ year }))(DebtToSuppliers);

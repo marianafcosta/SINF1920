@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import KpiBarChart from '../kpiBarChart';
 
 import { fetchAccountBalance } from '../../services/financialService';
-import { connect } from 'react-redux';
 
 const accountCodes = {
   sales: '71',
@@ -90,6 +90,10 @@ const SalesAndExpenses = ({ year }) => {
       data={graphData}
     />
   );
+};
+
+SalesAndExpenses.propTypes = {
+  year: PropTypes.number.isRequired,
 };
 
 export default connect(({ year }) => ({ year }))(SalesAndExpenses);

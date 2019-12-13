@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import KpiBarChart from '../../kpiBarChart';
 
 import { fetchAccountBalance } from '../../../services/financialService';
-import { connect } from 'react-redux';
-
 
 const monthNames = [
   'Jan',
@@ -26,11 +25,7 @@ const MonthlySales = ({ year }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchAccountBalance(
-        '71',
-        year,
-        true,
-      );
+      const { data } = await fetchAccountBalance('71', year, true);
       setMonthlySales(
         data.totalCredit.map((monthly, index) => ({
           name: monthNames[index],
@@ -50,6 +45,10 @@ const MonthlySales = ({ year }) => {
       data={monthlySales}
     />
   );
+};
+
+MonthlySales.propTypes = {
+  year: PropTypes.number.isRequired,
 };
 
 export default connect(({ year }) => ({ year }))(MonthlySales);

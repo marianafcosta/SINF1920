@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import CustomCard from '../CustomCard';
 import TableCard from '../TableCard';
 import { fetchSalesByLocation } from '../../services/salesService';
-import { connect } from 'react-redux';
 
 const headers = [
   { name: 'location', label: 'Location' },
@@ -49,6 +49,10 @@ const SalesLocation = ({ year }) => {
       <TableCard headers={headers} data={tableData} />
     </CustomCard>
   );
+};
+
+SalesLocation.propTypes = {
+  year: PropTypes.number.isRequired,
 };
 
 export default connect(({ year }) => ({ year }))(SalesLocation);

@@ -14,11 +14,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import Menu from '@material-ui/core/Menu';
 import './layout.css';
-import { NativeSelect } from '@material-ui/core';
+// import { NativeSelect } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import FlashOnIcon from '@material-ui/icons/FlashOn';
-import BootstrapInput from '../common/BootstrapInput';
+// import BootstrapInput from '../common/BootstrapInput';
 import { logout } from '../../actions/authActions';
 import changeOverlayStatus from '../../actions/overlayActions';
 
@@ -46,17 +46,18 @@ const Appbar = ({
   // eslint-disable-next-line
   changeOverlayStatus,
   user,
-  year
+  year,
 }) => {
   const history = useHistory();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [date, setDate] = React.useState('');
+  // const [date, setDate] = React.useState('');
   const openUser = Boolean(anchorEl);
-
+  /*
   const handleChange = event => {
     setDate(event.target.value);
   };
+  */
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -181,11 +182,12 @@ Appbar.propTypes = {
   user: PropTypes.shape({
     role: PropTypes.string,
   }),
+  year: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = ({ overlay, year }) => ({
   isOverlaySet: overlay.isSet,
-  year
+  year,
 });
 
 const mapDispatchToProps = {

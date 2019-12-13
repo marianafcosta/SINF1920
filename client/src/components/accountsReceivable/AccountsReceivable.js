@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
-import { fetchAccountsReceivable } from '../../services/financialService';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { fetchAccountsReceivable } from '../../services/financialService';
 
 import KpiValue from '../kpiValue';
 
@@ -25,6 +25,10 @@ const AccountsReceivable = ({ year }) => {
       unit="€"
     />
   );
+};
+
+AccountsReceivable.propTypes = {
+  year: PropTypes.number.isRequired,
 };
 
 export default connect(({ year }) => ({ year }))(AccountsReceivable);

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import CustomCard from '../CustomCard/CustomCard';
 import TableCard from '../TableCard';
 
 import { fetchTopClients } from '../../services/salesService';
-import { connect } from 'react-redux';
 
 const headers = [
   { name: 'id', label: 'Consumer', link: 'customers' },
@@ -52,6 +52,10 @@ const TopCustomers = ({ year }) => {
       <TableCard headers={headers} data={tableData} />
     </CustomCard>
   );
+};
+
+TopCustomers.propTypes = {
+  year: PropTypes.number.isRequired,
 };
 
 export default connect(({ year }) => ({ year }))(TopCustomers);

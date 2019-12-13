@@ -4,6 +4,4 @@ const baseUrl = '/api/year';
 
 const getYear = () => axios.get(baseUrl);
 
-export {
-  getYear
-};
+export default getYear;
