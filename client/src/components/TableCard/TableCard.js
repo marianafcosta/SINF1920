@@ -130,12 +130,14 @@ const useStyles = makeStyles(theme => ({
     color: 'inherit',
     padding: '7px 14px 7px 4rem',
     borderBottom: '1px solid #FFFBA1',
+    textAlign: 'end',
   },
   cells: {
     backgroundColor: '#262626',
     color: 'inherit',
     padding: '12px 14px 6px 4rem',
     border: 'none',
+    textAlign: 'end',
   },
   pagination: {
     backgroundColor: '#262626',
@@ -184,7 +186,7 @@ const TableCard = ({ headers, data }) => {
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  const displayCell = (row, name, link, number, date) => {
+  const displayCell = (row, name, link, number, date, format) => {
     if (link) {
       return (
         <Link style={{ color: '#fffba1' }} to={`/${link}/${row[name]}`}>
@@ -193,7 +195,7 @@ const TableCard = ({ headers, data }) => {
       );
     }
     if (number) {
-      return <>{numeral(row[name]).format('0.0a')}</>;
+      return <>{numeral(row[name]).format(format ? format : '0.0a')}</>;
     }
 
     if (date) {
@@ -237,9 +239,9 @@ const TableCard = ({ headers, data }) => {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      {headers.map(({ name, link, number, date }) => (
+                      {headers.map(({ name, link, number, date, format }) => (
                         <TableCell key={name} className={classes.cells}>
-                          {displayCell(row, name, link, number, date)}
+                          {displayCell(row, name, link, number, date, format)}
                         </TableCell>
                       ))}
                     </TableRow>
