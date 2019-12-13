@@ -103,6 +103,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     width: '100%',
+    boxShadow: 'none',
   },
   table: {
     minWidth: 750,
