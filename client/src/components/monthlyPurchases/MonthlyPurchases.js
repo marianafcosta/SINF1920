@@ -38,7 +38,7 @@ const MonthlyPurchases = () => {
   return (
     <KpiBarChart
       title="Purchases"
-      overlayInfo="FARTAAA DE LDSO"
+      overlayInfo="Number of units purchased in each month in a year."
       bars={[{ dataKey: 'purchases', fill: '#fffba1' }]}
       data={monthlyPurchases}
     />

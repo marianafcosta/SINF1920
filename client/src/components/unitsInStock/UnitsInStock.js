@@ -7,16 +7,15 @@ import { fetchUnitsInStock } from '../../services/productService';
 const UnitsInStock = ({ productId }) => {
   const [unitsInStock, setUnitsInStock] = useState(0);
 
-  const fetchData = async () => {
-    const response = await fetchUnitsInStock(productId);
-    setUnitsInStock(response.data);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetchUnitsInStock(productId);
+      setUnitsInStock(response.data);
+    };
     if (productId) {
       fetchData();
     }
-  }, []);
+  }, [productId]);
 
   return (
     <KpiValue

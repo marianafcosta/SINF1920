@@ -8,20 +8,19 @@ import KpiInfoList from '../kpiInfoList';
 const ProductInfo = ({ productId }) => {
   const [info, setInfo] = useState([]);
 
-  const fetchData = async () => {
-    if (productId) {
-      const response = await fetchProductInfo(productId);
-      console.log(response);
-      setInfo(
-        Object.keys(response.data).map(item => ({
-          label: item,
-          description: response.data[item],
-        })),
-      );
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      if (productId) {
+        const response = await fetchProductInfo(productId);
+        console.log(response);
+        setInfo(
+          Object.keys(response.data).map(item => ({
+            label: item,
+            description: response.data[item],
+          })),
+        );
+      }
+    };
     fetchData();
   }, [productId]);
 
