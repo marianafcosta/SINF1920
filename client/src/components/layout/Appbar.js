@@ -46,6 +46,7 @@ const Appbar = ({
   // eslint-disable-next-line
   changeOverlayStatus,
   user,
+  year
 }) => {
   const history = useHistory();
 
@@ -115,16 +116,9 @@ const Appbar = ({
           inputProps={{ 'aria-label': 'secondary checkbox' }}
         />
         <div>
-          <NativeSelect
-            value={date}
-            onChange={handleChange}
-            input={<BootstrapInput />}
-          >
-            <option value={2019}>2019</option>
-            <option value={2018}>2018</option>
-            <option value={2017}>2017</option>
-            <option value={2016}>2016</option>
-          </NativeSelect>
+          <Typography variant="h6" color="inherit" noWrap>
+            {year}
+          </Typography>
         </div>
         <div style={{ marginLeft: '12px' }}>
           <Typography variant="h6" color="inherit" noWrap>
@@ -189,8 +183,9 @@ Appbar.propTypes = {
   }),
 };
 
-const mapStateToProps = ({ overlay }) => ({
+const mapStateToProps = ({ overlay, year }) => ({
   isOverlaySet: overlay.isSet,
+  year
 });
 
 const mapDispatchToProps = {
