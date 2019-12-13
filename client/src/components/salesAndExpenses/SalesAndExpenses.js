@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import KpiBarChart from '../kpiBarChart';
 
 import { fetchAccountBalance } from '../../services/financialService';
+import { connect } from 'react-redux';
 
 const accountCodes = {
   sales: '71',
@@ -31,7 +32,7 @@ const testData = [
   },
 ];
 
-const SalesAndExpenses = () => {
+const SalesAndExpenses = ({ year }) => {
   const [accountBalances, setAccountBalances] = useState(null);
   const [graphData, setGraphData] = useState(testData);
 
@@ -54,12 +55,12 @@ const SalesAndExpenses = () => {
   const fetchData = async () => {
     const salesResponse = await fetchAccountBalance(
       accountCodes.sales,
-      2018, // TODO
+      year,
       true,
     );
     const expensesResponse = await fetchAccountBalance(
       accountCodes.expenses,
-      2018, // TODO
+      year,
       true,
     );
     setAccountBalances({
@@ -91,4 +92,4 @@ const SalesAndExpenses = () => {
   );
 };
 
-export default SalesAndExpenses;
+export default connect(({ year }) => ({ year }))(SalesAndExpenses);

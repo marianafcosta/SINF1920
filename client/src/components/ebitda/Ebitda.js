@@ -9,7 +9,7 @@ const Ebitda = ({ year }) => {
   const [ebitda, setEbitda] = useState(0);
 
   const fetchData = async () => {
-    const ebitdaData = await fetchEbitda(year); // TODO
+    const ebitdaData = await fetchEbitda(year);
     setEbitda(ebitdaData.data.ebitda);
   };
 
@@ -27,4 +27,4 @@ const Ebitda = ({ year }) => {
   );
 };
 
-export default connect(({year}) => ({year}))(Ebitda);
+export default connect(({ year }) => ({ year }))(Ebitda);

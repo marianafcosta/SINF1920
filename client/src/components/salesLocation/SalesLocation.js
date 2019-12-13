@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CustomCard from '../CustomCard';
 import TableCard from '../TableCard';
 import { fetchSalesByLocation } from '../../services/salesService';
+import { connect } from 'react-redux';
 
 const headers = [
   { name: 'location', label: 'Location' },
@@ -10,7 +11,7 @@ const headers = [
   { name: 'netTotal', label: 'Net total (€)' },
 ];
 
-const SalesLocation = () => {
+const SalesLocation = ({ year }) => {
   const [locations, setLocations] = useState(null);
   const [tableData, setTableData] = useState([]);
 
@@ -29,7 +30,7 @@ const SalesLocation = () => {
   };
 
   const fetchLocations = async () => {
-    const locationsResponse = await fetchSalesByLocation(2018); // TODO
+    const locationsResponse = await fetchSalesByLocation(year);
     const locationsData = locationsResponse.data;
     console.log(locationsResponse.data);
     setLocations(locationsData);
@@ -50,4 +51,4 @@ const SalesLocation = () => {
   );
 };
 
-export default SalesLocation;
+export default connect(({ year }) => ({ year }))(SalesLocation);

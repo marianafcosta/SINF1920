@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import KpiBarChart from '../../kpiBarChart';
 
 import { fetchAccountBalance } from '../../../services/financialService';
+import { connect } from 'react-redux';
+
 
 const monthNames = [
   'Jan',
@@ -19,14 +21,14 @@ const monthNames = [
   'Dec',
 ];
 
-const MonthlySales = () => {
+const MonthlySales = ({ year }) => {
   const [monthlySales, setMonthlySales] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await fetchAccountBalance(
         '71',
-        2018, // TODO
+        year,
         true,
       );
       setMonthlySales(
@@ -50,4 +52,4 @@ const MonthlySales = () => {
   );
 };
 
-export default MonthlySales;
+export default connect(({ year }) => ({ year }))(MonthlySales);

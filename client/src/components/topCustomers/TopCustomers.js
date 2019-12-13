@@ -4,6 +4,7 @@ import CustomCard from '../CustomCard/CustomCard';
 import TableCard from '../TableCard';
 
 import { fetchTopClients } from '../../services/salesService';
+import { connect } from 'react-redux';
 
 const headers = [
   { name: 'id', label: 'Consumer', link: 'customers' },
@@ -11,7 +12,7 @@ const headers = [
   { name: 'purchases', label: 'Purchases' },
 ];
 
-const TopCustomers = () => {
+const TopCustomers = ({ year }) => {
   const [topAccounts, setTopAccounts] = useState(null);
   const [tableData, setTableData] = useState([]);
 
@@ -30,7 +31,7 @@ const TopCustomers = () => {
   };
 
   const fetchData = async () => {
-    const res = await fetchTopClients(2018);
+    const res = await fetchTopClients(year);
     setTopAccounts({
       clients: res.data,
     });
@@ -53,4 +54,4 @@ const TopCustomers = () => {
   );
 };
 
-export default TopCustomers;
+export default connect(({ year }) => ({ year }))(TopCustomers);

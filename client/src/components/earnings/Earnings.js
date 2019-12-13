@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react';
 import KpiValue from '../kpiValue';
 
 import { fetchEarnings } from '../../services/financialService';
+import { connect } from 'react-redux';
 
-const Earnings = () => {
+
+const Earnings = ({ year }) => {
   const [earnings, setEarnings] = useState(0);
 
   const fetchData = async () => {
-    const { data } = await fetchEarnings(2018);
+    const { data } = await fetchEarnings(year);
     setEarnings(data);
   };
 
@@ -26,4 +28,4 @@ const Earnings = () => {
   );
 };
 
-export default Earnings;
+export default connect(({ year }) => ({ year }))(Earnings);

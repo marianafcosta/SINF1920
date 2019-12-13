@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import KpiValue from '../kpiValue';
 
 import { fetchEbit } from '../../services/financialService';
+import { connect } from 'react-redux';
 
-const Ebit = () => {
+const Ebit = ({ year }) => {
   const [ebit, setEbit] = useState(0);
 
   const fetchData = async () => {
-    const { data } = await fetchEbit(2018);
+    const { data } = await fetchEbit(year);
     setEbit(data);
   };
 
@@ -26,4 +27,4 @@ const Ebit = () => {
   );
 };
 
-export default Ebit;
+export default connect(({ year }) => ({ year }))(Ebit);
