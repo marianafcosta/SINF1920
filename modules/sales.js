@@ -91,7 +91,7 @@ const processSalesForCustomerId = (customerId, sales) => {
   return Object.keys(purchases).map(purchase => purchases[purchase]);
 };
 
-module.exports = (server, db) => {
+module.exports = (server, db, basePrimaveraUrl) => {
   server.get('/api/sales/revenue', (req, res) => {
     const salesInvoices = db.SourceDocuments.SalesInvoices.Invoice;
     const monthlyCumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -240,5 +240,24 @@ module.exports = (server, db) => {
     const sales = db.SourceDocuments.SalesInvoices.Invoice;
     const customerPurchases = processSalesForCustomerId(id, sales);
     res.json(customerPurchases);
+  });
+
+  server.get('/api/sales/customers/:id', (req, res) => {
+    const { id } = req.params;
+    const options = {
+      method: 'GET',
+      url: `${basePrimaveraUrl}/salescore/customerParties/${id}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    if (!global.primaveraRequests)
+      return res.json({ msg: 'Primavera token missing' });
+
+    return global.primaveraRequests(options, function(error, response, body) {
+      if (error) throw new Error(error);
+      res.json(JSON.parse(body));
+    });
   });
 };
