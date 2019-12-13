@@ -10,7 +10,7 @@ import SalesAndExpenses from '../components/salesAndExpenses';
 import Earnings from '../components/earnings';
 
 const Financial = () => (
-  <Layout pageName="Financial">
+  <Layout pageName="Finances">
     <StabilityRatios />
     <Ebitda />
     <Ebit />
