@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import KpiValue from '../../kpiValue';
+import KpiValue from '../kpiValue';
 
-import { fetchProductAverageCost } from '../../../services/productService';
+import { fetchProductAverageCost } from '../../services/productService';
 
-const AverageCost = ({ productId }) => {
+const ProductAverageCost = ({ productId }) => {
   const [averageCost, setAverageCost] = useState(0);
 
   useEffect(() => {
@@ -26,8 +26,8 @@ const AverageCost = ({ productId }) => {
   );
 };
 
-AverageCost.propTypes = {
+ProductAverageCost.propTypes = {
   productId: PropTypes.string.isRequired,
 };
 
-export default AverageCost;
+export default ProductAverageCost;

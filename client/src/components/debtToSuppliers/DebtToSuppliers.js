@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import numeral from 'numeral';
-import { fetchAccountBalance } from '../../../services/financialService';
+import { fetchAccountBalance } from '../../services/financialService';
 
-import KpiValue from '../../kpiValue';
+import KpiValue from '../kpiValue';
 
 const DebtToSuppliers = () => {
   const [debtToSuppliers, setDebtToSuppliers] = useState(0);
