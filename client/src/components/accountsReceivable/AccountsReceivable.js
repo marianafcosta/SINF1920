@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { fetchAccountsReceivable } from '../../services/financialService';
-import { getYear } from '../../services/yearService';
 
 import KpiValue from '../kpiValue';
 
@@ -9,8 +8,7 @@ const AccountsReceivable = () => {
   const [accountsReceivable, setAccountsReceivable] = useState(0);
 
   const fetchData = async () => {
-    const res = await getYear();
-    const { data } = await fetchAccountsReceivable(res.data.year); // TODO
+    const { data } = await fetchAccountsReceivable(2018); // TODO
     setAccountsReceivable(data);
   };
 

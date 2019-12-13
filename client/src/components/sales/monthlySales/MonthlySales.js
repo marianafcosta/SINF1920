@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import KpiBarChart from '../../kpiBarChart';
 
 import { fetchAccountBalance } from '../../../services/financialService';
-import { getYear } from '../../../services/yearService';
 
 const monthNames = [
   'Jan',
@@ -25,10 +24,9 @@ const MonthlySales = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getYear();
       const { data } = await fetchAccountBalance(
         '71',
-        res.data.year, // TODO
+        2018, // TODO
         true,
       );
       setMonthlySales(

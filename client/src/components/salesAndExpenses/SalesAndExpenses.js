@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import KpiBarChart from '../kpiBarChart';
 
 import { fetchAccountBalance } from '../../services/financialService';
-import { getYear } from '../../services/yearService';
 
 const accountCodes = {
   sales: '71',
@@ -53,15 +52,14 @@ const SalesAndExpenses = () => {
   };
 
   const fetchData = async () => {
-    const res = await getYear();
     const salesResponse = await fetchAccountBalance(
       accountCodes.sales,
-      res.data.year, // TODO
+      2018, // TODO
       true,
     );
     const expensesResponse = await fetchAccountBalance(
       accountCodes.expenses,
-      res.data.year, // TODO
+      2018, // TODO
       true,
     );
     setAccountBalances({

@@ -4,7 +4,6 @@ import CustomCard from '../CustomCard/CustomCard';
 import TableCard from '../TableCard';
 
 import { fetchTopClients } from '../../services/salesService';
-import { getYear } from '../../services/yearService';
 
 const headers = [
   { name: 'id', label: 'Consumer', link: 'customers' },
@@ -31,8 +30,7 @@ const TopCustomers = () => {
   };
 
   const fetchData = async () => {
-    const resYear = await getYear();
-    const res = await fetchTopClients(resYear.data.year);
+    const res = await fetchTopClients(2018);
     setTopAccounts({
       clients: res.data,
     });
