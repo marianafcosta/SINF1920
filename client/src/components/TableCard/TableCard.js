@@ -234,7 +234,7 @@ const TableCard = ({ headers, data }) => {
                       onClick={event => handleClick(event, row.id)}
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.id}
+                      key={row[Object.keys(row)[0]]}
                       selected={isItemSelected}
                     >
                       {headers.map(({ name, link, number, date }) => (

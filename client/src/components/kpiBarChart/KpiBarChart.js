@@ -33,7 +33,7 @@ const KpiBarChart = ({ title, overlayInfo, bars, data }) => {
         />
         <Legend formatter={renderLegend} />
         {bars.map(bar => (
-          <Bar dataKey={bar.dataKey} fill={bar.fill} />
+          <Bar dataKey={bar.dataKey} key={bar.dataKey} fill={bar.fill} />
         ))}
       </BarChart>
     </CustomCard>
