@@ -126,11 +126,6 @@ const Appbar = ({
             <option value={2016}>2016</option>
           </NativeSelect>
         </div>
-        <div style={{ marginLeft: '12px' }}>
-          <Typography variant="h6" color="inherit" noWrap>
-            {user.role}
-          </Typography>
-        </div>
         <div>
           <IconButton
             aria-label="account of current user"
@@ -166,6 +161,11 @@ const Appbar = ({
               Logout
             </MenuItem>
           </Menu>
+        </div>
+        <div>
+          <Typography variant="h6" color="inherit" noWrap>
+            {user.role}
+          </Typography>
         </div>
       </Toolbar>
     </AppBar>
