@@ -27,9 +27,7 @@ const LiquidityRatios = () => {
     const cashResponse = await fetchCashRatio();
     const workingCapitalResponse = await fetchWorkingCapital();
     const currentResponse = await fetchCurrentRatio();
-    console.log(cashResponse);
-    console.log(workingCapitalResponse);
-    console.log(currentResponse);
+
     setRatios({
       cash: cashResponse.data,
       workingCapital: workingCapitalResponse.data,
@@ -43,7 +41,6 @@ const LiquidityRatios = () => {
 
   useEffect(() => {
     if (ratios) {
-      console.log(ratios);
       setTableData([
         {
           cash: ratios.cash,

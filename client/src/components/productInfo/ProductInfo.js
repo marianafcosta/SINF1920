@@ -12,7 +12,6 @@ const ProductInfo = ({ productId }) => {
     const fetchData = async () => {
       if (productId) {
         const response = await fetchProductInfo(productId);
-        console.log(response);
         setInfo(
           Object.keys(response.data).map(item => ({
             label: item,
@@ -23,10 +22,6 @@ const ProductInfo = ({ productId }) => {
     };
     fetchData();
   }, [productId]);
-
-  useEffect(() => {
-    console.log(info);
-  }, [info]);
 
   return (
     <KpiInfoList
