@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 import { fetchEbitda } from '../../services/financialService';
+import { connect } from 'react-redux';
 
 import KpiValue from '../kpiValue';
 
-const Ebitda = () => {
+const Ebitda = ({ year }) => {
   const [ebitda, setEbitda] = useState(0);
 
   const fetchData = async () => {
-    const ebitdaData = await fetchEbitda(2018); // TODO
+    const ebitdaData = await fetchEbitda(year); // TODO
     setEbitda(ebitdaData.data.ebitda);
   };
 
@@ -26,4 +27,4 @@ const Ebitda = () => {
   );
 };
 
-export default Ebitda;
+export default connect(({year}) => ({year}))(Ebitda);

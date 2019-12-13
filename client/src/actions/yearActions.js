@@ -1,4 +1,4 @@
-import { SET_FISCAL_YEAR } from '.types';
+import { SET_FISCAL_YEAR } from './types';
 
 import { getYear } from '../services/yearService';
 
