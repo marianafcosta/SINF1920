@@ -1,6 +1,380 @@
 /* eslint-disable radix */
 /* eslint-disable eqeqeq */
 
+const balanceSheet = {
+  assets: {
+    nonCurrent: [
+      {
+        name: 'Tangible assets',
+        taxonomyCodes: [
+          268,
+          269,
+          270,
+          271,
+          272,
+          273,
+          274,
+          -275,
+          -276,
+          -277,
+          -278,
+          -279,
+          -280,
+          -281,
+          -282,
+          -283,
+          -284,
+          -285,
+          -286,
+          -287,
+          -288,
+          306,
+          310,
+          -314,
+          -318,
+        ],
+      },
+      {
+        name: 'Investment properties',
+        taxonomyCodes: [
+          259,
+          260,
+          261,
+          -262,
+          -263,
+          -264,
+          -265,
+          -266,
+          -267,
+          305,
+          309,
+          -313,
+          -317,
+        ],
+      },
+      {
+        name: 'Goodwill',
+        taxonomyCodes: [
+          217,
+          222,
+          227,
+          -236,
+          -237,
+          -238,
+          -240,
+          -245,
+          -250,
+          289,
+          -294,
+          -299,
+        ],
+      },
+      {
+        name: 'Intangible assets',
+        taxonomyCodes: [
+          290,
+          291,
+          292,
+          293,
+          -295,
+          -296,
+          -297,
+          -298,
+          -300,
+          -301,
+          -302,
+          -303,
+          307,
+          311,
+          -315,
+          -319,
+        ],
+      },
+      {
+        name: 'Biological assets',
+        taxonomyCodes: [197, 198, -200, -202, 215],
+      },
+      {
+        name: 'Financial participations',
+        taxonomyCodes: [216, 221, 226, -239, -244, -249],
+      },
+      {
+        name: 'Other financial investments',
+        taxonomyCodes: [
+          218,
+          219,
+          220,
+          223,
+          224,
+          225,
+          228,
+          229,
+          230,
+          231,
+          232,
+          233,
+          234,
+          235,
+          -241,
+          -242,
+          -243,
+          -246,
+          -247,
+          -248,
+          -251,
+          -252,
+          -253,
+          -254,
+          -255,
+          -256,
+          -257,
+          -258,
+          304,
+          308,
+          -312,
+          -316,
+        ],
+      },
+      {
+        name: 'Notes receivable', // ??
+        taxonomyCodes: [-68, -70, 112, -121, -123, 129, -141, -145],
+        ifDebtBalance: [62, 64, 114, 125, 127, 139],
+      },
+      {
+        name: 'Deferred tax assets',
+        taxonomyCodes: [133, -143],
+      },
+    ],
+    current: [
+      {
+        name: 'Inventory',
+        taxonomyCodes: [
+          165,
+          166,
+          167,
+          -168,
+          -169,
+          -170,
+          171,
+          172,
+          173,
+          174,
+          175,
+          176,
+          -177,
+          -178,
+          -179,
+          -180,
+          -181,
+          -182,
+          183,
+          184,
+          -185,
+          -186,
+          187,
+          188,
+          189,
+          -190,
+          -191,
+          -192,
+          193,
+          -194,
+          209,
+          210,
+          211,
+          212,
+          213,
+        ],
+      },
+      {
+        name: 'Biological assets',
+        taxonomyCodes: [195, 196, -199, -201, 214],
+      },
+      {
+        name: 'Clients',
+        taxonomyCodes: [
+          -24,
+          -25,
+          -26,
+          -27,
+          -28,
+          -29,
+          -30,
+          -31,
+          -32,
+          -33,
+          -34,
+          -35,
+          -36,
+        ],
+        ifDebtBalance: [10, 11, 12, 1, 314, 15, 16, 17, 18, 19, 20, 21, 22],
+      },
+      {
+        name: 'State and other public entities',
+        taxonomyCodes: [73, 74, 79, 80],
+        ifDebtBalance: [71, 76, 77, 82, 83, 84, 85],
+      },
+      {
+        name: 'Subscribed and non effective capital', //??
+        taxonomyCodes: [106, 107, -115, -116],
+      },
+      {
+        name: 'Other receivables', // ??
+        taxonomyCodes: [
+          51,
+          -52,
+          55,
+          56,
+          -65,
+          -66,
+          -67,
+          -69,
+          108,
+          111,
+          -117,
+          -118,
+          -119,
+          -120,
+          -122,
+          128,
+          130,
+          -140,
+          -142,
+          -144,
+        ],
+        ifDebtBalance: [
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          61,
+          63,
+          109,
+          110,
+          113,
+          124,
+          126,
+          138,
+        ],
+      },
+      {
+        name: 'Deferments',
+        taxonomyCodes: [146],
+      },
+      {
+        name: 'Financial assets held for negotiation', // ??
+        taxonomyCodes: [4, 6],
+      },
+      {
+        name: 'Other financial assets',
+        taxonomyCodes: [8],
+      },
+      {
+        name: 'Non current assets held for sale', // ??
+        taxonomyCodes: [320, 321, 322, 323, 324, -326, -327, -328, -329, -330],
+      },
+      {
+        name: 'Cash and bank deposits',
+        taxonomyCodes: [1],
+        ifDebtBalance: [2, 3],
+      },
+    ],
+  },
+  liabilities: {
+    nonCurrent: [
+      {
+        name: 'Provisions',
+        taxonomyCodes: [148, 149, 150, 151, 152, 153, 154, 155],
+      },
+      {
+        name: 'Obtained financing', // ??
+        taxonomyCodes: [87, 89, 91, 93, 95, 97, 99, 101, 103, 105],
+      },
+      {
+        name: 'Post-employment benefits responsibility', // ??
+        taxonomyCodes: [132],
+      },
+      {
+        name: 'Deferred tax liabilities',
+        taxonomyCodes: [134],
+      },
+      {
+        name: 'Other accounts payable',
+        taxonomyCodes: [58, 60, 136],
+        ifCreditBalance: [62, 64, 114, 125, 127, 139],
+      },
+    ],
+    current: [
+      {
+        name: 'Suppliers',
+        taxonomyCodes: [],
+        ifCreditBalance: [
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+        ],
+      },
+      {
+        name: 'Payments in advance to clients', // ??
+        taxonomyCodes: [23, 137],
+        ifCreditBalance: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+      },
+      {
+        name: 'State and other public entities',
+        taxonomyCodes: [72, 75, 78],
+        ifCreditBalance: [71, 76, 77, 81, 82, 83, 84, 85],
+      },
+      {
+        name: 'Financing obtained',
+        taxonomyCodes: [86, 88, 90, 92, 94, 96, 98, 100, 102, 104],
+        ifCreditBalance: [2, 3],
+      },
+      {
+        name: 'Other payable debts', // ??
+        taxonomyCodes: [53, 54, 57, 59, 131, 135],
+        ifCreditBalance: [61, 63, 109, 110, 113, 124, 126, 138],
+      },
+      {
+        name: 'Deferments', // ??
+        taxonomyCodes: [147],
+      },
+      {
+        name: 'Financial liabilites held for negotiation', // ??
+        taxonomyCodes: [5, 7],
+      },
+      {
+        name: 'Other financial liabilities',
+        taxonomyCodes: [9],
+      },
+      {
+        name: 'Non current liabilities held for negotiation', // ??
+        taxonomyCodes: [325],
+      },
+    ],
+  },
+};
+
 const processTransactionLines = (lines, accountId) => {
   const totalTransactionValues = {
     totalCredit: 0,
@@ -47,7 +421,8 @@ const processTransactions = (transactions, accountId, year, monthly) => {
     transactions.forEach(transaction => {
       if (
         transaction.Lines &&
-        year === new Date(transaction.TransactionDate).getFullYear()
+        year === new Date(transaction.TransactionDate).getFullYear() &&
+        transaction.TransactionType == 'N'
       ) {
         currentTransaction = processTransactionLines(
           transaction.Lines,
@@ -216,11 +591,11 @@ const calculateEbitda = accounts => {
 
   // USING THE SUM OF THE TRANSACTIONS
 
-  const earningsSales = processJournalEntries(accounts, '71', 2018, false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', 2018, false); // TODO date
-  const expensesCogs = processJournalEntries(accounts, '61', 2018, false); // TODO date
-  const expensesServices = processJournalEntries(accounts, '62', 2018, false); // TODO date
-  const expensesPersonnel = processJournalEntries(accounts, '63', 2018, false); // TODO date
+  const earningsSales = processJournalEntries(accounts, '71', 2019, false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', 2019, false); // TODO date
+  const expensesCogs = processJournalEntries(accounts, '61', 2019, false); // TODO date
+  const expensesServices = processJournalEntries(accounts, '62', 2019, false); // TODO date
+  const expensesPersonnel = processJournalEntries(accounts, '63', 2019, false); // TODO date
 
   const earningsSalesValue =
     earningsSales.totalCredit - earningsSales.totalDebit;
@@ -292,15 +667,15 @@ const calculateEbit = accounts => {
 
   // USING THE SUM OF THE TRANSACTIONS
 
-  const earningsSales = processJournalEntries(accounts, '71', 2018, false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', 2018, false); // TODO date
-  const expensesCogs = processJournalEntries(accounts, '61', 2018, false); // TODO date
-  const expensesServices = processJournalEntries(accounts, '62', 2018, false); // TODO date
-  const expensesPersonnel = processJournalEntries(accounts, '63', 2018, false); // TODO date
+  const earningsSales = processJournalEntries(accounts, '71', 2019, false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', 2019, false); // TODO date
+  const expensesCogs = processJournalEntries(accounts, '61', 2019, false); // TODO date
+  const expensesServices = processJournalEntries(accounts, '62', 2019, false); // TODO date
+  const expensesPersonnel = processJournalEntries(accounts, '63', 2019, false); // TODO date
   const expensesDepreciationAmortization = processJournalEntries(
     accounts,
     '64',
-    2018,
+    2019,
     false,
   ); // TODO date
 
@@ -380,9 +755,9 @@ const calculateEarnings = accounts => {
 
   // USING THE SUM OF THE TRANSACTIONS
 
-  const earningsSales = processJournalEntries(accounts, '71', 2018, false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', 2018, false); // TODO date
-  const expenses = processJournalEntries(accounts, '6', 2018, false); // TODO date
+  const earningsSales = processJournalEntries(accounts, '71', 2019, false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', 2019, false); // TODO date
+  const expenses = processJournalEntries(accounts, '6', 2019, false); // TODO date
 
   const earningsSalesValue =
     earningsSales.totalCredit - earningsSales.totalDebit;
@@ -455,7 +830,7 @@ const calculateEquity = accounts => {
     },
     'Total do Capital Próprio': 0,
   */
-  const ownersEquityAccounts = [
+  const ownersEquityTaxonomy = [
     51,
     261,
     262,
@@ -472,11 +847,10 @@ const calculateEquity = accounts => {
   let ownersEquityAccountsResults = [];
   let currentAccount;
   ownersEquityAccounts.forEach(account => {
-    currentAccount = fetchAccount(accounts, account);
+    currentAccount = processJournalEntries(accounts, account, 2019, false);
     if (currentAccount) {
       ownersEquityAccountsResults[account] =
-        currentAccount.ClosingDebitBalance -
-        currentAccount.ClosingCreditBalance; // ??
+        currentAccount.totalDebit - currentAccount.totalCredit; // ??
     }
   });
   const realizedCapital =
@@ -486,12 +860,17 @@ const calculateEquity = accounts => {
   ownersEquityAccountsResults = ownersEquityAccountsResults.filter(
     item => item !== 51 && item !== 261 && item !== 262,
   );
+  console.log('total accounts for equity');
+  console.log(ownersEquityAccountsResults);
   const totalCapital =
     realizedCapital +
     ownersEquityAccountsResults.reduce(
       (acc, curr) => (acc + curr ? curr : 0),
       0,
     );
+
+  console.log('equity');
+  console.log(totalCapital);
   return totalCapital;
 };
 
@@ -546,16 +925,17 @@ const calculateAssets = accounts => {
   nonCurrentAssetsCalculations.forEach(asset => {
     sum = 0;
     asset.forEach(account => {
-      currentAccount = fetchAccount(accounts, Math.abs(account));
+      currentAccount = processJournalEntries(
+        accounts,
+        Math.abs(account),
+        2019,
+        false,
+      );
       if (currentAccount) {
         if (account < 0) {
-          sum -=
-            currentAccount.ClosingDebitBalance -
-            currentAccount.ClosingCreditBalance;
+          sum -= currentAccount.totalDebit - currentAccount.totalCredit;
         } else {
-          sum +=
-            currentAccount.ClosingDebitBalance -
-            currentAccount.ClosingCreditBalance;
+          sum += currentAccount.totalDebit - currentAccount.totalCredit;
         }
       }
     });
@@ -567,16 +947,17 @@ const calculateAssets = accounts => {
   currentAssetsCalculations.forEach(asset => {
     sum = 0;
     asset.forEach(account => {
-      currentAccount = fetchAccount(accounts, Math.abs(account));
+      currentAccount = processJournalEntries(
+        accounts,
+        Math.abs(account),
+        2019,
+        false,
+      );
       if (currentAccount) {
         if (account < 0) {
-          sum -=
-            currentAccount.ClosingDebitBalance -
-            currentAccount.ClosingCreditBalance;
+          sum -= currentAccount.totalDebit - currentAccount.totalCredit;
         } else {
-          sum +=
-            currentAccount.ClosingDebitBalance -
-            currentAccount.ClosingCreditBalance;
+          sum += currentAccount.totalDebit - currentAccount.totalCredit;
         }
       }
     });
@@ -584,6 +965,10 @@ const calculateAssets = accounts => {
   });
 
   const currentAssets = total;
+  console.log('current assets');
+  console.log(currentAssets);
+  console.log('non current assets');
+  console.log(nonCurrentAssets);
 
   return nonCurrentAssets + currentAssets;
 };
@@ -633,13 +1018,9 @@ const calculateLiabilities = accounts => {
       currentAccount = fetchAccount(accounts, Math.abs(account));
       if (currentAccount) {
         if (account < 0) {
-          sum -=
-            currentAccount.ClosingDebitBalance -
-            currentAccount.ClosingCreditBalance;
+          sum -= currentAccount.totalDebit - currentAccount.totalCredit;
         } else {
-          sum +=
-            currentAccount.ClosingDebitBalance -
-            currentAccount.ClosingCreditBalance;
+          sum += currentAccount.totalDebit - currentAccount.totalCredit;
         }
       }
     });
@@ -651,16 +1032,17 @@ const calculateLiabilities = accounts => {
   currentLiabilitiesCalculations.forEach(asset => {
     sum = 0;
     asset.forEach(account => {
-      currentAccount = fetchAccount(accounts, Math.abs(account));
+      currentAccount = processJournalEntries(
+        accounts,
+        Math.abs(account),
+        2019,
+        false,
+      );
       if (currentAccount) {
         if (account < 0) {
-          sum -=
-            currentAccount.ClosingDebitBalance -
-            currentAccount.ClosingCreditBalance;
+          sum -= currentAccount.totalDebit - currentAccount.totalCredit;
         } else {
-          sum +=
-            currentAccount.ClosingDebitBalance -
-            currentAccount.ClosingCreditBalance;
+          sum += currentAccount.totalDebit - currentAccount.totalCredit;
         }
       }
     });
@@ -686,6 +1068,7 @@ const calculateCurrentLiabilities = accounts => {
   let total = 0;
   let currentAccount;
   let sum;
+  /*
   currentLiabilitiesCalculations.forEach(asset => {
     sum = 0;
     asset.forEach(account => {
@@ -699,6 +1082,26 @@ const calculateCurrentLiabilities = accounts => {
           sum +=
             currentAccount.ClosingDebitBalance -
             currentAccount.ClosingCreditBalance;
+        }
+      }
+    });
+    total += sum;
+  });
+  */
+  currentLiabilitiesCalculations.forEach(asset => {
+    sum = 0;
+    asset.forEach(account => {
+      currentAccount = processJournalEntries(
+        accounts,
+        `${Math.abs(account)}`,
+        2019,
+        false,
+      );
+      if (currentAccount) {
+        if (account < 0) {
+          sum -= currentAccount.totalDebit - currentAccount.totalCredit;
+        } else {
+          sum += currentAccount.totalDebit - currentAccount.totalCredit;
         }
       }
     });
@@ -723,6 +1126,7 @@ const calculateCurrentAssets = accounts => {
   let total = 0;
   let currentAccount;
   let sum;
+  /*
   currentAssetsCalculations.forEach(asset => {
     sum = 0;
     asset.forEach(account => {
@@ -741,13 +1145,34 @@ const calculateCurrentAssets = accounts => {
     });
     total += sum;
   });
+  */
+  currentAssetsCalculations.forEach(asset => {
+    sum = 0;
+    asset.forEach(account => {
+      currentAccount = processJournalEntries(
+        accounts,
+        `${Math.abs(account)}`,
+        2019,
+        false,
+      );
+      if (currentAccount) {
+        if (account < 0) {
+          sum -= currentAccount.totalDebit - currentAccount.totalCredit;
+        } else {
+          sum += currentAccount.totalDebit - currentAccount.totalCredit;
+        }
+      }
+    });
+    total += sum;
+  });
   return total;
 };
 
 const calculateCash = accounts => {
-  const cashCalculations = [11, 12, 13];
+  const cashCalculations = ['11', '12', '13'];
   let total = 0;
   let currentAccount;
+  /*
   cashCalculations.forEach(account => {
     currentAccount = fetchAccount(accounts, Math.abs(account));
     if (currentAccount) {
@@ -762,12 +1187,23 @@ const calculateCash = accounts => {
       }
     }
   });
+  */
+  cashCalculations.forEach(account => {
+    currentAccount = processJournalEntries(accounts, account, 2019, false);
+    if (currentAccount) {
+      if (account < 0) {
+        total -= currentAccount.totalDebit - currentAccount.totalCredit;
+      } else {
+        total += currentAccount.totalDebit - currentAccount.totalCredit;
+      }
+    }
+  });
   return total;
 };
 
 const calculateGrossProfitMargin = journal => {
-  const revenueFromSales = processJournalEntries(journal, '71', 2018, false); // TODO year
-  const cogs = processJournalEntries(journal, '61', 2018, false);
+  const revenueFromSales = processJournalEntries(journal, '71', 2019, false); // TODO year
+  const cogs = processJournalEntries(journal, '61', 2019, false);
   return (
     (revenueFromSales.totalCredit -
       revenueFromSales.totalDebit -
@@ -885,7 +1321,7 @@ module.exports = (server, db) => {
     const { totalCredit, totalDebit } = processJournalEntries(
       accounts,
       '21',
-      2018,
+      2019,
       false,
     ); // TODO date
 
@@ -893,54 +1329,54 @@ module.exports = (server, db) => {
   });
 
   server.get('/api/financial/equity', (req, res) => {
-    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const accounts = db.GeneralLedgerEntries.Journal;
     const equity = calculateEquity(accounts);
     res.json(parseFloat(equity));
   });
 
   server.get('/api/financial/assets', (req, res) => {
-    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const accounts = db.GeneralLedgerEntries.Journal;
     const assets = calculateAssets(accounts);
     res.json(parseFloat(assets));
   });
 
   server.get('/api/financial/liabilities', (req, res) => {
-    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const accounts = db.GeneralLedgerEntries.Journal;
     const liabilities = calculateLiabilities(accounts);
     res.json(parseFloat(liabilities));
   });
 
   server.get('/api/financial/liabilities/current', (req, res) => {
-    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const accounts = db.GeneralLedgerEntries.Journal;
     res.json(calculateCurrentLiabilities(accounts));
   });
 
   server.get('/api/financial/assets/current', (req, res) => {
-    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const accounts = db.GeneralLedgerEntries.Journal;
     res.json(calculateCurrentAssets(accounts));
   });
 
   server.get('/api/financial/assets/cash', (req, res) => {
-    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const accounts = db.GeneralLedgerEntries.Journal;
     res.json(calculateCash(accounts));
   });
 
   server.get('/api/financial/ratios/cash', (req, res) => {
-    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const accounts = db.GeneralLedgerEntries.Journal;
     const cash = calculateCash(accounts);
     const currentLiabilities = calculateCurrentLiabilities(accounts);
     res.json(Number(Math.abs(cash / currentLiabilities).toFixed(2)));
   });
 
   server.get('/api/financial/ratios/current', (req, res) => {
-    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const accounts = db.GeneralLedgerEntries.Journal;
     const currentAssets = calculateCurrentAssets(accounts);
     const currentLiabilities = calculateCurrentLiabilities(accounts);
     res.json(Number(Math.abs(currentAssets / currentLiabilities).toFixed(2)));
   });
 
   server.get('/api/financial/working-capital', (req, res) => {
-    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const accounts = db.GeneralLedgerEntries.Journal;
     const currentAssets = calculateCurrentAssets(accounts);
     const currentLiabilities = calculateCurrentLiabilities(accounts);
     res.json(
