@@ -866,24 +866,28 @@ const calculateAssets = accounts => {
     let currentTaxonomy;
     assetAccount.taxonomyCodes.forEach(taxonomy => {
       currentTaxonomy = processTaxonomySum(Math.abs(taxonomy), accounts);
-      if (taxonomy < 0) {
-        currentSum -= currentTaxonomy.balanceValue;
-      } else {
-        currentSum += currentTaxonomy.balanceValue;
-      }
+      currentTaxonomy.forEach(tax => {
+        if (taxonomy < 0) {
+          currentSum -= tax.balanceValue;
+        } else {
+          currentSum += tax.balanceValue;
+        }
+      });
     });
 
     // check if credit
     if (assetAccount.ifCreditBalance) {
       assetAccount.ifCreditBalance.forEach(credit => {
         currentTaxonomy = processTaxonomySum(Math.abs(credit), accounts);
-        if (currentTaxonomy.balanceType === 'credit') {
-          if (credit < 0) {
-            currentSum -= currentTaxonomy.balanceValue;
-          } else {
-            currentSum += currentTaxonomy.balanceValue;
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'credit') {
+            if (credit < 0) {
+              currentSum -= tax.balanceValue;
+            } else {
+              currentSum += tax.balanceValue;
+            }
           }
-        }
+        });
       });
     }
 
@@ -891,13 +895,15 @@ const calculateAssets = accounts => {
     if (assetAccount.ifDebtBalance) {
       assetAccount.ifDebtBalance.forEach(debit => {
         currentTaxonomy = processTaxonomySum(Math.abs(debit), accounts);
-        if (currentTaxonomy.balanceType === 'debit') {
-          if (debit < 0) {
-            currentSum -= currentTaxonomy.balanceValue;
-          } else {
-            currentSum += currentTaxonomy.balanceValue;
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            if (debit < 0) {
+              currentSum -= tax.balanceValue;
+            } else {
+              currentSum += tax.balanceValue;
+            }
           }
-        }
+        });
       });
     }
 
@@ -905,11 +911,13 @@ const calculateAssets = accounts => {
     if (assetAccount.ifCreditOrDebit) {
       assetAccount.ifCreditOrDebit.forEach(creditOrDebit => {
         currentTaxonomy = processTaxonomySum(Math.abs(creditOrDebit), accounts);
-        if (currentTaxonomy.balanceType === 'debit') {
-          currentSum -= currentTaxonomy.balanceValue;
-        } else {
-          currentSum += currentTaxonomy.balanceValue;
-        }
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            currentSum -= tax.balanceValue;
+          } else {
+            currentSum += tax.balanceValue;
+          }
+        });
       });
     }
     assets.current.push({ name: assetAccount.name, value: currentSum });
@@ -922,24 +930,28 @@ const calculateAssets = accounts => {
     let currentTaxonomy;
     assetAccount.taxonomyCodes.forEach(taxonomy => {
       currentTaxonomy = processTaxonomySum(Math.abs(taxonomy), accounts);
-      if (taxonomy < 0) {
-        currentSum -= currentTaxonomy.balanceValue;
-      } else {
-        currentSum += currentTaxonomy.balanceValue;
-      }
+      currentTaxonomy.forEach(tax => {
+        if (taxonomy < 0) {
+          currentSum -= tax.balanceValue;
+        } else {
+          currentSum += tax.balanceValue;
+        }
+      });
     });
 
     // check if credit
     if (assetAccount.ifCreditBalance) {
       assetAccount.ifCreditBalance.forEach(credit => {
         currentTaxonomy = processTaxonomySum(Math.abs(credit), accounts);
-        if (currentTaxonomy.balanceType === 'credit') {
-          if (credit < 0) {
-            currentSum -= currentTaxonomy.balanceValue;
-          } else {
-            currentSum += currentTaxonomy.balanceValue;
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'credit') {
+            if (credit < 0) {
+              currentSum -= tax.balanceValue;
+            } else {
+              currentSum += tax.balanceValue;
+            }
           }
-        }
+        });
       });
     }
 
@@ -947,13 +959,15 @@ const calculateAssets = accounts => {
     if (assetAccount.ifDebtBalance) {
       assetAccount.ifDebtBalance.forEach(debit => {
         currentTaxonomy = processTaxonomySum(Math.abs(debit), accounts);
-        if (currentTaxonomy.balanceType === 'debit') {
-          if (debit < 0) {
-            currentSum -= currentTaxonomy.balanceValue;
-          } else {
-            currentSum += currentTaxonomy.balanceValue;
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            if (debit < 0) {
+              currentSum -= tax.balanceValue;
+            } else {
+              currentSum += tax.balanceValue;
+            }
           }
-        }
+        });
       });
     }
 
@@ -961,11 +975,13 @@ const calculateAssets = accounts => {
     if (assetAccount.ifCreditOrDebit) {
       assetAccount.ifCreditOrDebit.forEach(creditOrDebit => {
         currentTaxonomy = processTaxonomySum(Math.abs(creditOrDebit), accounts);
-        if (currentTaxonomy.balanceType === 'debit') {
-          currentSum -= currentTaxonomy.balanceValue;
-        } else {
-          currentSum += currentTaxonomy.balanceValue;
-        }
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            currentSum -= tax.balanceValue;
+          } else {
+            currentSum += tax.balanceValue;
+          }
+        });
       });
     }
     assets.nonCurrent.push({ name: assetAccount.name, value: currentSum });
@@ -997,24 +1013,28 @@ const calculateLiabilities = accounts => {
     let currentTaxonomy;
     liabilityAccount.taxonomyCodes.forEach(taxonomy => {
       currentTaxonomy = processTaxonomySum(Math.abs(taxonomy), accounts);
-      if (taxonomy < 0) {
-        currentSum -= currentTaxonomy.balanceValue;
-      } else {
-        currentSum += currentTaxonomy.balanceValue;
-      }
+      currentTaxonomy.forEach(tax => {
+        if (taxonomy < 0) {
+          currentSum -= tax.balanceValue;
+        } else {
+          currentSum += tax.balanceValue;
+        }
+      });
     });
 
     // check if credit
     if (liabilityAccount.ifCreditBalance) {
       liabilityAccount.ifCreditBalance.forEach(credit => {
         currentTaxonomy = processTaxonomySum(Math.abs(credit), accounts);
-        if (currentTaxonomy.balanceType === 'credit') {
-          if (credit < 0) {
-            currentSum -= currentTaxonomy.balanceValue;
-          } else {
-            currentSum += currentTaxonomy.balanceValue;
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'credit') {
+            if (credit < 0) {
+              currentSum -= tax.balanceValue;
+            } else {
+              currentSum += tax.balanceValue;
+            }
           }
-        }
+        });
       });
     }
 
@@ -1022,13 +1042,15 @@ const calculateLiabilities = accounts => {
     if (liabilityAccount.ifDebtBalance) {
       liabilityAccount.ifDebtBalance.forEach(debit => {
         currentTaxonomy = processTaxonomySum(Math.abs(debit), accounts);
-        if (currentTaxonomy.balanceType === 'debit') {
-          if (debit < 0) {
-            currentSum -= currentTaxonomy.balanceValue;
-          } else {
-            currentSum += currentTaxonomy.balanceValue;
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            if (debit < 0) {
+              currentSum -= tax.balanceValue;
+            } else {
+              currentSum += tax.balanceValue;
+            }
           }
-        }
+        });
       });
     }
 
@@ -1036,11 +1058,13 @@ const calculateLiabilities = accounts => {
     if (liabilityAccount.ifCreditOrDebit) {
       liabilityAccount.ifCreditOrDebit.forEach(creditOrDebit => {
         currentTaxonomy = processTaxonomySum(Math.abs(creditOrDebit), accounts);
-        if (currentTaxonomy.balanceType === 'debit') {
-          currentSum -= currentTaxonomy.balanceValue;
-        } else {
-          currentSum += currentTaxonomy.balanceValue;
-        }
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            currentSum -= tax.balanceValue;
+          } else {
+            currentSum += tax.balanceValue;
+          }
+        });
       });
     }
     liabilities.current.push({
@@ -1056,24 +1080,28 @@ const calculateLiabilities = accounts => {
     let currentTaxonomy;
     liabilityAccount.taxonomyCodes.forEach(taxonomy => {
       currentTaxonomy = processTaxonomySum(Math.abs(taxonomy), accounts);
-      if (taxonomy < 0) {
-        currentSum -= currentTaxonomy.balanceValue;
-      } else {
-        currentSum += currentTaxonomy.balanceValue;
-      }
+      currentTaxonomy.forEach(tax => {
+        if (taxonomy < 0) {
+          currentSum -= tax.balanceValue;
+        } else {
+          currentSum += tax.balanceValue;
+        }
+      });
     });
 
     // check if credit
     if (liabilityAccount.ifCreditBalance) {
       liabilityAccount.ifCreditBalance.forEach(credit => {
         currentTaxonomy = processTaxonomySum(Math.abs(credit), accounts);
-        if (currentTaxonomy.balanceType === 'credit') {
-          if (credit < 0) {
-            currentSum -= currentTaxonomy.balanceValue;
-          } else {
-            currentSum += currentTaxonomy.balanceValue;
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'credit') {
+            if (credit < 0) {
+              currentSum -= tax.balanceValue;
+            } else {
+              currentSum += tax.balanceValue;
+            }
           }
-        }
+        });
       });
     }
 
@@ -1081,13 +1109,15 @@ const calculateLiabilities = accounts => {
     if (liabilityAccount.ifDebtBalance) {
       liabilityAccount.ifDebtBalance.forEach(debit => {
         currentTaxonomy = processTaxonomySum(Math.abs(debit), accounts);
-        if (currentTaxonomy.balanceType === 'debit') {
-          if (debit < 0) {
-            currentSum -= currentTaxonomy.balanceValue;
-          } else {
-            currentSum += currentTaxonomy.balanceValue;
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            if (debit < 0) {
+              currentSum -= tax.balanceValue;
+            } else {
+              currentSum += tax.balanceValue;
+            }
           }
-        }
+        });
       });
     }
 
@@ -1095,11 +1125,13 @@ const calculateLiabilities = accounts => {
     if (liabilityAccount.ifCreditOrDebit) {
       liabilityAccount.ifCreditOrDebit.forEach(creditOrDebit => {
         currentTaxonomy = processTaxonomySum(Math.abs(creditOrDebit), accounts);
-        if (currentTaxonomy.balanceType === 'debit') {
-          currentSum -= currentTaxonomy.balanceValue;
-        } else {
-          currentSum += currentTaxonomy.balanceValue;
-        }
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            currentSum -= tax.balanceValue;
+          } else {
+            currentSum += tax.balanceValue;
+          }
+        });
       });
     }
     liabilities.nonCurrent.push({
