@@ -1,7 +1,12 @@
 const commandLineArgs = require('command-line-args');
 
 const optionDefinitions = [
-  { name: 'filename', alias: 'f', type: String, defaultValue: 'sample.xml' },
+  {
+    name: 'filename',
+    alias: 'f',
+    type: String,
+    defaultValue: 'accounting.xml',
+  },
 ];
 
 const options = commandLineArgs(optionDefinitions);
