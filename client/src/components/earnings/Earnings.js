@@ -8,7 +8,7 @@ const Earnings = () => {
   const [earnings, setEarnings] = useState(0);
 
   const fetchData = async () => {
-    const { data } = await fetchEarnings(2018);
+    const { data } = await fetchEarnings(2019);
     setEarnings(data);
   };
 

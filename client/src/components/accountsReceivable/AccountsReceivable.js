@@ -8,7 +8,7 @@ const AccountsReceivable = () => {
   const [accountsReceivable, setAccountsReceivable] = useState(0);
 
   const fetchData = async () => {
-    const { data } = await fetchAccountsReceivable(2018); // TODO
+    const { data } = await fetchAccountsReceivable(2019); // TODO
     setAccountsReceivable(data);
   };
 
