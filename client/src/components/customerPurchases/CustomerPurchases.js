@@ -19,7 +19,7 @@ const CustomerPurchases = ({ customerId }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchPurchases(customerId, 2018);
+      const { data } = await fetchPurchases(customerId, 2019);
       setPurchases(
         data.map(item => ({
           ...item,

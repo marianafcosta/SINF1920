@@ -26,7 +26,7 @@ const MonthlySales = () => {
     const fetchData = async () => {
       const { data } = await fetchAccountBalance(
         '71',
-        2018, // TODO
+        2019, // TODO
         true,
       );
       setMonthlySales(

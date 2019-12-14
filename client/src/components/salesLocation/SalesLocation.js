@@ -15,7 +15,7 @@ const SalesLocation = () => {
   const [tableData, setTableData] = useState([]);
 
   const fetchLocations = async () => {
-    const locationsResponse = await fetchSalesByLocation(2018); // TODO
+    const locationsResponse = await fetchSalesByLocation(2019); // TODO
     const locationsData = locationsResponse.data;
     console.log(locationsResponse.data);
     setLocations(locationsData);

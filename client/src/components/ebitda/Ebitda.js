@@ -8,7 +8,7 @@ const Ebitda = () => {
   const [ebitda, setEbitda] = useState(0);
 
   const fetchData = async () => {
-    const ebitdaData = await fetchEbitda(2018); // TODO
+    const ebitdaData = await fetchEbitda(2019); // TODO
     setEbitda(ebitdaData.data.ebitda);
   };
 

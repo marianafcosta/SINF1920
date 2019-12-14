@@ -8,7 +8,7 @@ const DebtToSuppliers = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchAccountBalance('22', 2018, false);
+      const { data } = await fetchAccountBalance('22', 2019, false);
       setDebtToSuppliers(data.totalCredit - data.totalDebit);
     };
 

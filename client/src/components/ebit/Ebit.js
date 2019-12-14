@@ -8,7 +8,7 @@ const Ebit = () => {
   const [ebit, setEbit] = useState(0);
 
   const fetchData = async () => {
-    const { data } = await fetchEbit(2018);
+    const { data } = await fetchEbit(2019);
     setEbit(data);
   };
 
