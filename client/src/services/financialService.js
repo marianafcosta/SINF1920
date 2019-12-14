@@ -27,12 +27,8 @@ const fetchEbit = year => {
 const fetchAccountsReceivable = year =>
   axios.get(`${baseUrl}/accounts-receivable?year=${year}`);
 
-const fetchAccountBalanceSheet = accountId => {
-  return axios.get(`${baseUrl}/account-balance-sheet`, {
-    params: {
-      accountId,
-    },
-  });
+const fetchBalanceSheet = () => {
+  return axios.get(`${baseUrl}/balance-sheet`, {});
 };
 
 const fetchWorkingCapital = () => {
@@ -65,7 +61,7 @@ const fetchGrossProfitMargin = () => {
 
 export {
   fetchAccountBalance,
-  fetchAccountBalanceSheet,
+  fetchBalanceSheet,
   fetchLiabilities,
   fetchEquity,
   fetchAssets,

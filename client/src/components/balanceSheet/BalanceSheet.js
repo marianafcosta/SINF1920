@@ -1,74 +1,100 @@
 import React, { useState, useEffect } from 'react';
 
-import CustomCard from '../CustomCard/CustomCard';
-import TableCard from '../TableCard';
+import KpiAccountList from '../kpiAccountList';
 
-import { fetchAccountBalanceSheet } from '../../services/financialService';
+import { fetchBalanceSheet } from '../../services/financialService';
 
-const accountNames = [
-  ['11', 'Caixa'],
-  ['12', 'Depósitos à Ordem'],
-  ['21', 'Contas a Receber de Clientes'],
-  ['22', 'Contas a Pagar a Fornecedores'],
-  ['24', 'Estado e Outros Entes Públicos'],
-  ['31', 'Compras'],
-  ['32', 'Mercadorias em Armazém / Trânsito'],
-  ['36', 'Produtos e Trabalhos em Curso'],
-  ['61', 'Custo das Mercadorias Vendidas'],
-  ['62', 'Fornecimentos e Serviços Externos'],
-  ['71', 'Vendas'],
-  ['72', 'Prestações de Serviços'],
-];
-
-const headers = [
-  { name: 'id', label: 'Account' },
-  { name: 'description', label: 'Name' },
-  { name: 'debit', label: 'Debit (€)' },
-  { name: 'credit', label: 'Credit (€)' },
+const sections = [
+  { title: 'Assets', highlight: true },
+  { title: 'Current assets' },
+  { title: 'Non-current assets' },
+  { title: 'Liabilities', highlight: true },
+  { title: 'Current liabilities' },
+  { title: 'Non-current liabilities' },
+  { title: 'Equity', highlight: true },
+  { title: 'Totals', highlight: true },
 ];
 
 const BalanceSheet = () => {
-  const [accountBalance, setAccountBalance] = useState(null);
-  const [tableData, setTableData] = useState([]);
+  const [balanceSheet, setBalanceSheet] = useState(null);
+  const [listData, setListData] = useState([]);
 
   const updateTable = () => {
-    if (accountBalance) {
-      setTableData([
-        ...tableData,
-        {
-          id: accountBalance.id[0],
-          description: accountBalance.id[1],
-          debit: accountBalance.res.totalDebit,
-          credit: accountBalance.res.totalCredit,
-        },
-      ]);
+    const updatedListData = [];
+    if (balanceSheet) {
+      balanceSheet.assets.current.forEach(currentAsset =>
+        updatedListData.push({
+          section: 'Current assets',
+          label: currentAsset.name,
+          description: currentAsset.value,
+        }),
+      );
+      balanceSheet.assets.nonCurrent.forEach(nonCurrentAsset =>
+        updatedListData.push({
+          section: 'Non-current assets',
+          label: nonCurrentAsset.name,
+          description: nonCurrentAsset.value,
+        }),
+      );
+      balanceSheet.liabilities.current.forEach(currentLiability =>
+        updatedListData.push({
+          section: 'Current liabilities',
+          label: currentLiability.name,
+          description: currentLiability.value,
+        }),
+      );
+      balanceSheet.liabilities.nonCurrent.forEach(nonCurrentLiability =>
+        updatedListData.push({
+          section: 'Non-current liabilities',
+          label: nonCurrentLiability.name,
+          description: nonCurrentLiability.value,
+        }),
+      );
+      balanceSheet.equity.accounts.forEach(equity =>
+        updatedListData.push({
+          section: 'Equity',
+          label: equity.name,
+          description: equity.value,
+        }),
+      );
+      updatedListData.push({
+        section: 'Totals',
+        label: 'Total assets',
+        description: balanceSheet.assets.total,
+      });
+      updatedListData.push({
+        section: 'Totals',
+        label: 'Total equity and liabilities',
+        description: balanceSheet.assets.total,
+      });
+      setListData(updatedListData);
     }
   };
 
-  const fetchData = async account => {
-    const balance = await fetchAccountBalanceSheet(account[0]);
-    setAccountBalance({
-      id: account,
-      res: balance.data,
-    });
+  const fetchData = async () => {
+    const { data } = await fetchBalanceSheet();
+    console.log(data);
+    setBalanceSheet(data);
   };
 
   useEffect(() => {
-    accountNames.forEach(account => {
-      fetchData(account);
-    });
+    fetchData();
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     updateTable();
+    console.log(balanceSheet);
     // eslint-disable-next-line
-  }, [accountBalance]);
+  }, [balanceSheet]);
 
   return (
-    <CustomCard title="Balance Sheet" overlay="Testing">
-      <TableCard headers={headers} data={tableData} />
-    </CustomCard>
+    <KpiAccountList
+      title="Balance sheet"
+      overlayInfo="dfadsf"
+      sections={sections}
+      data={listData}
+    />
   );
 };
 

@@ -1150,7 +1150,13 @@ const calculateLiabilities = accounts => {
   return liabilities;
 };
 
-const calculateBalanceSheet = accounts => {};
+const calculateBalanceSheet = accounts => {
+  const balanceSheetResponse = {};
+  balanceSheetResponse.assets = calculateAssets(accounts);
+  balanceSheetResponse.liabilities = calculateLiabilities(accounts);
+  balanceSheetResponse.equity = calculateEquity(accounts);
+  return balanceSheetResponse;
+};
 
 const calculateCash = accounts => {
   const cashCalculations = ['11', '12', '13'];
@@ -1333,7 +1339,7 @@ module.exports = (server, db) => {
   server.get('/api/financial/balance-sheet', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const balanceSheetResponse = calculateBalanceSheet(accounts);
-    res.json(parseFloat(balanceSheetResponse));
+    res.json(balanceSheetResponse);
   });
 
   server.get('/api/financial/liabilities/current', (req, res) => {
