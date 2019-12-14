@@ -1,11 +1,10 @@
 const moment = require('moment');
 
-const processPurchases = (orders, year) => {
+const processPurchases = orders => {
   const monthlyCumulativeValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   orders
     // eslint-disable-next-line eqeqeq
-    .filter(order => moment(order.documentDate).year() == year)
     .forEach(({ documentDate, payableAmount }) => {
       const month = moment(documentDate).month();
 
@@ -33,10 +32,7 @@ module.exports = (server, basePrimaveraUrl) => {
 
       let monthlyCumulativeValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       if (!JSON.parse(body).message) {
-        monthlyCumulativeValue = processPurchases(
-          JSON.parse(body),
-          req.query.year,
-        );
+        monthlyCumulativeValue = processPurchases(JSON.parse(body));
       }
       res.json(monthlyCumulativeValue);
     });
