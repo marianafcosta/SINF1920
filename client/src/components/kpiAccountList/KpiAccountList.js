@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import numeral from 'numeral';
 
 import CustomCard from '../CustomCard';
 
@@ -28,7 +29,10 @@ const KpiAccountList = ({ title, overlayInfo, sections, data }) => {
                 <li className={styles.listItem} key={sectionItem.label}>
                   <strong className={styles.label}>{sectionItem.label}</strong>
                   <strong className={styles.description}>
-                    {sectionItem.description}
+                    {numeral(sectionItem.description).format(
+                      sectionItem.format ? sectionItem.format : '€0,0.00',
+                    )}{' '}
+                    €
                   </strong>
                 </li>
               ))}
@@ -52,6 +56,7 @@ KpiAccountList.propTypes = {
     PropTypes.shape({
       label: PropTypes.string,
       description: PropTypes.string,
+      format: PropTypes.string,
       section: PropTypes.string,
     }),
   ).isRequired,
