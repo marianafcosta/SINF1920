@@ -21,7 +21,7 @@ const monthNames = [
 ];
 
 const MonthlySales = ({ year }) => {
-  const [monthlySales, setMonthlySales] = useState(null);
+  const [monthlySales, setMonthlySales] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +40,7 @@ const MonthlySales = ({ year }) => {
   return (
     <KpiBarChart
       title="Sales"
-      overlay="gemp gemp gemp"
+      overlayInfo="Number of units purchased in each month in a year."
       bars={[{ dataKey: 'sales', fill: '#fffba1' }]}
       data={monthlySales}
     />

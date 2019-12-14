@@ -29,24 +29,23 @@ const testData = [
 const ProductSales = ({ productId }) => {
   const [graphData, setGraphData] = useState(testData);
 
-  const fetchData = async () => {
-    const { data } = await fetchProductUnitsSold(productId, true);
-    setGraphData(
-      data.value.map((month, index) => ({
-        name: monthNames[index],
-        sales: month,
-      })),
-    );
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await fetchProductUnitsSold(productId, true);
+      setGraphData(
+        data.value.map((month, index) => ({
+          name: monthNames[index],
+          sales: month,
+        })),
+      );
+    };
     fetchData();
-  }, []);
+  }, [productId]);
 
   return (
     <KpiBarChart
       title="Product sales"
-      overlayInfo="FARTAAA DE LDSO"
+      overlayInfo="Number of units sold per month in a year."
       bars={[{ dataKey: 'sales', fill: '#fffba1' }]}
       data={graphData}
     />

@@ -17,20 +17,19 @@ const headers = [
 const CustomerPurchases = ({ customerId }) => {
   const [purchases, setPurchases] = useState([]);
 
-  const fetchData = async () => {
-    const { data } = await fetchPurchases(customerId, 2018);
-    setPurchases(
-      data.map(item => ({
-        ...item,
-        units: numeral(item.units).format('0a'),
-        value: numeral(item.value).format('0.000a'),
-      })),
-    );
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await fetchPurchases(customerId, 2019);
+      setPurchases(
+        data.map(item => ({
+          ...item,
+          units: numeral(item.units).format('0a'),
+          value: numeral(item.value).format('0.000a'),
+        })),
+      );
+    };
     fetchData();
-  }, []);
+  }, [customerId]);
 
   return (
     <CustomCard title="Purchases" overlayInfo="dkfngçsdasfsd">

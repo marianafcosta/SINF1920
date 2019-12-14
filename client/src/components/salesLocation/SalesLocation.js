@@ -15,20 +15,6 @@ const SalesLocation = ({ year }) => {
   const [locations, setLocations] = useState(null);
   const [tableData, setTableData] = useState([]);
 
-  const updateTable = () => {
-    if (locations) {
-      setTableData(
-        Object.keys(locations).map(location => {
-          return {
-            location,
-            quantity: locations[location].quantity,
-            netTotal: locations[location].netTotal,
-          };
-        }),
-      );
-    }
-  };
-
   const fetchLocations = async () => {
     const locationsResponse = await fetchSalesByLocation(year);
     const locationsData = locationsResponse.data;
@@ -41,6 +27,19 @@ const SalesLocation = ({ year }) => {
   }, []);
 
   useEffect(() => {
+    const updateTable = () => {
+      if (locations) {
+        setTableData(
+          Object.keys(locations).map(location => {
+            return {
+              location,
+              quantity: locations[location].quantity,
+              netTotal: locations[location].netTotal,
+            };
+          }),
+        );
+      }
+    };
     updateTable();
   }, [locations]);
 
