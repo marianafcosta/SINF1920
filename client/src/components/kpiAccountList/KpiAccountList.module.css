@@ -1,0 +1,63 @@
+.list {
+  list-style-type: none;
+  color: white;
+  padding: 0 20px;
+  margin-bottom: 1em;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 251, 161, 0.7);
+}
+
+.listItem *:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+
+.listItem .description {
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+
+.listItem .label {
+  padding: 0.3em;
+}
+
+.sectionTitleWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  align-items: center;
+}
+
+.sectionTitle {
+  padding: 5px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  align-items: center;
+  margin: 0;
+}
+
+strong {
+  margin-bottom: 0 !important;
+}
+
+.highlight {
+  padding: 0.5em;
+  background-color: #fffba1;
+  color: #262626;
+  border-radius: 50px;
+}
+
+.sectionTitleWrapper:not(:first-child) {
+  margin-top: 1em;
+}
