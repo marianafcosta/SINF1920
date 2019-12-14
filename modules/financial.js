@@ -680,7 +680,6 @@ const calculateEbit = accounts => {
   const expensesDepreciationAmortization = processJournalEntries(
     accounts,
     '64',
-    2019,
     false,
   ); // TODO date
 
@@ -1198,10 +1197,10 @@ module.exports = (server, db) => {
   server.get('/api/financial/account-balance', (req, res) => {
     const journalEntries = db.GeneralLedgerEntries.Journal;
 
-    if (!req.query.monthly || !req.query.year || !req.query.accountId) {
+    if (!req.query.monthly || !req.query.accountId) {
       res.json({
         error:
-          'The request should be as follows: /api/financial/accountBalance?accountId=<accountId>&year=<year>&monthly=<true|false>',
+          'The request should be as follows: /api/financial/accountBalance?accountId=<accountId>&monthly=<true|false>',
       });
       return;
     }
