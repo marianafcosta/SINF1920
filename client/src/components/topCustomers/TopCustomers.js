@@ -30,7 +30,7 @@ const TopCustomers = () => {
   };
 
   const fetchData = async () => {
-    const res = await fetchTopClients(2019);
+    const res = await fetchTopClients(2018);
     setTopAccounts({
       clients: res.data,
     });
