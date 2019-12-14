@@ -373,6 +373,58 @@ const balanceSheet = {
       },
     ],
   },
+  equity: {
+    nonCurrent: [
+      {
+        name: 'Subscribed capital',
+        taxonomyCodes: [331],
+      },
+      {
+        name: 'Own stock',
+        taxonomyCodes: [-332],
+        ifCreditOrDebit: [333],
+      },
+      {
+        name: 'Other equity instruments',
+        taxonomyCodes: [334],
+      },
+      {
+        name: 'Emission prizes', // ???
+        taxonomyCodes: [335],
+      },
+      {
+        name: 'Legal reserves',
+        taxonomyCodes: [336],
+      },
+      {
+        name: 'Other reserves',
+        taxonomyCodes: [337],
+      },
+      {
+        name: 'Results moved', // ??
+        taxonomyCodes: [],
+        ifCreditOrDebit: [338],
+      },
+      {
+        name: 'Reappreciation surplus',
+        taxonomyCodes: [343, -344, 345, -346],
+      },
+      {
+        name: 'Adjustments',
+        taxonomyCodes: [349, -350, 351],
+        ifCreditOrDebit: [339, 340, 341, 342, 347, 348, 352],
+      },
+      {
+        name: 'Net result',
+        taxonomyCodes: [],
+        ifCreditOrDebit: [646],
+      },
+      {
+        name: 'Early dividends', // ??
+        taxonomyCodes: [-647],
+      },
+    ],
+  },
 };
 
 const processTransactionLines = (lines, accountId) => {
