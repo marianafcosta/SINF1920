@@ -18,7 +18,6 @@ const SalesLocation = ({ year }) => {
   const fetchLocations = async () => {
     const locationsResponse = await fetchSalesByLocation(year);
     const locationsData = locationsResponse.data;
-    console.log(locationsResponse.data);
     setLocations(locationsData);
   };
 

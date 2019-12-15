@@ -3,28 +3,24 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const PrivateRoute = ({ children, user, roles, path, exact }) => {
-  console.log(user);
-
-  return (
-    <Route
-      exact={exact}
-      path={path}
-      render={({ location }) =>
-        user && user.role && roles.includes(user.role) ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
-  );
-};
+const PrivateRoute = ({ children, user, roles, path, exact }) => (
+  <Route
+    exact={exact}
+    path={path}
+    render={({ location }) =>
+      user && user.role && roles.includes(user.role) ? (
+        children
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: location },
+          }}
+        />
+      )
+    }
+  />
+);
 
 PrivateRoute.defaultProps = {
   exact: false,
