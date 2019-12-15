@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
 import KpiBarChart from '../kpiBarChart';
 
 import { fetchAccountBalance } from '../../services/financialService';
@@ -84,6 +84,10 @@ const SalesAndExpenses = () => {
       data={graphData}
     />
   );
+};
+
+SalesAndExpenses.propTypes = {
+  year: PropTypes.number.isRequired,
 };
 
 export default SalesAndExpenses;

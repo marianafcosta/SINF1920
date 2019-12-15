@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { fetchAccountBalance } from '../../../services/financialService';
 
 import KpiValue from '../../kpiValue';
 
-const DebtToSuppliers = () => {
+const DebtToSuppliers = ({ year }) => {
   const [debtToSuppliers, setDebtToSuppliers] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchAccountBalance('22', 2019, false);
+      const { data } = await fetchAccountBalance('22', year, false);
       setDebtToSuppliers(data.totalCredit - data.totalDebit);
     };
 
@@ -26,4 +28,8 @@ const DebtToSuppliers = () => {
   );
 };
 
-export default DebtToSuppliers;
+DebtToSuppliers.propTypes = {
+  year: PropTypes.number.isRequired,
+};
+
+export default connect(({ year }) => ({ year }))(DebtToSuppliers);
