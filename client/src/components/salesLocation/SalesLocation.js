@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import CustomCard from '../CustomCard';
 import TableCard from '../TableCard';
 import { fetchSalesByLocation } from '../../services/salesService';
@@ -10,14 +11,13 @@ const headers = [
   { name: 'netTotal', label: 'Net total (€)' },
 ];
 
-const SalesLocation = () => {
+const SalesLocation = ({ year }) => {
   const [locations, setLocations] = useState(null);
   const [tableData, setTableData] = useState([]);
 
   const fetchLocations = async () => {
-    const locationsResponse = await fetchSalesByLocation(2019); // TODO
+    const locationsResponse = await fetchSalesByLocation(year);
     const locationsData = locationsResponse.data;
-    console.log(locationsResponse.data);
     setLocations(locationsData);
   };
 
@@ -49,4 +49,8 @@ const SalesLocation = () => {
   );
 };
 
-export default SalesLocation;
+SalesLocation.propTypes = {
+  year: PropTypes.number.isRequired,
+};
+
+export default connect(({ year }) => ({ year }))(SalesLocation);

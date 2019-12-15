@@ -28,7 +28,6 @@ const processProductInfo = product => ({
 });
 
 const processProductAveragePVP = product => {
-  console.log(product);
   const { priceListLines } = product;
   const pvpSum = priceListLines.reduce(
     (acc, curr) => acc + curr.priceAmount.amount,
@@ -50,8 +49,6 @@ module.exports = (server, db, basePrimaveraUrl) => {
 
     if (!global.primaveraRequests)
       return res.json({ msg: 'Primavera token missing' });
-
-    console.log(id);
 
     return global.primaveraRequests(options, function(error, response, body) {
       if (error) throw new Error(error);
@@ -75,8 +72,6 @@ module.exports = (server, db, basePrimaveraUrl) => {
 
     if (!global.primaveraRequests)
       return res.json({ msg: 'Primavera token missing' });
-
-    console.log(id);
 
     return global.primaveraRequests(options, function(error, response, body) {
       if (error) throw new Error(error);

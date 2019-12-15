@@ -3,7 +3,7 @@ import Layout from '../components/layout/Layout';
 import SalesExpenses from '../components/salesAndExpenses';
 import BalanceSheet from '../components/balanceSheet';
 import TopProducts from '../components/topProducts';
-import Products from '../components/inventory/products/Products';
+import Products from '../components/products/Products';
 
 const Overview = () => (
   <Layout pageName="Overview">

@@ -6,20 +6,12 @@ const fetchCustomerInfo = id => axios.get(`${baseUrl}/customers/${id}`);
 
 const fetchTopProducts = () => axios.get(`${baseUrl}/top-products`);
 
-const fetchTopClients = year => {
-  return axios.get(`${baseUrl}/topClients`, {
-    params: {
-      year,
-    },
-  });
+const fetchTopClients = () => {
+  return axios.get(`${baseUrl}/topClients`, {});
 };
 
-const fetchSalesByLocation = year => {
-  return axios.get(`${baseUrl}/location`, {
-    params: {
-      year,
-    },
-  });
+const fetchSalesByLocation = () => {
+  return axios.get(`${baseUrl}/location`, {});
 };
 
 export {

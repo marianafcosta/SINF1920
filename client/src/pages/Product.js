@@ -5,12 +5,12 @@ import Layout from '../components/layout/Layout';
 
 import { fetchProductInfo } from '../services/productService';
 import UnitsInStock from '../components/unitsInStock';
-import UnitsSold from '../components/Product/unitsSold';
+import UnitsSold from '../components/productUnitsSold';
 import ProductInfo from '../components/productInfo';
 import ProductSales from '../components/productSales';
 import ProductAveragePvp from '../components/productAveragePvp';
 import ProductSuppliers from '../components/productSuppliers';
-import AverageCost from '../components/Product/averageCost/AverageCost';
+import AverageCost from '../components/productAverageCost';
 
 const Product = () => {
   const { id } = useParams();
@@ -20,7 +20,6 @@ const Product = () => {
     const fetchData = async () => {
       const { data } = await fetchProductInfo(id); // TODO
       setProduct(data);
-      console.log(id);
     };
     fetchData();
   }, [id]);

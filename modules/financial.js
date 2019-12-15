@@ -852,7 +852,7 @@ const processTransactionLines = (lines, accountId) => {
   return totalTransactionValues;
 };
 
-const processTransactions = (transactions, accountId, year, monthly) => {
+const processTransactions = (transactions, accountId, monthly) => {
   const totalJournalValues = {
     totalCredit: monthly ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] : 0,
     totalDebit: monthly ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] : 0,
@@ -861,11 +861,7 @@ const processTransactions = (transactions, accountId, year, monthly) => {
   let currentTransaction;
   if (Array.isArray(transactions)) {
     transactions.forEach(transaction => {
-      if (
-        transaction.Lines &&
-        year === new Date(transaction.TransactionDate).getFullYear() &&
-        transaction.TransactionType == 'N'
-      ) {
+      if (transaction.Lines && transaction.TransactionType == 'N') {
         currentTransaction = processTransactionLines(
           transaction.Lines,
           accountId,
@@ -889,11 +885,7 @@ const processTransactions = (transactions, accountId, year, monthly) => {
         }
       }
     });
-  } else if (
-    transactions.Lines &&
-    year === new Date(transactions.TransactionDate).getFullYear() &&
-    transactions.TransactionType == 'N'
-  ) {
+  } else if (transactions.Lines && transactions.Lines.TransactionType == 'N') {
     currentTransaction = processTransactionLines(transactions.Lines, accountId);
     if (monthly) {
       totalJournalValues.totalCredit[
@@ -917,7 +909,7 @@ const processTransactions = (transactions, accountId, year, monthly) => {
   return totalJournalValues;
 };
 
-const processJournalEntries = (entries, accountId, year, monthly) => {
+const processJournalEntries = (entries, accountId, monthly) => {
   const totalLedgerValues = {
     totalCredit: monthly ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] : 0,
     totalDebit: monthly ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] : 0,
@@ -930,7 +922,6 @@ const processJournalEntries = (entries, accountId, year, monthly) => {
         currentJournal = processTransactions(
           entry.Transaction,
           accountId,
-          year,
           monthly,
         );
         totalLedgerValues.totalCredit = monthly
@@ -949,7 +940,6 @@ const processJournalEntries = (entries, accountId, year, monthly) => {
     currentJournal = processTransactions(
       entries.Transaction,
       accountId,
-      year,
       monthly,
     );
     totalLedgerValues.totalCredit = monthly
@@ -1031,11 +1021,11 @@ const processTaxonomySumViaTransactions = (taxonomy, accounts, journals) => {
 };
 
 const calculateEbitda = accounts => {
-  const earningsSales = processJournalEntries(accounts, '71', 2019, false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', 2019, false); // TODO date
-  const expensesCogs = processJournalEntries(accounts, '61', 2019, false); // TODO date
-  const expensesServices = processJournalEntries(accounts, '62', 2019, false); // TODO date
-  const expensesPersonnel = processJournalEntries(accounts, '63', 2019, false); // TODO date
+  const earningsSales = processJournalEntries(accounts, '71', false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', false); // TODO date
+  const expensesCogs = processJournalEntries(accounts, '61', false); // TODO date
+  const expensesServices = processJournalEntries(accounts, '62', false); // TODO date
+  const expensesPersonnel = processJournalEntries(accounts, '63', false); // TODO date
 
   const earningsSalesValue =
     earningsSales.totalCredit - earningsSales.totalDebit;
@@ -1057,15 +1047,14 @@ const calculateEbitda = accounts => {
 const calculateEbit = accounts => {
   // USING THE SUM OF THE TRANSACTIONS
 
-  const earningsSales = processJournalEntries(accounts, '71', 2019, false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', 2019, false); // TODO date
-  const expensesCogs = processJournalEntries(accounts, '61', 2019, false); // TODO date
-  const expensesServices = processJournalEntries(accounts, '62', 2019, false); // TODO date
-  const expensesPersonnel = processJournalEntries(accounts, '63', 2019, false); // TODO date
+  const earningsSales = processJournalEntries(accounts, '71', false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', false); // TODO date
+  const expensesCogs = processJournalEntries(accounts, '61', false); // TODO date
+  const expensesServices = processJournalEntries(accounts, '62', false); // TODO date
+  const expensesPersonnel = processJournalEntries(accounts, '63', false); // TODO date
   const expensesDepreciationAmortization = processJournalEntries(
     accounts,
     '64',
-    2019,
     false,
   ); // TODO date
 
@@ -1093,9 +1082,9 @@ const calculateEbit = accounts => {
 };
 
 const calculateEarnings = accounts => {
-  const earningsSales = processJournalEntries(accounts, '71', 2019, false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', 2019, false); // TODO date
-  const expenses = processJournalEntries(accounts, '6', 2019, false); // TODO date
+  const earningsSales = processJournalEntries(accounts, '71', false); // TODO date
+  const earningsServices = processJournalEntries(accounts, '72', false); // TODO date
+  const expenses = processJournalEntries(accounts, '6', false); // TODO date
 
   const earningsSalesValue =
     earningsSales.totalCredit - earningsSales.totalDebit;
@@ -1553,7 +1542,7 @@ const calculateCash = accounts => {
   });
   */
   cashCalculations.forEach(account => {
-    currentAccount = processJournalEntries(accounts, account, 2019, false);
+    currentAccount = processJournalEntries(accounts, account, false);
     if (currentAccount) {
       if (account < 0) {
         total -= currentAccount.totalDebit - currentAccount.totalCredit;
@@ -1803,8 +1792,8 @@ const calculateProfitLoss = (journals, accounts) => {
 };
 
 const calculateGrossProfitMargin = journal => {
-  const revenueFromSales = processJournalEntries(journal, '71', 2019, false); // TODO year
-  const cogs = processJournalEntries(journal, '61', 2019, false);
+  const revenueFromSales = processJournalEntries(journal, '71', false); // TODO year
+  const cogs = processJournalEntries(journal, '61', false);
   return (
     (revenueFromSales.totalCredit -
       revenueFromSales.totalDebit -
@@ -1824,10 +1813,10 @@ module.exports = (server, db) => {
   server.get('/api/financial/account-balance', (req, res) => {
     const journalEntries = db.GeneralLedgerEntries.Journal;
 
-    if (!req.query.monthly || !req.query.year || !req.query.accountId) {
+    if (!req.query.monthly || !req.query.accountId) {
       res.json({
         error:
-          'The request should be as follows: /api/financial/accountBalance?accountId=<accountId>&year=<year>&monthly=<true|false>',
+          'The request should be as follows: /api/financial/accountBalance?accountId=<accountId>&monthly=<true|false>',
       });
       return;
     }
@@ -1835,7 +1824,6 @@ module.exports = (server, db) => {
     const totalJournalValues = processJournalEntries(
       journalEntries,
       req.query.accountId,
-      parseInt(req.query.year),
       req.query.monthly === 'true',
     );
 
@@ -1922,7 +1910,6 @@ module.exports = (server, db) => {
     const { totalCredit, totalDebit } = processJournalEntries(
       accounts,
       '21',
-      2019,
       false,
     ); // TODO date
 

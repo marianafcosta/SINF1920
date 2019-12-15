@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { fetchAccountsReceivable } from '../../services/financialService';
 
 import KpiValue from '../kpiValue';
 
-const AccountsReceivable = () => {
+const AccountsReceivable = ({ year }) => {
   const [accountsReceivable, setAccountsReceivable] = useState(0);
 
   const fetchData = async () => {
-    const { data } = await fetchAccountsReceivable(2019); // TODO
+    const { data } = await fetchAccountsReceivable(year);
     setAccountsReceivable(data);
   };
 
@@ -27,4 +28,8 @@ const AccountsReceivable = () => {
   );
 };
 
-export default AccountsReceivable;
+AccountsReceivable.propTypes = {
+  year: PropTypes.number.isRequired,
+};
+
+export default connect(({ year }) => ({ year }))(AccountsReceivable);

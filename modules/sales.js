@@ -95,14 +95,10 @@ module.exports = (server, db, basePrimaveraUrl) => {
   server.get('/api/sales/revenue', (req, res) => {
     const salesInvoices = db.SourceDocuments.SalesInvoices.Invoice;
     const monthlyCumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    let invoiceDate;
     salesInvoices.forEach(invoice => {
-      invoiceDate = new Date(invoice.InvoiceDate);
-      if (invoiceDate.getFullYear() === parseInt(req.query.year, 10)) {
-        monthlyCumulative[parseInt(invoice.Period, 10) - 1] =
-          parseFloat(invoice.DocumentTotals.GrossTotal) +
-          monthlyCumulative[parseInt(invoice.Period, 10) - 1];
-      }
+      monthlyCumulative[parseInt(invoice.Period, 10) - 1] =
+        parseFloat(invoice.DocumentTotals.GrossTotal) +
+        monthlyCumulative[parseInt(invoice.Period, 10) - 1];
     });
     res.json({ monthlyCumulative });
   });
@@ -151,44 +147,8 @@ module.exports = (server, db, basePrimaveraUrl) => {
 
     const clients = [];
 
-    let invoiceDate;
     if (Array.isArray(salesInvoices)) {
       salesInvoices.forEach(invoice => {
-        invoiceDate = new Date(invoice.InvoiceDate);
-        if (invoiceDate.getFullYear() === parseInt(req.query.year, 10)) {
-          const customerID = invoice.CustomerID;
-          let purchased = 0;
-
-          if (Array.isArray(invoice.Line)) {
-            invoice.Line.forEach(line => {
-              const { UnitPrice, Quantity } = line;
-              purchased += UnitPrice * Quantity;
-            });
-          } else {
-            purchased = invoice.Line.UnitPrice * invoice.Line.Quantity;
-          }
-          let exists = false;
-          for (let i = 0; i < clients.length; i += 1) {
-            if (clients[i].id === customerID) {
-              exists = true;
-              clients[i].nPurchases += 1;
-              clients[i].totalPurchased += purchased;
-              break;
-            }
-          }
-          if (!exists) {
-            clients.push({
-              id: customerID,
-              totalPurchased: purchased,
-              nPurchases: 1,
-            });
-          }
-        }
-      });
-    } else {
-      const invoice = salesInvoices;
-      invoiceDate = new Date(invoice.InvoiceDate);
-      if (invoiceDate.getFullYear() === parseInt(req.query.year, 10)) {
         const customerID = invoice.CustomerID;
         let purchased = 0;
 
@@ -216,6 +176,35 @@ module.exports = (server, db, basePrimaveraUrl) => {
             nPurchases: 1,
           });
         }
+      });
+    } else {
+      const invoice = salesInvoices;
+      const customerID = invoice.CustomerID;
+      let purchased = 0;
+
+      if (Array.isArray(invoice.Line)) {
+        invoice.Line.forEach(line => {
+          const { UnitPrice, Quantity } = line;
+          purchased += UnitPrice * Quantity;
+        });
+      } else {
+        purchased = invoice.Line.UnitPrice * invoice.Line.Quantity;
+      }
+      let exists = false;
+      for (let i = 0; i < clients.length; i += 1) {
+        if (clients[i].id === customerID) {
+          exists = true;
+          clients[i].nPurchases += 1;
+          clients[i].totalPurchased += purchased;
+          break;
+        }
+      }
+      if (!exists) {
+        clients.push({
+          id: customerID,
+          totalPurchased: purchased,
+          nPurchases: 1,
+        });
       }
     }
 

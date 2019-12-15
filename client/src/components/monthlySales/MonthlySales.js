@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import KpiBarChart from '../../kpiBarChart';
+import KpiBarChart from '../kpiBarChart';
 
-import { fetchAccountBalance } from '../../../services/financialService';
+import { fetchAccountBalance } from '../../services/financialService';
 
 const monthNames = [
   'Jan',
@@ -24,11 +24,7 @@ const MonthlySales = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchAccountBalance(
-        '71',
-        2019, // TODO
-        true,
-      );
+      const { data } = await fetchAccountBalance('71', true);
       setMonthlySales(
         data.totalCredit.map((monthly, index) => ({
           name: monthNames[index],

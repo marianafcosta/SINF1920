@@ -20,7 +20,6 @@ const ProductSuppliers = ({ productId }) => {
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await fetchProductSuppliers(productId);
-      console.log(data);
       setTableData(
         data.map(supplier => ({
           id: supplier.id,

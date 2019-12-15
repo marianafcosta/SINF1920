@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { fetchPurchases } from '../../../services/purchasesService';
+import { fetchPurchases } from '../../services/purchasesService';
 
-import KpiBarChart from '../../kpiBarChart';
+import KpiBarChart from '../kpiBarChart';
 
 const monthNames = [
   'Jan',

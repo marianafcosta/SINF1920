@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import KpiBarChart from '../kpiBarChart';
 
 import { fetchAccountBalance } from '../../services/financialService';
@@ -52,14 +51,9 @@ const SalesAndExpenses = () => {
   };
 
   const fetchData = async () => {
-    const salesResponse = await fetchAccountBalance(
-      accountCodes.sales,
-      2019, // TODO
-      true,
-    );
+    const salesResponse = await fetchAccountBalance(accountCodes.sales, true);
     const expensesResponse = await fetchAccountBalance(
       accountCodes.expenses,
-      2019, // TODO
       true,
     );
     setAccountBalances({

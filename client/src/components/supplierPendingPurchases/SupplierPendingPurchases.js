@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import CustomCard from '../../CustomCard/CustomCard';
-import TableCard from '../../TableCard';
+import CustomCard from '../CustomCard/CustomCard';
+import TableCard from '../TableCard';
 
-import { fetchPendingPurchases } from '../../../services/supplierService';
+import { fetchPendingPurchases } from '../../services/supplierService';
 
 const headers = [
   { name: 'id', label: 'Reference' },
@@ -12,7 +12,7 @@ const headers = [
   { name: 'value', label: 'Value (€)', number: true },
 ];
 
-const PendingPurchases = ({ id }) => {
+const SupplierPendingPurchases = ({ id }) => {
   const [pendingPurchases, setPendingPurchases] = useState([]);
 
   useEffect(() => {
@@ -31,8 +31,8 @@ const PendingPurchases = ({ id }) => {
   );
 };
 
-PendingPurchases.propTypes = {
+SupplierPendingPurchases.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-export default PendingPurchases;
+export default SupplierPendingPurchases;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { fetchProductBacklog } from '../../../services/purchasesService';
+import { fetchProductBacklog } from '../../services/purchasesService';
 
-import KpiValue from '../../kpiValue';
+import KpiValue from '../kpiValue';
 
 const ProductBacklog = () => {
   const [productBacklog, setProductBacklog] = useState(0);

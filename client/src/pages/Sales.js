@@ -4,7 +4,7 @@ import TopProducts from '../components/topProducts';
 import TopCustomers from '../components/topCustomers';
 import SalesLocation from '../components/salesLocation';
 import GrossProfitMargin from '../components/grossProfitMargin';
-import MonthlySales from '../components/sales/monthlySales';
+import MonthlySales from '../components/monthlySales';
 
 const Sales = () => (
   <Layout pageName="Sales">
