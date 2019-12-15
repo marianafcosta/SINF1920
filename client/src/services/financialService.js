@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const baseUrl = '/api/financial';
 
-const fetchAccountBalance = (accountId, year, monthly) => {
+const fetchAccountBalance = (accountId, monthly) => {
   return axios.get(
-    `${baseUrl}/account-balance?accountId=${accountId}&year=${year}&monthly=${monthly}`,
+    `${baseUrl}/account-balance?accountId=${accountId}&monthly=${monthly}`,
   );
 };
 
@@ -12,20 +12,20 @@ const fetchAccount = accountId => {
   return axios.get(`${baseUrl}/accounts?accountId=${accountId}`);
 };
 
-const fetchEbitda = year => {
-  return axios.get(`${baseUrl}/ebitda?year=${year}`);
+const fetchEbitda = () => {
+  return axios.get(`${baseUrl}/ebitda`);
 };
 
-const fetchEarnings = year => {
-  return axios.get(`${baseUrl}/earnings?year=${year}`);
+const fetchEarnings = () => {
+  return axios.get(`${baseUrl}/earnings`);
 };
 
-const fetchEbit = year => {
-  return axios.get(`${baseUrl}/ebit?year=${year}`);
+const fetchEbit = () => {
+  return axios.get(`${baseUrl}/ebit`);
 };
 
-const fetchAccountsReceivable = year =>
-  axios.get(`${baseUrl}/accounts-receivable?year=${year}`);
+const fetchAccountsReceivable = () =>
+  axios.get(`${baseUrl}/accounts-receivable`);
 
 const fetchAccountBalanceSheet = accountId => {
   return axios.get(`${baseUrl}/account-balance-sheet`, {
