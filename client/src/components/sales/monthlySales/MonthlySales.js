@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import KpiBarChart from '../../kpiBarChart';
 
 import { fetchAccountBalance } from '../../../services/financialService';
@@ -44,10 +43,6 @@ const MonthlySales = () => {
       data={monthlySales}
     />
   );
-};
-
-MonthlySales.propTypes = {
-  year: PropTypes.number.isRequired,
 };
 
 export default MonthlySales;
