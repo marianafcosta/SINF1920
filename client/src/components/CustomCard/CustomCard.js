@@ -25,6 +25,7 @@ const useStyles = makeStyles({
     margin: '0',
     color: 'white',
     padding: '5px',
+    marginBottom: '1em',
   },
 });
 

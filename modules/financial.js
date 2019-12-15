@@ -5,7 +5,7 @@ const balanceSheetTemplate = {
   assets: {
     nonCurrent: [
       {
-        name: 'Tangible assets',
+        name: 'Ativos fixos tangíveis',
         taxonomyCodes: [
           268,
           269,
@@ -36,7 +36,7 @@ const balanceSheetTemplate = {
         value: 0,
       },
       {
-        name: 'Investment properties',
+        name: 'Propriedades de investimento',
         taxonomyCodes: [
           259,
           260,
@@ -73,7 +73,7 @@ const balanceSheetTemplate = {
         value: 0,
       },
       {
-        name: 'Intangible assets',
+        name: 'Ativos intangíveis',
         taxonomyCodes: [
           290,
           291,
@@ -95,17 +95,17 @@ const balanceSheetTemplate = {
         value: 0,
       },
       {
-        name: 'Biological assets',
+        name: 'Ativos biológicos',
         taxonomyCodes: [197, 198, -200, -202, 215],
         value: 0,
       },
       {
-        name: 'Financial participations',
+        name: 'Participações financeiras - método da equivalência patrimonial',
         taxonomyCodes: [216, 221, 226, -239, -244, -249],
         value: 0,
       },
       {
-        name: 'Other financial investments',
+        name: 'Outros investimentos financeiros',
         taxonomyCodes: [
           218,
           219,
@@ -143,20 +143,20 @@ const balanceSheetTemplate = {
         value: 0,
       },
       {
-        name: 'Notes receivable', // ??
+        name: 'Créditos a receber',
         taxonomyCodes: [-68, -70, 112, -121, -123, 129, -141, -145],
         ifDebtBalance: [62, 64, 114, 125, 127, 139],
         value: 0,
       },
       {
-        name: 'Deferred tax assets',
+        name: 'Ativos por impostos diferidos',
         taxonomyCodes: [133, -143],
         value: 0,
       },
     ],
     current: [
       {
-        name: 'Inventory',
+        name: 'Inventário',
         taxonomyCodes: [
           165,
           166,
@@ -197,12 +197,12 @@ const balanceSheetTemplate = {
         value: 0,
       },
       {
-        name: 'Biological assets',
+        name: 'Ativos biológicos',
         taxonomyCodes: [195, 196, -199, -201, 214],
         value: 0,
       },
       {
-        name: 'Clients',
+        name: 'Clientes',
         taxonomyCodes: [
           -24,
           -25,
@@ -222,18 +222,18 @@ const balanceSheetTemplate = {
         value: 0,
       },
       {
-        name: 'State and other public entities',
+        name: 'Estado e outros entes públicos',
         taxonomyCodes: [73, 74, 79, 80],
         ifDebtBalance: [71, 76, 77, 82, 83, 84, 85],
         value: 0,
       },
       {
-        name: 'Subscribed and non effective capital', // ??
+        name: 'Capital subscrito e não realizado',
         taxonomyCodes: [106, 107, -115, -116],
         value: 0,
       },
       {
-        name: 'Other receivables', // ??
+        name: 'Outros créditos a receber',
         taxonomyCodes: [
           51,
           -52,
@@ -283,27 +283,27 @@ const balanceSheetTemplate = {
         value: 0,
       },
       {
-        name: 'Deferments',
+        name: 'Diferimentos',
         taxonomyCodes: [146],
         value: 0,
       },
       {
-        name: 'Financial assets held for negotiation', // ??
+        name: 'Ativos financeiros detidos para negociação',
         taxonomyCodes: [4, 6],
         value: 0,
       },
       {
-        name: 'Other financial assets',
+        name: 'Outros ativos financeiros',
         taxonomyCodes: [8],
         value: 0,
       },
       {
-        name: 'Non current assets held for sale', // ??
+        name: 'Ativos não currentes detidos para venda',
         taxonomyCodes: [320, 321, 322, 323, 324, -326, -327, -328, -329, -330],
         value: 0,
       },
       {
-        name: 'Cash and bank deposits',
+        name: 'Caixa e depósitos bancários',
         taxonomyCodes: [1],
         ifDebtBalance: [2, 3],
         value: 0,
@@ -313,27 +313,27 @@ const balanceSheetTemplate = {
   liabilities: {
     nonCurrent: [
       {
-        name: 'Provisions',
+        name: 'Provisões',
         taxonomyCodes: [148, 149, 150, 151, 152, 153, 154, 155],
         value: 0,
       },
       {
-        name: 'Obtained financing', // ??
+        name: 'Financiamentos obtidos',
         taxonomyCodes: [87, 89, 91, 93, 95, 97, 99, 101, 103, 105],
         value: 0,
       },
       {
-        name: 'Post-employment benefits responsibility', // ??
+        name: 'Responsabilidades por benefícios pós-emprego',
         taxonomyCodes: [132],
         value: 0,
       },
       {
-        name: 'Deferred tax liabilities',
+        name: 'Passivos por impostos diferidos',
         taxonomyCodes: [134],
         value: 0,
       },
       {
-        name: 'Other accounts payable',
+        name: 'Outras dívidas a pagar',
         taxonomyCodes: [58, 60, 136],
         ifCreditBalance: [62, 64, 114, 125, 127, 139],
         value: 0,
@@ -341,7 +341,7 @@ const balanceSheetTemplate = {
     ],
     current: [
       {
-        name: 'Suppliers',
+        name: 'Fornecedores',
         taxonomyCodes: [],
         ifCreditBalance: [
           37,
@@ -362,46 +362,46 @@ const balanceSheetTemplate = {
         value: 0,
       },
       {
-        name: 'Payments in advance to clients', // ??
+        name: 'Adiantamentos de clientes',
         taxonomyCodes: [23, 137],
         ifCreditBalance: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
         value: 0,
       },
       {
-        name: 'State and other public entities',
+        name: 'Estado e outros entes públicos',
         taxonomyCodes: [72, 75, 78],
         ifCreditBalance: [71, 76, 77, 81, 82, 83, 84, 85],
         value: 0,
       },
       {
-        name: 'Financing obtained',
+        name: 'Financiamentos obtidos',
         taxonomyCodes: [86, 88, 90, 92, 94, 96, 98, 100, 102, 104],
         ifCreditBalance: [2, 3],
         value: 0,
       },
       {
-        name: 'Other payable debts', // ??
+        name: 'Outras dívidas a pagar',
         taxonomyCodes: [53, 54, 57, 59, 131, 135],
         ifCreditBalance: [61, 63, 109, 110, 113, 124, 126, 138],
         value: 0,
       },
       {
-        name: 'Deferments', // ??
+        name: 'Diferimentos',
         taxonomyCodes: [147],
         value: 0,
       },
       {
-        name: 'Financial liabilites held for negotiation', // ??
+        name: 'Passivos financeiros detidos para negociação',
         taxonomyCodes: [5, 7],
         value: 0,
       },
       {
-        name: 'Other financial liabilities',
+        name: 'Outros passivos financeiros',
         taxonomyCodes: [9],
         value: 0,
       },
       {
-        name: 'Non current liabilities held for negotiation', // ??
+        name: 'Passivos não currentes detidos para venda',
         taxonomyCodes: [325],
         value: 0,
       },
@@ -409,61 +409,61 @@ const balanceSheetTemplate = {
   },
   equity: [
     {
-      name: 'Subscribed capital',
+      name: 'Capital subscrito',
       taxonomyCodes: [331],
       value: 0,
     },
     {
-      name: 'Own stock',
+      name: 'Ações (quotas) próprias',
       taxonomyCodes: [-332],
       ifCreditOrDebit: [333],
       value: 0,
     },
     {
-      name: 'Other equity instruments',
+      name: 'Outros instrumentos de capital próprio',
       taxonomyCodes: [334],
       value: 0,
     },
     {
-      name: 'Emission prizes', // ???
+      name: 'Prémios de emissão',
       taxonomyCodes: [335],
       value: 0,
     },
     {
-      name: 'Legal reserves',
+      name: 'Reservas legais',
       taxonomyCodes: [336],
       value: 0,
     },
     {
-      name: 'Other reserves',
+      name: 'Outras reservas',
       taxonomyCodes: [337],
       value: 0,
     },
     {
-      name: 'Results moved', // ??
+      name: 'Resultados transitados',
       taxonomyCodes: [],
       ifCreditOrDebit: [338],
       value: 0,
     },
     {
-      name: 'Reappreciation surplus',
+      name: 'Excedentes de revalorização',
       taxonomyCodes: [343, -344, 345, -346],
       value: 0,
     },
     {
-      name: 'Adjustments',
+      name: 'Ajustamentos / outras variações no capital próprio',
       taxonomyCodes: [349, -350, 351],
       ifCreditOrDebit: [339, 340, 341, 342, 347, 348, 352],
       value: 0,
     },
     {
-      name: 'Net result',
+      name: 'Resultado líquido do período',
       taxonomyCodes: [],
       ifCreditOrDebit: [646],
       value: 0,
     },
     {
-      name: 'Early dividends', // ??
+      name: 'Dividendos antecipados',
       taxonomyCodes: [-647],
       value: 0,
     },
@@ -1140,7 +1140,13 @@ const calculateLiabilities = accounts => {
   return liabilities;
 };
 
-const calculateBalanceSheet = accounts => {};
+const calculateBalanceSheet = accounts => {
+  const balanceSheetResponse = {};
+  balanceSheetResponse.assets = calculateAssets(accounts);
+  balanceSheetResponse.liabilities = calculateLiabilities(accounts);
+  balanceSheetResponse.equity = calculateEquity(accounts);
+  return balanceSheetResponse;
+};
 
 const calculateCash = accounts => {
   const cashCalculations = ['11', '12', '13'];
@@ -1321,7 +1327,7 @@ module.exports = (server, db) => {
   server.get('/api/financial/balance-sheet', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const balanceSheetResponse = calculateBalanceSheet(accounts);
-    res.json(parseFloat(balanceSheetResponse));
+    res.json(balanceSheetResponse);
   });
 
   server.get('/api/financial/liabilities/current', (req, res) => {
