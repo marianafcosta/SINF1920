@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import KpiBarChart from '../kpiBarChart';
 
 import { fetchAccountBalance } from '../../services/financialService';
@@ -31,7 +32,7 @@ const testData = [
   },
 ];
 
-const SalesAndExpenses = () => {
+const SalesAndExpenses = ({ year }) => {
   const [accountBalances, setAccountBalances] = useState(null);
   const [graphData, setGraphData] = useState(testData);
 
@@ -54,12 +55,12 @@ const SalesAndExpenses = () => {
   const fetchData = async () => {
     const salesResponse = await fetchAccountBalance(
       accountCodes.sales,
-      2019, // TODO
+      year,
       true,
     );
     const expensesResponse = await fetchAccountBalance(
       accountCodes.expenses,
-      2019, // TODO
+      year,
       true,
     );
     setAccountBalances({
@@ -91,4 +92,8 @@ const SalesAndExpenses = () => {
   );
 };
 
-export default SalesAndExpenses;
+SalesAndExpenses.propTypes = {
+  year: PropTypes.number.isRequired,
+};
+
+export default connect(({ year }) => ({ year }))(SalesAndExpenses);

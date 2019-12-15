@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { fetchEbitda } from '../../services/financialService';
 
 import KpiValue from '../kpiValue';
 
-const Ebitda = () => {
+const Ebitda = ({ year }) => {
   const [ebitda, setEbitda] = useState(0);
 
   const fetchData = async () => {
-    const ebitdaData = await fetchEbitda(2019); // TODO
+    const ebitdaData = await fetchEbitda(year);
     setEbitda(ebitdaData.data.ebitda);
   };
 
@@ -27,4 +28,8 @@ const Ebitda = () => {
   );
 };
 
-export default Ebitda;
+Ebitda.propTypes = {
+  year: PropTypes.number.isRequired,
+};
+
+export default connect(({ year }) => ({ year }))(Ebitda);
