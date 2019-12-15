@@ -59,6 +59,10 @@ const fetchGrossProfitMargin = () => {
   return axios.get(`${baseUrl}/gross-profit-margin`, {});
 };
 
+const fetchProfitLoss = () => {
+  return axios.get(`${baseUrl}/profit-loss`, {});
+};
+
 export {
   fetchAccountBalance,
   fetchBalanceSheet,
@@ -74,4 +78,5 @@ export {
   fetchGrossProfitMargin,
   fetchEarnings,
   fetchEbit,
+  fetchProfitLoss,
 };
