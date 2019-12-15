@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import KpiValue from '../../kpiValue';
+import KpiValue from '../kpiValue';
 
-import { fetchProductUnitsSold } from '../../../services/productService';
+import { fetchProductUnitsSold } from '../../services/productService';
 
-const UnitsSold = ({ id }) => {
+const ProductUnitsSold = ({ id }) => {
   const [unitsSold, setUnitsSold] = useState(0);
   const [value, setValue] = useState(0);
 
@@ -26,8 +26,8 @@ const UnitsSold = ({ id }) => {
   );
 };
 
-UnitsSold.propTypes = {
+ProductUnitsSold.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-export default UnitsSold;
+export default ProductUnitsSold;

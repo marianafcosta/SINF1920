@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { fetchStock } from '../../../services/inventoryService';
+import { fetchStock } from '../../services/inventoryService';
 
-import KpiValue from '../../kpiValue';
+import KpiValue from '../kpiValue';
 
 const Stock = () => {
   const [stock, setStock] = useState(0);

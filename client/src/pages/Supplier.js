@@ -5,8 +5,8 @@ import KpiInfoList from '../components/kpiInfoList';
 import Layout from '../components/layout/Layout';
 
 import fetchSupplierInfo from '../services/suppliersService';
-import PendingPurchases from '../components/supplier/pendingPurchases/PendingPurchases';
-import TotalPurchased from '../components/supplier/totalPurchased/TotalPurchased';
+import PendingPurchases from '../components/supplierPendingPurchases/SupplierPendingPurchases';
+import TotalPurchased from '../components/supplierTotalPurchased/SupplierTotalPurchased';
 
 const Supplier = () => {
   const { id } = useParams();

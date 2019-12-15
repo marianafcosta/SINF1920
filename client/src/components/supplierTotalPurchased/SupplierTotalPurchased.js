@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import { fetchTotalPurchased } from '../../../services/supplierService';
+import { fetchTotalPurchased } from '../../services/supplierService';
 
-import KpiValue from '../../kpiValue';
+import KpiValue from '../kpiValue';
 
-const TotalPurchased = ({ id }) => {
+const SupplierTotalPurchased = ({ id }) => {
   const [totalPurchased, setTotalPurchased] = useState(0);
 
   useEffect(() => {
@@ -27,8 +27,8 @@ const TotalPurchased = ({ id }) => {
   );
 };
 
-TotalPurchased.propTypes = {
+SupplierTotalPurchased.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-export default TotalPurchased;
+export default SupplierTotalPurchased;
