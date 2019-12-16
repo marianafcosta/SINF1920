@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import CustomCard from '../CustomCard/CustomCard';
-import TableCard from '../TableCard';
+import KpiTable from '../kpiTable';
 
 import { fetchPendingPurchases } from '../../services/supplierService';
 
@@ -25,9 +24,12 @@ const SupplierPendingPurchases = ({ id }) => {
   }, [id]);
 
   return (
-    <CustomCard title="Pending Purchases" overlay="Testing">
-      <TableCard headers={headers} data={pendingPurchases} />
-    </CustomCard>
+    <KpiTable
+      title="Pending purchases"
+      overlayInfo="kajsdhfs"
+      headers={headers}
+      data={pendingPurchases}
+    />
   );
 };
 

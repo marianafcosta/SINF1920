@@ -37,6 +37,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    boxShadow: 'none',
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -65,6 +66,22 @@ const useStyles = makeStyles(theme => ({
     }),
     backgroundColor: '#262626',
     borderBottom: '1px solid #FFFBA1!important',
+    boxShadow: 'none',
+  },
+  yearIndicator: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fffba1',
+    borderRadius: '50px',
+    padding: '0px 15px',
+    color: '#262626',
+    marginRight: 'auto',
+    marginLeft: '1.5em',
+  },
+  yearIndicatorIcon: {
+    color: '#262626',
+    marginRight: '0.5em',
   },
   appBarShift: {
     marginLeft: 0,
@@ -85,7 +102,6 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
   },
   title: {
-    flexGrow: 1,
     fontSize: '32px',
   },
   drawerPaper: {

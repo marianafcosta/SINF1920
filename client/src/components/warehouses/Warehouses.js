@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import numeral from 'numeral';
 
-import CustomCard from '../CustomCard';
-import TableCard from '../TableCard';
+import KpiTable from '../kpiTable';
 
 import { fetchWarehouses } from '../../services/inventoryService';
 
@@ -31,9 +30,12 @@ const Warehouses = () => {
   }, []);
 
   return (
-    <CustomCard title="Warehouses" overlayInfo="a place to store things">
-      <TableCard headers={headers} data={tableData} />
-    </CustomCard>
+    <KpiTable
+      title="Warehouses"
+      overlayInfo="ksadjf"
+      headers={headers}
+      data={tableData}
+    />
   );
 };
 

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
+import KpiTable from '../kpiTable';
+
 import {
   fetchAssets,
   fetchEquity,
   fetchLiabilities,
 } from '../../services/financialService';
-import TableCard from '../TableCard';
-
-import CustomCard from '../CustomCard/CustomCard';
 
 const headers = [
   { name: 'equityToAssets', label: 'Equity to assets' },
@@ -49,9 +48,12 @@ const StabilityRatios = () => {
   }, [values]);
 
   return (
-    <CustomCard title="Stability Ratios" overlayInfo="oh guess what more gemp">
-      <TableCard headers={headers} data={tableData} />
-    </CustomCard>
+    <KpiTable
+      title="Stability ratios"
+      overlayInfo="lajsdfkaosdf"
+      headers={headers}
+      data={tableData}
+    />
   );
 };
 

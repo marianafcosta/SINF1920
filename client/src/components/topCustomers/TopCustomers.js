@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import CustomCard from '../CustomCard/CustomCard';
-import TableCard from '../TableCard';
+
+import KpiTable from '../kpiTable';
 
 import { fetchTopClients } from '../../services/salesService';
 
@@ -48,9 +48,12 @@ const TopCustomers = ({ year }) => {
   }, [topAccounts]);
 
   return (
-    <CustomCard title="Top Customers" overlay="Testing">
-      <TableCard headers={headers} data={tableData} />
-    </CustomCard>
+    <KpiTable
+      title="Top customers"
+      overlayInfo="lskdfa"
+      headers={headers}
+      data={tableData}
+    />
   );
 };
 

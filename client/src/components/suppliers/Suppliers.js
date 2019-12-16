@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import numeral from 'numeral';
 
-import CustomCard from '../CustomCard';
-import TableCard from '../TableCard';
+import KpiTable from '../kpiTable';
 
 import { fetchSuppliers } from '../../services/purchasesService';
 
@@ -33,9 +32,12 @@ const Suppliers = () => {
   }, []);
 
   return (
-    <CustomCard title="Suppliers" overlayInfo="something something suppliers">
-      <TableCard headers={headers} data={tableData} />
-    </CustomCard>
+    <KpiTable
+      title="Suppliers"
+      overlayInfo="kasdlfa"
+      headers={headers}
+      data={tableData}
+    />
   );
 };
 

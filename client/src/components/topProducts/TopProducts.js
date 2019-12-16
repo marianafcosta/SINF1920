@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import CustomCard from '../CustomCard/CustomCard';
-import TableCard from '../TableCard';
+
+import KpiTable from '../kpiTable';
 
 import { fetchTopProducts } from '../../services/salesService';
 
@@ -17,9 +17,12 @@ const TopProducts = ({ headers }) => {
   }, []);
 
   return (
-    <CustomCard title="Top Products" overlay="Testing">
-      <TableCard headers={headers} data={tableData} />
-    </CustomCard>
+    <KpiTable
+      title="Top products"
+      overlayInfo="sdasdf"
+      headers={headers}
+      data={tableData}
+    />
   );
 };
 

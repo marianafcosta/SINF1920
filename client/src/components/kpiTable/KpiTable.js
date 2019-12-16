@@ -13,6 +13,9 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
+
+import CustomCard from '../CustomCard';
+
 import './TableCard.css';
 
 function desc(a, b, orderBy) {
@@ -107,8 +110,9 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     minWidth: 750,
-    backgroundColor: 'rgba(0, 0, 0, 0.87)',
+    backgroundColor: '#262626',
     color: 'white',
+    padding: '0 20px',
   },
   tableWrapper: {
     maxHeight: 320,
@@ -130,7 +134,6 @@ const useStyles = makeStyles(theme => ({
     color: 'inherit',
     padding: '7px 14px 7px 4rem',
     borderBottom: '1px solid #FFFBA1',
-    textAlign: 'end',
   },
   cells: {
     backgroundColor: '#262626',
@@ -146,7 +149,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TableCard = ({ headers, data }) => {
+const KpiTable = ({ title, overlayInfo, headers, data }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
@@ -208,72 +211,79 @@ const TableCard = ({ headers, data }) => {
     rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <div className={classes.tableWrapper}>
-          <Table
-            stickyHeader
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size="medium"
-            aria-label="sticky table"
-          >
-            <EnhancedTableHead
-              headers={headers}
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
+    <CustomCard title={title} overlayInfo={overlayInfo}>
+      <div className={classes.root}>
+        <Paper className={classes.paper}>
+          <div className={classes.tableWrapper}>
+            <Table
+              stickyHeader
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size="medium"
+              aria-label="sticky table"
+            >
+              <EnhancedTableHead
+                headers={headers}
+                classes={classes}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+              />
+              <TableBody>
+                {stableSort(data, getSorting(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map(row => {
+                    const isItemSelected = isSelected(row.id);
+                    return (
+                      <TableRow
+                        hover
+                        onClick={event => handleClick(event, row.id)}
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row[Object.keys(row)[0]]}
+                        selected={isItemSelected}
+                      >
+                        {headers.map(({ name, link, number, date, format }) => (
+                          <TableCell key={name} className={classes.cells}>
+                            {displayCell(row, name, link, number, date, format)}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow
+                    style={{
+                      height: 43 * emptyRows,
+                      backgroundColor: '#262626',
+                    }}
+                  >
+                    <TableCell style={{ border: 'none' }} colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+          {data.length > rowsPerPage && (
+            <TablePagination
+              className={clsx(classes.pagination, 'pagination')}
+              rowsPerPageOptions={[]}
+              component="div"
+              count={data.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
             />
-            <TableBody>
-              {stableSort(data, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(row => {
-                  const isItemSelected = isSelected(row.id);
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event => handleClick(event, row.id)}
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row[Object.keys(row)[0]]}
-                      selected={isItemSelected}
-                    >
-                      {headers.map(({ name, link, number, date, format }) => (
-                        <TableCell key={name} className={classes.cells}>
-                          {displayCell(row, name, link, number, date, format)}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{ height: 43 * emptyRows, backgroundColor: '#262626' }}
-                >
-                  <TableCell style={{ border: 'none' }} colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        {data.length > rowsPerPage && (
-          <TablePagination
-            className={clsx(classes.pagination, 'pagination')}
-            rowsPerPageOptions={[]}
-            component="div"
-            count={data.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-          />
-        )}
-      </Paper>
-    </div>
+          )}
+        </Paper>
+      </div>
+    </CustomCard>
   );
 };
 
-TableCard.propTypes = {
+KpiTable.propTypes = {
+  title: PropTypes.string.isRequired,
+  overlayInfo: PropTypes.string.isRequired,
   headers: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -284,4 +294,4 @@ TableCard.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
 };
-export default TableCard;
+export default KpiTable;
