@@ -30,12 +30,15 @@ const testData = [
 const ProductSales = ({ productId }) => {
   const [graphData, setGraphData] = useState(testData);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchProductUnitsSold(productId, true);
+        setLoading(false);
         setGraphData(
           data.value.map((month, index) => ({
             name: monthNames[index],
@@ -43,6 +46,7 @@ const ProductSales = ({ productId }) => {
           })),
         );
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -56,6 +60,7 @@ const ProductSales = ({ productId }) => {
       bars={[{ dataKey: 'sales', fill: '#fffba1' }]}
       data={graphData}
       error={error}
+      loading={loading}
     />
   );
 };

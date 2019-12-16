@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 
 import CustomCard from '../CustomCard';
 
-const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
+const KpiBarChart = ({ title, overlayInfo, bars, data, error, loading }) => {
   const renderLegend = (value, entry) => {
     const { color } = entry;
 
@@ -21,7 +21,12 @@ const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
   };
 
   return (
-    <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
+    <CustomCard
+      title={title}
+      overlayInfo={overlayInfo}
+      error={error}
+      loading={loading}
+    >
       <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
@@ -42,6 +47,7 @@ const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
 
 KpiBarChart.defaultProps = {
   error: false,
+  loading: false,
 };
 
 KpiBarChart.propTypes = {
@@ -55,6 +61,7 @@ KpiBarChart.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
   error: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default KpiBarChart;

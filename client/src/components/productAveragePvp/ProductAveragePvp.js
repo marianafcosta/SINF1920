@@ -7,16 +7,20 @@ import KpiValue from '../kpiValue';
 const ProductAveragePvp = ({ productId }) => {
   const [averagePvp, setAveragePvp] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
         if (productId) {
+          setLoading(true);
           const { data } = await fetchProductAveragePvp(productId);
+          setLoading(false);
           setAveragePvp(data);
         }
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -32,6 +36,7 @@ const ProductAveragePvp = ({ productId }) => {
       unit="€/unit"
       format="0.000a"
       error={error}
+      loading={loading}
     />
   );
 };

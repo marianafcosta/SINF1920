@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { CircularProgress } from '@material-ui/core';
+
 import './CustomCard.css';
 
 import ApiCallError from '../apiCallError';
@@ -29,6 +31,16 @@ const useStyles = makeStyles({
     padding: '5px',
     marginBottom: '1em',
   },
+  loadingWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingIcon: {
+    margin: '0.5em 0',
+    color: '#fffba1',
+  },
 });
 
 const CustomCard = ({
@@ -39,6 +51,7 @@ const CustomCard = ({
   animation,
   padding,
   error,
+  loading,
 }) => {
   const classes = useStyles();
   const [isOverlayAnimationRunning, setIsOverlayAnimationRunning] = useState(
@@ -68,7 +81,16 @@ const CustomCard = ({
           </Card>
         )}
         <h1 className={classes.cardTitle}>{title}</h1>
-        {error ? <ApiCallError /> : children}
+        {// eslint-disable-next-line
+        error ? (
+          <ApiCallError />
+        ) : loading ? (
+          <div className={classes.loadingWrapper}>
+            <CircularProgress className={classes.loadingIcon} />
+          </div>
+        ) : (
+          children
+        )}
       </Card>
     </div>
   );
@@ -82,6 +104,7 @@ CustomCard.defaultProps = {
   animation: true,
   padding: '',
   error: false,
+  loading: false,
 };
 
 CustomCard.propTypes = {
@@ -92,6 +115,7 @@ CustomCard.propTypes = {
   animation: PropTypes.bool,
   padding: PropTypes.string,
   error: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
