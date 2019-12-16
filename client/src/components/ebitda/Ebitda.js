@@ -29,7 +29,7 @@ const Ebitda = ({ year }) => {
   return (
     <KpiValue
       title="EBITDA"
-      overlayInfo="something something gemp something"
+      overlayInfo="Earnings before Interest, Taxes, Depreciation and Amortization."
       value={ebitda}
       unit="€"
       format="0.000a"

@@ -30,7 +30,7 @@ const ProductUnitsSold = ({ id }) => {
   return (
     <KpiValue
       title="Units Sold"
-      overlayInfo="something something gemp something"
+      overlayInfo="Number of units sold"
       value={`${unitsSold} (${value} €)`}
       error={error}
       loading={loading}

@@ -59,7 +59,7 @@ const StabilityRatios = () => {
   return (
     <KpiTable
       title="Stability ratios"
-      overlayInfo="lajsdfkaosdf"
+      overlayInfo="Equity to assets and Debt to equity ratios"
       headers={headers}
       data={tableData}
       error={error}

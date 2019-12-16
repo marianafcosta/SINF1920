@@ -58,7 +58,7 @@ const TopCustomers = ({ year }) => {
   return (
     <KpiTable
       title="Top customers"
-      overlayInfo="lskdfa"
+      overlayInfo="Information about the Top Customers"
       headers={headers}
       data={tableData}
       error={error}

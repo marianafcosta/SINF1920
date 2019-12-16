@@ -30,7 +30,7 @@ const Products = ({ headers, title }) => {
   return (
     <KpiTable
       title={title}
-      overlay="testing"
+      overlayInfo="ID, Name, Quantity and Value in euros of the products"
       headers={headers}
       data={tableData}
       error={error}

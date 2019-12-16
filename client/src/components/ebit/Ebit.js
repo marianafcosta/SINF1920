@@ -30,7 +30,7 @@ const Ebit = ({ year }) => {
     <KpiValue
       title="EBIT"
       unit="€"
-      overlayInfo="GEEEEEEEEEEEMMMMPPPP"
+      overlayInfo="Earnings before Interest and Taxes."
       value={ebit}
       format="0.000a"
       error={error}

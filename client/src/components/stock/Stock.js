@@ -28,7 +28,7 @@ const Stock = () => {
   return (
     <KpiValue
       title="Stock"
-      overlayInfo="something something gemp something"
+      overlayInfo="Value of the products in Stock"
       value={stock}
       unit="€"
       format="0.0a"

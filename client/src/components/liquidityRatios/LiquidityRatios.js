@@ -62,7 +62,7 @@ const LiquidityRatios = () => {
   return (
     <KpiTable
       title="Liquidity ratios"
-      overlayInfo="G E M P"
+      overlayInfo="Cash ratio, Current ratio and Working Capital in euros"
       headers={headers}
       data={tableData}
       error={error}

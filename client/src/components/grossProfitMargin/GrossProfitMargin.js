@@ -29,7 +29,7 @@ const GrossProfitMargin = () => {
       value={margin ? `${(margin * 100).toFixed(2)}` : '0'}
       unit="%"
       title="Gross profit margin"
-      overlayInfo="akjfnlakdjhfals"
+      overlayInfo="Gross profit margin in percentage"
       format="0.000a"
       error={error}
       loading={loading}

@@ -30,7 +30,7 @@ const SupplierTotalPurchased = ({ id }) => {
   return (
     <KpiValue
       title="Total Purchased"
-      overlayInfo="something something gemp something"
+      overlayInfo="Total value purchased by a Supplier"
       value={numeral(totalPurchased).format('0.0a')}
       unit="€"
       error={error}

@@ -55,7 +55,7 @@ const SalesLocation = ({ year }) => {
   return (
     <KpiTable
       title="Sales by location"
-      overlayInfo="knfalsdjfa"
+      overlayInfo="Net total of sales by Location"
       headers={headers}
       data={tableData}
       error={error}
