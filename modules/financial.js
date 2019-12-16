@@ -470,6 +470,353 @@ const balanceSheetTemplate = {
   ],
 };
 
+const profitLossTemplate = {
+  revenue: [
+    {
+      name: 'Vendas e serviços prestados',
+      taxonomyCodes: [506, 507, 508, 509, -511, -512, 513, 514, 515, 516, -518],
+      ifCreditOrDebit: [510, 517],
+    },
+    {
+      name: 'Subsídios à exploração',
+      taxonomyCodes: [527, 528],
+    },
+    {
+      name:
+        'Ganhos / perdas imputadas de subsidiárias, associadas e empreendimentos conjuntos',
+      taxonomyCodes: [614, 615, 616, 638, 639, -479, -480, -481, -482],
+    },
+    {
+      name: 'Variação nos inventários da produção',
+      taxonomyCodes: [],
+      ifCreditOrDebit: [519, 520, 521, 522],
+    },
+    {
+      name: 'Trabalhos para a própria entidade',
+      taxonomyCodes: [523, 524, 525, 526],
+    },
+
+    {
+      name: 'Aumentos / reduções de justo valor',
+      taxonomyCodes: [
+        594,
+        595,
+        596,
+        597,
+        598,
+        599,
+        600,
+        601,
+        602,
+        -454,
+        -455,
+        -456,
+        -457,
+        -458,
+        -459,
+        -460,
+        -461,
+        -462,
+      ],
+    },
+    {
+      name: 'Outros rendimentos',
+      taxonomyCodes: [
+        603,
+        604,
+        605,
+        606,
+        607,
+        608,
+        609,
+        610,
+        611,
+        612,
+        613,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627,
+        628,
+        629,
+        630,
+        631,
+        632,
+        633,
+        634,
+        636,
+        637,
+        640,
+        642,
+      ],
+    },
+  ],
+  expenses: [
+    {
+      name: 'Custo das mercadorias vendidas e das matérias consumidas',
+      taxonomyCodes: [353, 354, 355],
+    },
+    {
+      name: 'Fornecimentos e serviços externos',
+      taxonomyCodes: [
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+      ],
+    },
+    {
+      name: 'Gastos com o pessoal',
+      taxonomyCodes: [385, 386, 389, 390, 391, 392, 393],
+      ifCreditOrDebit: [387, 388],
+    },
+    {
+      name: 'Imparidade / ajustamentos de inventários (perdas / reversões)',
+      taxonomyCodes: [
+        415,
+        416,
+        417,
+        418,
+        419,
+        420,
+        421,
+        -549,
+        -550,
+        -551,
+        -552,
+        -553,
+        -554,
+        -555,
+      ],
+    },
+    {
+      name: 'Imparidade de dívidas a receber (perdas / reversões)',
+      taxonomyCodes: [413, 414, -547, -548],
+    },
+    {
+      name: 'Provisões (aumentos / reduções)',
+      taxonomyCodes: [
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        -586,
+        -587,
+        -588,
+        -589,
+        -590,
+        -591,
+        -592,
+        -593,
+      ],
+    },
+    {
+      name:
+        'Imparidade de investimentos não depreciáveis / amortizáveis (perdas / reversões)',
+      taxonomyCodes: [
+        422,
+        423,
+        424,
+        425,
+        441,
+        442,
+        443,
+        444,
+        445,
+        446,
+        447,
+        448,
+        449,
+        450,
+        451,
+        452,
+        453,
+        -556,
+        -557,
+        -558,
+        -573,
+        -574,
+        -575,
+        -576,
+        -577,
+        -578,
+        -579,
+        -580,
+        -581,
+        -582,
+        -583,
+        -584,
+        -585,
+      ],
+      ifCreditOrDebit: [412],
+    },
+    {
+      name: 'Outros gastos',
+      taxonomyCodes: [
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+      ],
+    },
+  ],
+  depreciation: [
+    {
+      name: 'Gastos / reversões de depreciação e de amortização',
+      taxonomyCodes: [
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        -529,
+        -530,
+        -531,
+        -532,
+        -533,
+        -534,
+        -535,
+        -536,
+        -537,
+        -538,
+        -539,
+        -540,
+        -541,
+        -542,
+        -543,
+        -544,
+        -545,
+        -546,
+      ],
+    },
+    {
+      name:
+        'Imparidade de investimentos depreciáveis / amortizáveis (perdas / reversões)',
+      taxonomyCodes: [
+        426,
+        427,
+        428,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        437,
+        438,
+        439,
+        440,
+        -559,
+        -560,
+        -561,
+        -562,
+        -563,
+        -564,
+        -565,
+        -566,
+        -567,
+        -568,
+        -569,
+        -570,
+        -571,
+        -572,
+      ],
+    },
+  ],
+  interest: [
+    {
+      name: 'Juros e rendimentos similares obtidos',
+      taxonomyCodes: [635, 641],
+    },
+    {
+      name: 'Juros e gastos similares suportados',
+      taxonomyCodes: [500, 501, 502, 503, 504, 505],
+    },
+  ],
+  taxes: [
+    {
+      name: 'Imposto sobre o rendimento do período',
+      taxonomyCodes: [644],
+      ifCreditOrDebit: [645],
+    },
+  ],
+  ebit: 0,
+  ebitda: 0,
+  netIncome: 0,
+};
+
 const processTransactionLines = (lines, accountId) => {
   const totalTransactionValues = {
     totalCredit: 0,
@@ -640,6 +987,34 @@ const processTaxonomySum = (taxonomy, accounts) => {
         balanceValue: balance > 0 ? balance : -balance,
       });
     }
+  });
+
+  return results;
+};
+
+const processTaxonomySumViaTransactions = (taxonomy, accounts, journals) => {
+  const accountCodes = [];
+  const results = [];
+  let currentAccount;
+  let balance = 0;
+  accounts.forEach(account => {
+    if (account.TaxonomyCode == taxonomy) {
+      accountCodes.push(account.AccountID);
+    }
+  });
+
+  accountCodes.forEach(code => {
+    // get transaction sum
+    currentAccount = processJournalEntries(journals, code, 2019, false);
+    balance =
+      Number(currentAccount.totalDebit) - Number(currentAccount.totalCredit);
+    results.push({
+      taxonomy: taxonomy,
+      account: code,
+      balanceType: balance > 0 ? 'debit' : 'credt',
+      balanceValue: balance > 0 ? balance : -balance,
+    });
+    // return the same we returned before
   });
 
   return results;
@@ -836,7 +1211,7 @@ const calculateEquity = accounts => {
     currentSum = 0;
   });
   equity.total = sum;
-  console.log(equity);
+
   return equity;
 };
 
@@ -983,7 +1358,6 @@ const calculateAssets = accounts => {
   assets.totalNonCurrent = totalNonCurrent;
   assets.total = totalCurrent + totalNonCurrent;
 
-  console.log(assets);
   return assets;
 };
 
@@ -1136,7 +1510,6 @@ const calculateLiabilities = accounts => {
   liabilities.totalNonCurrent = totalNonCurrent;
   liabilities.total = totalCurrent + totalNonCurrent;
 
-  console.log(liabilities);
   return liabilities;
 };
 
@@ -1179,6 +1552,243 @@ const calculateCash = accounts => {
     }
   });
   return total;
+};
+
+const calculateProfitLoss = (journals, accounts) => {
+  let currentSum = 0;
+  const pl = {
+    revenue: [],
+    expenses: [],
+    interest: [],
+    depreciation: [],
+    taxes: [],
+    ebitda: 0,
+    ebit: 0,
+    netIncome: 0,
+  };
+
+  profitLossTemplate.revenue.forEach(revenueAccount => {
+    // check taxonomy codes
+    let currentTaxonomy;
+    revenueAccount.taxonomyCodes.forEach(taxonomy => {
+      currentTaxonomy = processTaxonomySumViaTransactions(
+        Math.abs(taxonomy),
+        accounts,
+        journals,
+      );
+      currentTaxonomy.forEach(tax => {
+        if (taxonomy < 0) {
+          currentSum -= tax.balanceValue;
+        } else {
+          currentSum += tax.balanceValue;
+        }
+      });
+    });
+
+    // check if credit or debit
+    if (revenueAccount.ifCreditOrDebit) {
+      revenueAccount.ifCreditOrDebit.forEach(creditOrDebit => {
+        currentTaxonomy = processTaxonomySumViaTransactions(
+          Math.abs(creditOrDebit),
+          accounts,
+          journals,
+        );
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            currentSum -= tax.balanceValue;
+          } else {
+            currentSum += tax.balanceValue;
+          }
+        });
+      });
+    }
+
+    pl.revenue.push({ name: revenueAccount.name, value: currentSum });
+    currentSum = 0;
+  });
+
+  profitLossTemplate.expenses.forEach(expensesAccount => {
+    // check taxonomy codes
+    let currentTaxonomy;
+    expensesAccount.taxonomyCodes.forEach(taxonomy => {
+      currentTaxonomy = processTaxonomySumViaTransactions(
+        Math.abs(taxonomy),
+        accounts,
+        journals,
+      );
+      currentTaxonomy.forEach(tax => {
+        if (taxonomy < 0) {
+          currentSum -= tax.balanceValue;
+        } else {
+          currentSum += tax.balanceValue;
+        }
+      });
+    });
+
+    // check if credit or debit
+    if (expensesAccount.ifCreditOrDebit) {
+      expensesAccount.ifCreditOrDebit.forEach(creditOrDebit => {
+        currentTaxonomy = processTaxonomySumViaTransactions(
+          Math.abs(creditOrDebit),
+          accounts,
+          journals,
+        );
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            currentSum -= tax.balanceValue;
+          } else {
+            currentSum += tax.balanceValue;
+          }
+        });
+      });
+    }
+
+    pl.expenses.push({ name: expensesAccount.name, value: currentSum });
+    currentSum = 0;
+  });
+
+  profitLossTemplate.interest.forEach(interestAccount => {
+    // check taxonomy codes
+    let currentTaxonomy;
+    interestAccount.taxonomyCodes.forEach(taxonomy => {
+      currentTaxonomy = processTaxonomySumViaTransactions(
+        Math.abs(taxonomy),
+        accounts,
+        journals,
+      );
+      currentTaxonomy.forEach(tax => {
+        if (taxonomy < 0) {
+          currentSum -= tax.balanceValue;
+        } else {
+          currentSum += tax.balanceValue;
+        }
+      });
+    });
+
+    // check if credit or debit
+    if (interestAccount.ifCreditOrDebit) {
+      interestAccount.ifCreditOrDebit.forEach(creditOrDebit => {
+        currentTaxonomy = processTaxonomySumViaTransactions(
+          Math.abs(creditOrDebit),
+          accounts,
+          journals,
+        );
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            currentSum -= tax.balanceValue;
+          } else {
+            currentSum += tax.balanceValue;
+          }
+        });
+      });
+    }
+
+    pl.interest.push({ name: interestAccount.name, value: currentSum });
+    currentSum = 0;
+  });
+
+  profitLossTemplate.depreciation.forEach(depreciationAccount => {
+    // check taxonomy codes
+    let currentTaxonomy;
+    depreciationAccount.taxonomyCodes.forEach(taxonomy => {
+      currentTaxonomy = processTaxonomySumViaTransactions(
+        Math.abs(taxonomy),
+        accounts,
+        journals,
+      );
+      currentTaxonomy.forEach(tax => {
+        if (taxonomy < 0) {
+          currentSum -= tax.balanceValue;
+        } else {
+          currentSum += tax.balanceValue;
+        }
+      });
+    });
+
+    // check if credit or debit
+    if (depreciationAccount.ifCreditOrDebit) {
+      depreciationAccount.ifCreditOrDebit.forEach(creditOrDebit => {
+        currentTaxonomy = processTaxonomySumViaTransactions(
+          Math.abs(creditOrDebit),
+          accounts,
+          journals,
+        );
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            currentSum -= tax.balanceValue;
+          } else {
+            currentSum += tax.balanceValue;
+          }
+        });
+      });
+    }
+
+    pl.depreciation.push({ name: depreciationAccount.name, value: currentSum });
+    currentSum = 0;
+  });
+
+  profitLossTemplate.taxes.forEach(taxesAccount => {
+    // check taxonomy codes
+    let currentTaxonomy;
+    taxesAccount.taxonomyCodes.forEach(taxonomy => {
+      currentTaxonomy = processTaxonomySumViaTransactions(
+        Math.abs(taxonomy),
+        accounts,
+        journals,
+      );
+      currentTaxonomy.forEach(tax => {
+        if (taxonomy < 0) {
+          currentSum -= tax.balanceValue;
+        } else {
+          currentSum += tax.balanceValue;
+        }
+      });
+    });
+
+    // check if credit or debit
+    if (taxesAccount.ifCreditOrDebit) {
+      taxesAccount.ifCreditOrDebit.forEach(creditOrDebit => {
+        currentTaxonomy = processTaxonomySumViaTransactions(
+          Math.abs(creditOrDebit),
+          accounts,
+          journals,
+        );
+        currentTaxonomy.forEach(tax => {
+          if (tax.balanceType === 'debit') {
+            currentSum -= tax.balanceValue;
+          } else {
+            currentSum += tax.balanceValue;
+          }
+        });
+      });
+    }
+
+    pl.taxes.push({ name: taxesAccount.name, value: currentSum });
+    currentSum = 0;
+  });
+
+  pl.ebitda =
+    pl.revenue.reduce((acc, curr) => acc + curr.value, 0) -
+    pl.expenses.reduce((acc, curr) => acc + curr.value, 0);
+  pl.ebit =
+    pl.ebitda - pl.depreciation.reduce((acc, curr) => acc + curr.value, 0);
+  let incomeInterest = 0;
+  let expensesInterest = 0;
+  // eslint-disable-next-line
+  for (let i = 0; i < pl.interest.length; i++) {
+    if (pl.interest[i].name === 'Juros e rendimentos similares obtidos') {
+      incomeInterest = pl.interest[i].value;
+    } else if (pl.interest[i].name === 'Juros e gastos similares suportados') {
+      expensesInterest = pl.interest[i].value;
+    }
+  }
+  pl.netIncome =
+    pl.ebit +
+    incomeInterest -
+    expensesInterest -
+    pl.taxes.reduce((acc, curr) => acc + curr.value, 0);
+
+  return pl;
 };
 
 const calculateGrossProfitMargin = journal => {
@@ -1351,7 +1961,7 @@ module.exports = (server, db) => {
     let i = 0;
     // eslint-disable-next-line
     for (i; i < assets.current.length; i++) {
-      if (assets.current[i].name == 'Cash and bank deposits') {
+      if (assets.current[i].name == 'Caixa e depósitos bancários') {
         break;
       }
     }
@@ -1363,6 +1973,8 @@ module.exports = (server, db) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const currentAssets = calculateAssets(accounts).totalCurrent;
     const currentLiabilities = calculateLiabilities(accounts).totalCurrent;
+    console.log(currentAssets);
+    console.log(currentLiabilities);
     res.json((currentAssets / currentLiabilities).toFixed(2));
   });
 
@@ -1377,5 +1989,12 @@ module.exports = (server, db) => {
     const journal = db.GeneralLedgerEntries.Journal;
     const grossProfit = calculateGrossProfitMargin(journal);
     res.json(grossProfit);
+  });
+
+  server.get('/api/financial/profit-loss', (req, res) => {
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const journal = db.GeneralLedgerEntries.Journal;
+    const pl = calculateProfitLoss(journal, accounts);
+    res.json(pl);
   });
 };
