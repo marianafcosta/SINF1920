@@ -36,6 +36,7 @@ const CustomCard = ({
   title,
   overlayInfo,
   isOverlaySet,
+  firstToggle,
   animation,
   padding,
   error,
@@ -56,17 +57,22 @@ const CustomCard = ({
   return (
     <div className={classes.cardContainer}>
       <Card className={classNames(classes.card, padding)}>
-        {animation && (isOverlaySet || isOverlayAnimationRunning) && (
-          <Card
-            className={classNames('overlay', !isOverlaySet ? 'collapsing' : '')}
-            onAnimationEnd={handleOverlayAnimationStatus}
-          >
-            <p>
-              <strong>{title}: </strong>
-              {overlayInfo}
-            </p>
-          </Card>
-        )}
+        {animation &&
+          (isOverlaySet || isOverlayAnimationRunning) &&
+          firstToggle && (
+            <Card
+              className={classNames(
+                'overlay',
+                !isOverlaySet ? 'collapsing' : '',
+              )}
+              onAnimationEnd={handleOverlayAnimationStatus}
+            >
+              <p>
+                <strong>{title}: </strong>
+                {overlayInfo}
+              </p>
+            </Card>
+          )}
         <h1 className={classes.cardTitle}>{title}</h1>
         {error ? <ApiCallError /> : children}
       </Card>
@@ -79,6 +85,7 @@ CustomCard.defaultProps = {
   title: '',
   overlayInfo: 'No description provided',
   isOverlaySet: false,
+  firstToggle: false,
   animation: true,
   padding: '',
   error: false,
@@ -89,6 +96,7 @@ CustomCard.propTypes = {
   title: PropTypes.string,
   overlayInfo: PropTypes.string,
   isOverlaySet: PropTypes.bool,
+  firstToggle: PropTypes.bool,
   animation: PropTypes.bool,
   padding: PropTypes.string,
   error: PropTypes.bool,
@@ -96,6 +104,7 @@ CustomCard.propTypes = {
 
 const mapStateToProps = state => ({
   isOverlaySet: state.overlay.isSet,
+  firstToggle: state.overlay.firstToggle,
 });
 
 export default connect(
