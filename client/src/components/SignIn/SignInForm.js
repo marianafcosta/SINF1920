@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -53,11 +53,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '23px',
     margin: '1rem 0',
   },
-  passwordInput: {
-    backgroundColor: '#FFFBA1',
-    border: 'none',
-    outline: 'none',
-    borderRadius: '23px',
+  emailInput: {
     margin: '.3rem 0',
   },
   submit: {
@@ -143,7 +139,7 @@ const SignInForm = ({ isAuthenticated, doLogin, error, user }) => {
             </Grid>
             <Grid item xs={9}>
               <BootstrapInput
-                className={classes.passwordInput}
+                className={clsx(classes.input, classes.emailInput)}
                 margin="none"
                 required
                 fullWidth
@@ -183,10 +179,6 @@ const SignInForm = ({ isAuthenticated, doLogin, error, user }) => {
           >
             Login
           </Button>
-
-          <Link className={classes.link} href="/" variant="body2">
-            Forgot your password?
-          </Link>
         </form>
       </CustomCard>
 
