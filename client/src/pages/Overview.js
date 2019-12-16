@@ -22,10 +22,7 @@ const Overview = () => {
           <Grid item sm={12}>
             <SalesExpenses />
           </Grid>
-          <Grid item sm={6}>
-            <Products />
-          </Grid>
-          <Grid item sm={6}>
+          <Grid item sm={12} lg={6}>
             <TopProducts
               headers={[
                 {
@@ -43,6 +40,9 @@ const Overview = () => {
                 },
               ]}
             />
+          </Grid>
+          <Grid item sm={12} lg={6}>
+            <Products />
           </Grid>
           <Grid item sm={12}>
             <BalanceSheet />

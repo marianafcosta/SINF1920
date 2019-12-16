@@ -24,9 +24,6 @@ const Financial = () => {
     <Layout pageName="Finances">
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item sm={12}>
-            <SalesAndExpenses />
-          </Grid>
           <Grid item sm={6}>
             <Ebitda />
           </Grid>
@@ -50,6 +47,9 @@ const Financial = () => {
           </Grid>
           <Grid item sm={12}>
             <BalanceSheet />
+          </Grid>
+          <Grid item sm={12}>
+            <SalesAndExpenses />
           </Grid>
         </Grid>
       </div>

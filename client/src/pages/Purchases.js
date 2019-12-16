@@ -20,6 +20,9 @@ const Purchases = () => {
     <Layout pageName="Purchases">
       <div className={classes.root}>
         <Grid container spacing={3}>
+          <Grid item sm={12}>
+            <MonthlyPurchases />
+          </Grid>
           <Grid item sm={12} md={8}>
             <Suppliers />
           </Grid>
@@ -32,9 +35,6 @@ const Purchases = () => {
                 <DebtToSuppliers />
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item sm={12}>
-            <MonthlyPurchases />
           </Grid>
         </Grid>
       </div>

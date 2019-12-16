@@ -20,20 +20,20 @@ const Sales = () => {
     <Layout pageName="Sales">
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item sm={12}>
+          <Grid item sm={12} md={8}>
             <MonthlySales />
-          </Grid>
-          <Grid item sm={6} md={8}>
-            <SalesLocation />
           </Grid>
           <Grid item sm={6} md={4}>
             <GrossProfitMargin />
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={12} lg={5}>
             <TopCustomers />
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={12} lg={7}>
             <TopProducts />
+          </Grid>
+          <Grid item sm={12}>
+            <SalesLocation />
           </Grid>
         </Grid>
       </div>

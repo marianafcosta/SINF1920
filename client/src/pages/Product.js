@@ -35,14 +35,14 @@ const Product = () => {
     <Layout pageName={`Product ${product ? `- ${product.description}` : ''}`}>
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item sm={12}>
-            <ProductSales productId={id} />
+          <Grid item sm={6} md={4}>
+            <ProductInfo productId={id} />
           </Grid>
           <Grid item sm={6} md={8}>
             <ProductSuppliers productId={id} />
           </Grid>
-          <Grid item sm={6} md={4}>
-            <ProductInfo productId={id} />
+          <Grid item sm={12}>
+            <ProductSales productId={id} />
           </Grid>
           <Grid item sm={6}>
             <AverageCost productId={id} />
