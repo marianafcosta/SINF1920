@@ -103,19 +103,24 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(3),
+    maxHeight: 'inherit',
   },
   paper: {
     width: '100%',
     boxShadow: 'none',
+    backgroundColor: 'inherit',
+    maxHeight: 'inherit',
+    boxShadow: 'none !important',
   },
   table: {
-    minWidth: 750,
+    minWidth: 'auto',
     backgroundColor: '#262626',
     color: 'white',
     padding: '0 20px',
+    maxHeight: 'inherit',
   },
   tableWrapper: {
-    maxHeight: 320,
+    maxHeight: 'inherit',
     overflowX: 'auto',
   },
   visuallyHidden: {
@@ -132,13 +137,13 @@ const useStyles = makeStyles(theme => ({
   head: {
     backgroundColor: '#262626',
     color: 'inherit',
-    padding: '7px 14px 7px 4rem',
+    padding: '7px 3px 7px 1em',
     borderBottom: '1px solid #FFFBA1',
   },
   cells: {
     backgroundColor: '#262626',
     color: 'inherit',
-    padding: '12px 14px 6px 4rem',
+    padding: '7px 3px 7px 1em',
     border: 'none',
     textAlign: 'end',
   },
@@ -251,7 +256,7 @@ const KpiTable = ({ title, overlayInfo, headers, data, error }) => {
                       </TableRow>
                     );
                   })}
-                {emptyRows > 0 && (
+                {emptyRows > 0 && data.length > rowsPerPage && (
                   <TableRow
                     style={{
                       height: 43 * emptyRows,

@@ -10,16 +10,18 @@ import ApiCallError from '../apiCallError';
 
 const useStyles = makeStyles({
   card: {
-    minWidth: 275,
+    minWidth: 'auto',
     boxShadow: 'none !important',
     backgroundColor: '#262626',
     borderRadius: '25px',
     padding: '15px',
+    height: '100%',
     position: 'relative',
   },
   cardContainer: {
     border: '2px #fffba1',
     borderRadius: '25px',
+    height: '100%',
     padding: '2px 2px 10px 2px',
     backgroundColor: '#fffba1',
   },
