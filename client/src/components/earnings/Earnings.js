@@ -21,7 +21,7 @@ const Earnings = ({ year }) => {
     <KpiValue
       value={earnings}
       unit="€"
-      title="Earnings"
+      title="Net income"
       overlayInfo="nem sei se isto é relevante"
       format="0.000a"
     />
