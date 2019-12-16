@@ -23,7 +23,7 @@ const Customer = () => {
     <Layout pageName={`Customer ${customer ? `- ${customer.name}` : ''}`}>
       {customer !== null && (
         <KpiInfoList
-          title="Costumer information"
+          title="Customer information"
           overlayInfo="Something happened"
           data={[
             customer.partyKey
