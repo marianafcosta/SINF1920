@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import { Provider } from 'react-redux';
-import store from './store';
+import { connect } from 'react-redux';
 import setYear from './actions/yearActions';
 
 import AppRouter from './AppRouter';
-
-setYear();
 
 const theme = createMuiTheme({
   typography: {
@@ -15,12 +13,24 @@ const theme = createMuiTheme({
   },
 });
 
-const App = () => (
-  <MuiThemeProvider theme={theme}>
-    <Provider store={store}>
-      <AppRouter />
-    </Provider>
-  </MuiThemeProvider>
-);
+const App = ({ initYear }) => {
+  useEffect(() => {
+    initYear();
+    //eslint-disable-next-year
+  }, []);
 
-export default App;
+  return (
+    <MuiThemeProvider theme={theme}>
+      <AppRouter />
+    </MuiThemeProvider>
+  );
+};
+
+App.propTypes = {
+  initYear: PropTypes.func.isRequired,
+};
+
+export default connect(
+  null,
+  { initYear: setYear },
+)(App);
