@@ -31,7 +31,7 @@ const ProductSuppliers = ({ productId }) => {
             units: numeral(supplier.units).format('0.0a'),
           })),
         );
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

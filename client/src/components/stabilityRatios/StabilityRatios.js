@@ -35,7 +35,7 @@ const StabilityRatios = () => {
           assets: assetsResponse.data,
           liabilities: liabilitiesResponse.data,
         });
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

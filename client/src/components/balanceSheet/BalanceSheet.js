@@ -79,7 +79,7 @@ const BalanceSheet = () => {
       try {
         const { data } = await fetchBalanceSheet();
         setBalanceSheet(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

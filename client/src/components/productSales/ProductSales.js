@@ -43,7 +43,7 @@ const ProductSales = ({ productId }) => {
             sales: month,
           })),
         );
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

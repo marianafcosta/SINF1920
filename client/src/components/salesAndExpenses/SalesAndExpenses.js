@@ -68,7 +68,7 @@ const SalesAndExpenses = () => {
           sales: salesResponse.data,
           expenses: expensesResponse.data,
         });
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

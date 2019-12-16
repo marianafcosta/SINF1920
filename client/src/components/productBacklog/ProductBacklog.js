@@ -14,7 +14,7 @@ const ProductBacklog = () => {
       try {
         const { data } = await fetchProductBacklog();
         setProductBacklog(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

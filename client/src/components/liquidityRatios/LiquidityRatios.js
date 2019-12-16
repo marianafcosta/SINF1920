@@ -37,7 +37,7 @@ const LiquidityRatios = () => {
           workingCapital: workingCapitalResponse.data,
           current: currentResponse.data,
         });
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

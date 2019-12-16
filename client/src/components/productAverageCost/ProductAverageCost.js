@@ -15,7 +15,7 @@ const ProductAverageCost = ({ productId }) => {
       try {
         const { data } = await fetchProductAverageCost(productId); // TODO
         setAverageCost(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

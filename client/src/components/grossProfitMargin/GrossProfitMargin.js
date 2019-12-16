@@ -14,7 +14,7 @@ const GrossProfitMargin = () => {
       try {
         const response = await fetchGrossProfitMargin();
         setMargin(response.data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

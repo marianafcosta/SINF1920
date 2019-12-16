@@ -16,7 +16,7 @@ const SupplierTotalPurchased = ({ id }) => {
       try {
         const { data } = await fetchTotalPurchased(id, 2019);
         setTotalPurchased(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

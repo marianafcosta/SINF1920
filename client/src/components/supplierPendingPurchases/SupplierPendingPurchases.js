@@ -22,7 +22,7 @@ const SupplierPendingPurchases = ({ id }) => {
       try {
         const { data } = await fetchPendingPurchases(id);
         setPendingPurchases(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

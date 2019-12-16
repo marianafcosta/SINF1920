@@ -17,7 +17,7 @@ const Ebit = ({ year }) => {
       try {
         const { data } = await fetchEbit(year);
         setEbit(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

@@ -23,7 +23,7 @@ const ProductInfo = ({ productId }) => {
             })),
           );
         }
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

@@ -17,7 +17,7 @@ const ProductAveragePvp = ({ productId }) => {
           const { data } = await fetchProductAveragePvp(productId);
           setAveragePvp(data);
         }
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

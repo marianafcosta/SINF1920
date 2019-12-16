@@ -31,7 +31,7 @@ const CustomerPurchases = ({ customerId }) => {
             value: numeral(item.value).format('0.000a'),
           })),
         );
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

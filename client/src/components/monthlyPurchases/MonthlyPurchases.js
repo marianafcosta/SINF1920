@@ -34,7 +34,7 @@ const MonthlyPurchases = () => {
             purchases: month,
           })),
         );
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

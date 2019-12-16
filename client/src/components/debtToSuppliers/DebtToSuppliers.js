@@ -18,7 +18,7 @@ const DebtToSuppliers = ({ year }) => {
       try {
         const { data } = await fetchAccountBalance('22', year, false);
         setDebtToSuppliers(data.totalCredit - data.totalDebit);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

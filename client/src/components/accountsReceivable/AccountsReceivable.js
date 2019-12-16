@@ -16,7 +16,7 @@ const AccountsReceivable = ({ year }) => {
       try {
         const { data } = await fetchAccountsReceivable(year);
         setAccountsReceivable(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

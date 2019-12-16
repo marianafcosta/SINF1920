@@ -35,7 +35,7 @@ const MonthlySales = () => {
             sales: monthly,
           })),
         );
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

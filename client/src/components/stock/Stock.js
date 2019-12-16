@@ -14,7 +14,7 @@ const Stock = () => {
       try {
         const { data } = await fetchStock(); // TODO
         setStock(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

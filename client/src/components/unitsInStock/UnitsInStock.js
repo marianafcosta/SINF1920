@@ -15,7 +15,7 @@ const UnitsInStock = ({ productId }) => {
       try {
         const response = await fetchUnitsInStock(productId);
         setUnitsInStock(response.data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

@@ -16,13 +16,13 @@ const Earnings = ({ year }) => {
       try {
         const { data } = await fetchEarnings(year);
         setEarnings(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };
 
     fetchData();
-  }, []);
+  }, [year]);
 
   return error ? (
     <ApiCallError title="Earnings" />

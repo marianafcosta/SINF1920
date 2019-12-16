@@ -17,7 +17,7 @@ const ProductUnitsSold = ({ id }) => {
         const { data } = await fetchProductUnitsSold(id); // TODO
         setUnitsSold(data.unitsSold);
         setValue(data.value);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

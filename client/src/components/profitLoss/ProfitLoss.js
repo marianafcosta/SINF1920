@@ -58,7 +58,7 @@ const ProfitLoss = () => {
       try {
         const { data } = await fetchProfitLoss();
         setProfitLoss(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };
@@ -68,7 +68,6 @@ const ProfitLoss = () => {
 
   useEffect(() => {
     updateTable();
-    console.log(profitLoss);
     // eslint-disable-next-line
   }, [profitLoss]);
 

@@ -28,7 +28,7 @@ const Warehouses = () => {
             amount: numeral(amount).format('0.000a'),
           })),
         );
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

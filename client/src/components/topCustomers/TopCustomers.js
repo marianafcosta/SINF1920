@@ -40,7 +40,7 @@ const TopCustomers = ({ year }) => {
         setTopAccounts({
           clients: res.data,
         });
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

@@ -26,7 +26,7 @@ const SalesLocation = ({ year }) => {
         const locationsResponse = await fetchSalesByLocation(year);
         const locationsData = locationsResponse.data;
         setLocations(locationsData);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };

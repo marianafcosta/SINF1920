@@ -16,7 +16,7 @@ const Products = ({ headers, title }) => {
       try {
         const { data } = await fetchProducts();
         setTableData(data);
-      } catch (error) {
+      } catch (e) {
         setError(true);
       }
     };
