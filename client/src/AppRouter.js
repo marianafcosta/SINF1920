@@ -18,6 +18,7 @@ import SignIn from './pages/SignIn';
 import Product from './pages/Product';
 import Supplier from './pages/Supplier';
 import Customer from './pages/Customer';
+import NotFound from './pages/NotFound';
 
 const redirectTo = role => {
   const paths = {
@@ -80,6 +81,9 @@ const AppRouter = ({ user }) => (
       </PrivateRoute>
       <Route exact path="/login">
         {user ? redirectTo(user.role) : <SignIn />}
+      </Route>
+      <Route>
+        <NotFound />
       </Route>
     </Switch>
   </Router>
