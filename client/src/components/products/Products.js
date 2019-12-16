@@ -26,7 +26,7 @@ const Products = ({ headers, title }) => {
   return (
     <KpiTable
       title={title}
-      overlay="testing"
+      overlayInfo="testing"
       headers={headers}
       data={tableData}
       error={error}
