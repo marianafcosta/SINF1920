@@ -4,3 +4,9 @@
   font-size: xx-large;
   margin: 0.5em 0;
 }
+
+.valueWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
