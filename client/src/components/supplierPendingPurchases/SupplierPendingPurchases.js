@@ -13,11 +13,17 @@ const headers = [
 
 const SupplierPendingPurchases = ({ id }) => {
   const [pendingPurchases, setPendingPurchases] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchPendingPurchases(id);
-      setPendingPurchases(data);
+      setError(false);
+      try {
+        const { data } = await fetchPendingPurchases(id);
+        setPendingPurchases(data);
+      } catch (e) {
+        setError(true);
+      }
     };
 
     fetchData();
@@ -29,6 +35,7 @@ const SupplierPendingPurchases = ({ id }) => {
       overlayInfo="kajsdhfs"
       headers={headers}
       data={pendingPurchases}
+      error={error}
     />
   );
 };

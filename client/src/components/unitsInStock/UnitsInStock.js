@@ -6,11 +6,17 @@ import { fetchUnitsInStock } from '../../services/productService';
 
 const UnitsInStock = ({ productId }) => {
   const [unitsInStock, setUnitsInStock] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetchUnitsInStock(productId);
-      setUnitsInStock(response.data);
+      setError(false);
+      try {
+        const response = await fetchUnitsInStock(productId);
+        setUnitsInStock(response.data);
+      } catch (e) {
+        setError(true);
+      }
     };
     if (productId) {
       fetchData();
@@ -24,6 +30,7 @@ const UnitsInStock = ({ productId }) => {
       unit="units"
       overlayInfo="AHHHHHHHHHH"
       format="0.000a"
+      error={error}
     />
   );
 };

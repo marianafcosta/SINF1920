@@ -20,16 +20,22 @@ const monthNames = [
 
 const MonthlyPurchases = () => {
   const [monthlyPurchases, setMonthlyPurchases] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchPurchases(true);
-      setMonthlyPurchases(
-        data.map((month, index) => ({
-          name: monthNames[index],
-          purchases: month,
-        })),
-      );
+      setError(false);
+      try {
+        const { data } = await fetchPurchases(true);
+        setMonthlyPurchases(
+          data.map((month, index) => ({
+            name: monthNames[index],
+            purchases: month,
+          })),
+        );
+      } catch (e) {
+        setError(true);
+      }
     };
 
     fetchData();
@@ -41,6 +47,7 @@ const MonthlyPurchases = () => {
       overlayInfo="Number of units purchased in each month in a year."
       bars={[{ dataKey: 'purchases', fill: '#fffba1' }]}
       data={monthlyPurchases}
+      error={error}
     />
   );
 };

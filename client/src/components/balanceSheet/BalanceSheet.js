@@ -18,6 +18,7 @@ const sections = [
 const BalanceSheet = () => {
   const [balanceSheet, setBalanceSheet] = useState(null);
   const [listData, setListData] = useState([]);
+  const [error, setError] = useState(false);
 
   const updateTable = () => {
     const updatedListData = [];
@@ -71,20 +72,21 @@ const BalanceSheet = () => {
     }
   };
 
-  const fetchData = async () => {
-    const { data } = await fetchBalanceSheet();
-    console.log(data);
-    setBalanceSheet(data);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchBalanceSheet();
+        setBalanceSheet(data);
+      } catch (e) {
+        setError(true);
+      }
+    };
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     updateTable();
-    console.log(balanceSheet);
     // eslint-disable-next-line
   }, [balanceSheet]);
 
@@ -94,6 +96,7 @@ const BalanceSheet = () => {
       overlayInfo="dfadsf"
       sections={sections}
       data={listData}
+      error={error}
     />
   );
 };

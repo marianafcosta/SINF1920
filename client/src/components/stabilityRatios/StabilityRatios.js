@@ -20,19 +20,24 @@ const StabilityRatios = () => {
     liabilities: 0,
   });
   const [tableData, setTableData] = useState([]);
-
-  const fetchData = async () => {
-    const equityResponse = await fetchEquity();
-    const assetsResponse = await fetchAssets();
-    const liabilitiesResponse = await fetchLiabilities();
-    setValues({
-      equity: equityResponse.data,
-      assets: assetsResponse.data,
-      liabilities: liabilitiesResponse.data,
-    });
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const equityResponse = await fetchEquity();
+        const assetsResponse = await fetchAssets();
+        const liabilitiesResponse = await fetchLiabilities();
+        setValues({
+          equity: equityResponse.data,
+          assets: assetsResponse.data,
+          liabilities: liabilitiesResponse.data,
+        });
+      } catch (e) {
+        setError(true);
+      }
+    };
     fetchData();
   }, []);
 
@@ -53,6 +58,7 @@ const StabilityRatios = () => {
       overlayInfo="lajsdfkaosdf"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

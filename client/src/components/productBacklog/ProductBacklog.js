@@ -5,11 +5,17 @@ import KpiValue from '../kpiValue';
 
 const ProductBacklog = () => {
   const [productBacklog, setProductBacklog] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchProductBacklog();
-      setProductBacklog(data);
+      setError(false);
+      try {
+        const { data } = await fetchProductBacklog();
+        setProductBacklog(data);
+      } catch (e) {
+        setError(true);
+      }
     };
 
     fetchData();
@@ -22,6 +28,7 @@ const ProductBacklog = () => {
       value={productBacklog}
       unit="€"
       format="0.0a"
+      error={error}
     />
   );
 };

@@ -7,12 +7,18 @@ import { fetchProductUnitsSold } from '../../services/productService';
 const ProductUnitsSold = ({ id }) => {
   const [unitsSold, setUnitsSold] = useState(0);
   const [value, setValue] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchProductUnitsSold(id); // TODO
-      setUnitsSold(data.unitsSold);
-      setValue(data.value);
+      setError(false);
+      try {
+        const { data } = await fetchProductUnitsSold(id); // TODO
+        setUnitsSold(data.unitsSold);
+        setValue(data.value);
+      } catch (e) {
+        setError(true);
+      }
     };
     fetchData();
   }, [id]);
@@ -22,6 +28,7 @@ const ProductUnitsSold = ({ id }) => {
       title="Units Sold"
       overlayInfo="something something gemp something"
       value={`${unitsSold} (${value} €)`}
+      error={error}
     />
   );
 };

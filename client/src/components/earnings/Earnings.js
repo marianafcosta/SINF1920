@@ -7,15 +7,21 @@ import { fetchEarnings } from '../../services/financialService';
 
 const Earnings = ({ year }) => {
   const [earnings, setEarnings] = useState(0);
-
-  const fetchData = async () => {
-    const { data } = await fetchEarnings(year);
-    setEarnings(data);
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchEarnings(year);
+        setEarnings(data);
+      } catch (e) {
+        setError(true);
+      }
+    };
+
     fetchData();
-  });
+  }, [year]);
 
   return (
     <KpiValue
@@ -24,6 +30,7 @@ const Earnings = ({ year }) => {
       title="Net income"
       overlayInfo="nem sei se isto é relevante"
       format="0.000a"
+      error={error}
     />
   );
 };

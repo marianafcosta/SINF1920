@@ -7,9 +7,9 @@ import CustomCard from '../CustomCard';
 
 import styles from './KpiAccountList.module.css';
 
-const KpiAccountList = ({ title, overlayInfo, sections, data }) => {
+const KpiAccountList = ({ title, overlayInfo, sections, data, error }) => {
   return (
-    <CustomCard title={title} overlayInfo={overlayInfo}>
+    <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
       {sections.map(section => (
         <>
           <div className={styles.sectionTitleWrapper}>
@@ -43,6 +43,10 @@ const KpiAccountList = ({ title, overlayInfo, sections, data }) => {
   );
 };
 
+KpiAccountList.defaultProps = {
+  error: false,
+};
+
 KpiAccountList.propTypes = {
   title: PropTypes.string.isRequired,
   overlayInfo: PropTypes.string.isRequired,
@@ -60,6 +64,7 @@ KpiAccountList.propTypes = {
       section: PropTypes.string,
     }),
   ).isRequired,
+  error: PropTypes.bool,
 };
 
 export default KpiAccountList;

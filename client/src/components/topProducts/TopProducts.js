@@ -7,11 +7,17 @@ import { fetchTopProducts } from '../../services/salesService';
 
 const TopProducts = ({ headers }) => {
   const [tableData, setTableData] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getTopProducts = async () => {
-      const { data } = await fetchTopProducts();
-      setTableData(data);
+      setError(false);
+      try {
+        const { data } = await fetchTopProducts();
+        setTableData(data);
+      } catch (e) {
+        setError(true);
+      }
     };
     getTopProducts();
   }, []);
@@ -22,6 +28,7 @@ const TopProducts = ({ headers }) => {
       overlayInfo="sdasdf"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

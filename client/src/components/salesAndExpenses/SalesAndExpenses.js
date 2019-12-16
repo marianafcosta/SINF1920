@@ -33,40 +33,45 @@ const testData = [
 const SalesAndExpenses = () => {
   const [accountBalances, setAccountBalances] = useState(null);
   const [graphData, setGraphData] = useState(testData);
+  const [error, setError] = useState(false);
 
   const updateGraph = () => {
     // both sales and expenses should have an equal amount of months,
     // so you can use either one as a map
-    if (accountBalances) {
-      if (accountBalances.sales.error === null) {
-        setGraphData(
-          accountBalances.sales.totalCredit.map((monthly, index) => {
-            return {
-              name: monthNames[index],
-              sales: monthly,
-              expenses: accountBalances.expenses.totalDebit[index],
-            };
-          }),
-        );
-      }
+    if (accountBalances && !accountBalances.sales.error) {
+      setGraphData(
+        accountBalances.sales.totalCredit.map((monthly, index) => {
+          return {
+            name: monthNames[index],
+            sales: monthly,
+            expenses: accountBalances.expenses.totalDebit[index],
+          };
+        }),
+      );
     }
   };
 
-  const fetchData = async () => {
-    const salesResponse = await fetchAccountBalance(accountCodes.sales, true);
-    const expensesResponse = await fetchAccountBalance(
-      accountCodes.expenses,
-      true,
-    );
-    setAccountBalances({
-      sales: salesResponse.data,
-      expenses: expensesResponse.data,
-    });
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const salesResponse = await fetchAccountBalance(
+          accountCodes.sales,
+          true,
+        );
+        const expensesResponse = await fetchAccountBalance(
+          accountCodes.expenses,
+          true,
+        );
+        setAccountBalances({
+          sales: salesResponse.data,
+          expenses: expensesResponse.data,
+        });
+      } catch (e) {
+        setError(true);
+      }
+    };
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -83,6 +88,7 @@ const SalesAndExpenses = () => {
         { dataKey: 'expenses', fill: '#BE6E46' },
       ]}
       data={graphData}
+      error={error}
     />
   );
 };

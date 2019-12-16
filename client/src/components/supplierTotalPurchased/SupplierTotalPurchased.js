@@ -7,11 +7,17 @@ import KpiValue from '../kpiValue';
 
 const SupplierTotalPurchased = ({ id }) => {
   const [totalPurchased, setTotalPurchased] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchTotalPurchased(id, 2019);
-      setTotalPurchased(data);
+      setError(false);
+      try {
+        const { data } = await fetchTotalPurchased(id, 2019);
+        setTotalPurchased(data);
+      } catch (e) {
+        setError(true);
+      }
     };
 
     fetchData();
@@ -23,6 +29,7 @@ const SupplierTotalPurchased = ({ id }) => {
       overlayInfo="something something gemp something"
       value={numeral(totalPurchased).format('0.0a')}
       unit="€"
+      error={error}
     />
   );
 };

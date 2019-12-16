@@ -7,11 +7,17 @@ import { fetchProducts } from '../../services/inventoryService';
 
 const Products = ({ headers, title }) => {
   const [tableData, setTableData] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getProducts = async () => {
-      const { data } = await fetchProducts();
-      setTableData(data);
+      setError(false);
+      try {
+        const { data } = await fetchProducts();
+        setTableData(data);
+      } catch (e) {
+        setError(true);
+      }
     };
     getProducts();
     // eslint-disable-next-line
@@ -23,6 +29,7 @@ const Products = ({ headers, title }) => {
       overlay="testing"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

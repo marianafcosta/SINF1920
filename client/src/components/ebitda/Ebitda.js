@@ -7,15 +7,20 @@ import KpiValue from '../kpiValue';
 
 const Ebitda = ({ year }) => {
   const [ebitda, setEbitda] = useState(0);
-
-  const fetchData = async () => {
-    const { data } = await fetchEbitda(year);
-    setEbitda(data);
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchEbitda(year);
+        setEbitda(data);
+      } catch (e) {
+        setError(true);
+      }
+    };
     fetchData();
-  }, []);
+  }, [year]);
 
   return (
     <KpiValue
@@ -24,6 +29,7 @@ const Ebitda = ({ year }) => {
       value={ebitda}
       unit="€"
       format="0.000a"
+      error={error}
     />
   );
 };

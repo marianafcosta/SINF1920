@@ -15,18 +15,24 @@ const headers = [
 
 const ProductSuppliers = ({ productId }) => {
   const [tableData, setTableData] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchProductSuppliers(productId);
-      setTableData(
-        data.map(supplier => ({
-          id: supplier.id,
-          name: supplier.name,
-          value: numeral(supplier.value).format('0.0a'),
-          units: numeral(supplier.units).format('0.0a'),
-        })),
-      );
+      setError(false);
+      try {
+        const { data } = await fetchProductSuppliers(productId);
+        setTableData(
+          data.map(supplier => ({
+            id: supplier.id,
+            name: supplier.name,
+            value: numeral(supplier.value).format('0.0a'),
+            units: numeral(supplier.units).format('0.0a'),
+          })),
+        );
+      } catch (e) {
+        setError(true);
+      }
     };
     fetchData();
   }, [productId]);
@@ -37,6 +43,7 @@ const ProductSuppliers = ({ productId }) => {
       overlayInfo="aksjdflsdf"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

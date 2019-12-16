@@ -13,6 +13,7 @@ const sections = [
 const ProfitLoss = () => {
   const [profitLoss, setProfitLoss] = useState(null);
   const [listData, setListData] = useState([]);
+  const [error, setError] = useState(false);
 
   const updateTable = () => {
     const updatedListData = [];
@@ -50,20 +51,22 @@ const ProfitLoss = () => {
     }
   };
 
-  const fetchData = async () => {
-    const { data } = await fetchProfitLoss();
-    console.log(data);
-    setProfitLoss(data);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchProfitLoss();
+        setProfitLoss(data);
+      } catch (e) {
+        setError(true);
+      }
+    };
+
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     updateTable();
-    console.log(profitLoss);
     // eslint-disable-next-line
   }, [profitLoss]);
 
@@ -73,6 +76,7 @@ const ProfitLoss = () => {
       overlayInfo="ahhh como é que vou fazer as merdas todas a tempo"
       sections={sections}
       data={listData}
+      error={error}
     />
   );
 };

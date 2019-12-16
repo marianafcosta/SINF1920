@@ -5,11 +5,17 @@ import KpiValue from '../kpiValue';
 
 const Stock = () => {
   const [stock, setStock] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchStock(); // TODO
-      setStock(data);
+      setError(false);
+      try {
+        const { data } = await fetchStock(); // TODO
+        setStock(data);
+      } catch (e) {
+        setError(true);
+      }
     };
 
     fetchData();
@@ -22,6 +28,7 @@ const Stock = () => {
       value={stock}
       unit="€"
       format="0.0a"
+      error={error}
     />
   );
 };

@@ -7,17 +7,23 @@ import KpiInfoList from '../kpiInfoList';
 
 const ProductInfo = ({ productId }) => {
   const [info, setInfo] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (productId) {
-        const response = await fetchProductInfo(productId);
-        setInfo(
-          Object.keys(response.data).map(item => ({
-            label: item,
-            description: response.data[item],
-          })),
-        );
+      setError(false);
+      try {
+        if (productId) {
+          const response = await fetchProductInfo(productId);
+          setInfo(
+            Object.keys(response.data).map(item => ({
+              label: item,
+              description: response.data[item],
+            })),
+          );
+        }
+      } catch (e) {
+        setError(true);
       }
     };
     fetchData();
@@ -28,6 +34,7 @@ const ProductInfo = ({ productId }) => {
       title="Product information"
       overlayInfo="ah finalmente estamos a fazer alguma coisa"
       data={info}
+      error={error}
     />
   );
 };

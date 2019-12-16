@@ -15,17 +15,24 @@ const headers = [
 
 const CustomerPurchases = ({ customerId }) => {
   const [purchases, setPurchases] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchPurchases(customerId, 2019);
-      setPurchases(
-        data.map(item => ({
-          ...item,
-          units: numeral(item.units).format('0a'),
-          value: numeral(item.value).format('0.000a'),
-        })),
-      );
+      setError(false);
+
+      try {
+        const { data } = await fetchPurchases(customerId, 2019);
+        setPurchases(
+          data.map(item => ({
+            ...item,
+            units: numeral(item.units).format('0a'),
+            value: numeral(item.value).format('0.000a'),
+          })),
+        );
+      } catch (e) {
+        setError(true);
+      }
     };
     fetchData();
   }, [customerId]);
@@ -36,6 +43,7 @@ const CustomerPurchases = ({ customerId }) => {
       overlayInfo="dkfngçsdasfsd"
       headers={headers}
       data={purchases}
+      error={error}
     />
   );
 };

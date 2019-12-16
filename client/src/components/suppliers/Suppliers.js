@@ -14,20 +14,25 @@ const headers = [
 
 const Suppliers = () => {
   const [tableData, setTableData] = useState([]);
-
-  const fetchData = async () => {
-    const { data } = await fetchSuppliers();
-    setTableData(
-      data.map(supplier => ({
-        id: supplier.id,
-        name: supplier.name,
-        value: numeral(supplier.value).format('0.0a'),
-        units: numeral(supplier.units).format('0.0a'),
-      })),
-    );
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchSuppliers();
+        setTableData(
+          data.map(supplier => ({
+            id: supplier.id,
+            name: supplier.name,
+            value: numeral(supplier.value).format('0.0a'),
+            units: numeral(supplier.units).format('0.0a'),
+          })),
+        );
+      } catch (e) {
+        setError(true);
+      }
+    };
     fetchData();
   }, []);
 
@@ -37,6 +42,7 @@ const Suppliers = () => {
       overlayInfo="kasdlfa"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };
