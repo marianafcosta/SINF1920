@@ -37,7 +37,7 @@ const Warehouses = () => {
   return (
     <KpiTable
       title="Warehouses"
-      overlayInfo="ksadjf"
+      overlayInfo="Information about the Warehouses: ID, Name and Current amount in euros "
       headers={headers}
       data={tableData}
       error={error}

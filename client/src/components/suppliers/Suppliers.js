@@ -39,7 +39,7 @@ const Suppliers = () => {
   return (
     <KpiTable
       title="Suppliers"
-      overlayInfo="kasdlfa"
+      overlayInfo="Information about the Suppliers: Name, Value and number of Units"
       headers={headers}
       data={tableData}
       error={error}

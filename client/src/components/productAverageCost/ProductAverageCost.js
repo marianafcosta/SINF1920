@@ -24,7 +24,7 @@ const ProductAverageCost = ({ productId }) => {
   return (
     <KpiValue
       title="Average Cost"
-      overlayInfo="something something gemp something"
+      overlayInfo="Average cost of a product"
       value={averageCost}
       unit="€"
       format="0.0a"

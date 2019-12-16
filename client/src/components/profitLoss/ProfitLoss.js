@@ -73,7 +73,7 @@ const ProfitLoss = () => {
   return (
     <KpiAccountList
       title="Profit and loss statement"
-      overlayInfo="ahhh como é que vou fazer as merdas todas a tempo"
+      overlayInfo="The profit and loss statement is a financial statement that summarizes the revenues, costs, and expenses incurred during a specified period"
       sections={sections}
       data={listData}
       error={error}

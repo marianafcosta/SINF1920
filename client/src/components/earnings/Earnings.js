@@ -28,7 +28,7 @@ const Earnings = ({ year }) => {
       value={earnings}
       unit="€"
       title="Net income"
-      overlayInfo="nem sei se isto é relevante"
+      overlayInfo="Net income (NI), also called net earnings, is calculated as sales minus cost of goods sold, selling, general and administrative expenses, operating expenses, depreciation, interest, taxes, and other expenses."
       format="0.000a"
       error={error}
     />

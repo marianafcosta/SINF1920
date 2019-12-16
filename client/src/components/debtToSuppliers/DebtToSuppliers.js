@@ -28,7 +28,7 @@ const DebtToSuppliers = ({ year }) => {
   return (
     <KpiValue
       title="Debt To Suppliers"
-      overlayInfo="something something gemp something"
+      overlayInfo="Capital owed to the suppliers"
       value={debtToSuppliers}
       unit="€"
       format="0.0a"

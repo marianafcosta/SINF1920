@@ -93,7 +93,7 @@ const BalanceSheet = () => {
   return (
     <KpiAccountList
       title="Balance sheet"
-      overlayInfo="dfadsf"
+      overlayInfo="A balance sheet is a financial statement that reports a company's assets, liabilities and shareholders' equity at a specific point in time"
       sections={sections}
       data={listData}
       error={error}
