@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import KpiTable from '../kpiTable';
+import ApiCallError from '../apiCallError';
 
 import {
   fetchAssets,
@@ -20,19 +21,24 @@ const StabilityRatios = () => {
     liabilities: 0,
   });
   const [tableData, setTableData] = useState([]);
-
-  const fetchData = async () => {
-    const equityResponse = await fetchEquity();
-    const assetsResponse = await fetchAssets();
-    const liabilitiesResponse = await fetchLiabilities();
-    setValues({
-      equity: equityResponse.data,
-      assets: assetsResponse.data,
-      liabilities: liabilitiesResponse.data,
-    });
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const equityResponse = await fetchEquity();
+        const assetsResponse = await fetchAssets();
+        const liabilitiesResponse = await fetchLiabilities();
+        setValues({
+          equity: equityResponse.data,
+          assets: assetsResponse.data,
+          liabilities: liabilitiesResponse.data,
+        });
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchData();
   }, []);
 
@@ -47,7 +53,9 @@ const StabilityRatios = () => {
     }
   }, [values]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Stability ratios" />
+  ) : (
     <KpiTable
       title="Stability ratios"
       overlayInfo="lajsdfkaosdf"

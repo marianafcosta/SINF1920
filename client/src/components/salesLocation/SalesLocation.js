@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import KpiTable from '../kpiTable';
+import ApiCallError from '../apiCallError';
+
 import { fetchSalesByLocation } from '../../services/salesService';
 
 const headers = [
@@ -14,16 +16,22 @@ const headers = [
 const SalesLocation = ({ year }) => {
   const [locations, setLocations] = useState(null);
   const [tableData, setTableData] = useState([]);
-
-  const fetchLocations = async () => {
-    const locationsResponse = await fetchSalesByLocation(year);
-    const locationsData = locationsResponse.data;
-    setLocations(locationsData);
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchLocations = async () => {
+      setError(false);
+
+      try {
+        const locationsResponse = await fetchSalesByLocation(year);
+        const locationsData = locationsResponse.data;
+        setLocations(locationsData);
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchLocations();
-  }, []);
+  }, [year]);
 
   useEffect(() => {
     const updateTable = () => {
@@ -42,7 +50,9 @@ const SalesLocation = ({ year }) => {
     updateTable();
   }, [locations]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Sales by location" />
+  ) : (
     <KpiTable
       title="Sales by location"
       overlayInfo="knfalsdjfa"

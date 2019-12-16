@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import ApiCallError from '../apiCallError';
 import KpiValue from '../kpiValue';
 import { fetchUnitsInStock } from '../../services/productService';
 
 const UnitsInStock = ({ productId }) => {
   const [unitsInStock, setUnitsInStock] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetchUnitsInStock(productId);
-      setUnitsInStock(response.data);
+      setError(false);
+      try {
+        const response = await fetchUnitsInStock(productId);
+        setUnitsInStock(response.data);
+      } catch (error) {
+        setError(true);
+      }
     };
     if (productId) {
       fetchData();
     }
   }, [productId]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Units in stock" />
+  ) : (
     <KpiValue
       value={unitsInStock}
       title="Units in stock"

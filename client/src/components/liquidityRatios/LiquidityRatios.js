@@ -7,6 +7,7 @@ import {
   fetchCashRatio,
   fetchCurrentRatio,
 } from '../../services/financialService';
+import ApiCallError from '../apiCallError';
 
 const headers = [
   { name: 'cash', label: 'Cash ratio' },
@@ -21,20 +22,25 @@ const LiquidityRatios = () => {
     current: 0,
   });
   const [tableData, setTableData] = useState([]);
-
-  const fetchData = async () => {
-    const cashResponse = await fetchCashRatio();
-    const workingCapitalResponse = await fetchWorkingCapital();
-    const currentResponse = await fetchCurrentRatio();
-
-    setRatios({
-      cash: cashResponse.data,
-      workingCapital: workingCapitalResponse.data,
-      current: currentResponse.data,
-    });
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const cashResponse = await fetchCashRatio();
+        const workingCapitalResponse = await fetchWorkingCapital();
+        const currentResponse = await fetchCurrentRatio();
+
+        setRatios({
+          cash: cashResponse.data,
+          workingCapital: workingCapitalResponse.data,
+          current: currentResponse.data,
+        });
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchData();
   }, []);
 
@@ -49,7 +55,10 @@ const LiquidityRatios = () => {
       ]);
     }
   }, [ratios]);
-  return (
+
+  return error ? (
+    <ApiCallError title="Liquidity ratios" />
+  ) : (
     <KpiTable
       title="Liquidity ratios"
       overlayInfo="G E M P"

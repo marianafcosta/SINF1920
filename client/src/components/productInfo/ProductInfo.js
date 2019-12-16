@@ -4,26 +4,35 @@ import PropTypes from 'prop-types';
 import { fetchProductInfo } from '../../services/productService';
 
 import KpiInfoList from '../kpiInfoList';
+import ApiCallError from '../apiCallError';
 
 const ProductInfo = ({ productId }) => {
   const [info, setInfo] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (productId) {
-        const response = await fetchProductInfo(productId);
-        setInfo(
-          Object.keys(response.data).map(item => ({
-            label: item,
-            description: response.data[item],
-          })),
-        );
+      setError(false);
+      try {
+        if (productId) {
+          const response = await fetchProductInfo(productId);
+          setInfo(
+            Object.keys(response.data).map(item => ({
+              label: item,
+              description: response.data[item],
+            })),
+          );
+        }
+      } catch (error) {
+        setError(true);
       }
     };
     fetchData();
   }, [productId]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Product information" />
+  ) : (
     <KpiInfoList
       title="Product information"
       overlayInfo="ah finalmente estamos a fazer alguma coisa"

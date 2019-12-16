@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import KpiTable from '../kpiTable';
+import ApiCallError from '../apiCallError';
 
 import { fetchPendingPurchases } from '../../services/supplierService';
 
@@ -13,17 +14,25 @@ const headers = [
 
 const SupplierPendingPurchases = ({ id }) => {
   const [pendingPurchases, setPendingPurchases] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchPendingPurchases(id);
-      setPendingPurchases(data);
+      setError(false);
+      try {
+        const { data } = await fetchPendingPurchases(id);
+        setPendingPurchases(data);
+      } catch (error) {
+        setError(true);
+      }
     };
 
     fetchData();
   }, [id]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Pending purchases" />
+  ) : (
     <KpiTable
       title="Pending purchases"
       overlayInfo="kajsdhfs"

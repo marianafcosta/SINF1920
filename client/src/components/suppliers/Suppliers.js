@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import numeral from 'numeral';
 
 import KpiTable from '../kpiTable';
+import ApiCallError from '../apiCallError';
 
 import { fetchSuppliers } from '../../services/purchasesService';
 
@@ -14,24 +15,31 @@ const headers = [
 
 const Suppliers = () => {
   const [tableData, setTableData] = useState([]);
-
-  const fetchData = async () => {
-    const { data } = await fetchSuppliers();
-    setTableData(
-      data.map(supplier => ({
-        id: supplier.id,
-        name: supplier.name,
-        value: numeral(supplier.value).format('0.0a'),
-        units: numeral(supplier.units).format('0.0a'),
-      })),
-    );
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchSuppliers();
+        setTableData(
+          data.map(supplier => ({
+            id: supplier.id,
+            name: supplier.name,
+            value: numeral(supplier.value).format('0.0a'),
+            units: numeral(supplier.units).format('0.0a'),
+          })),
+        );
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchData();
   }, []);
 
-  return (
+  return error ? (
+    <ApiCallError title="Suppliers" />
+  ) : (
     <KpiTable
       title="Suppliers"
       overlayInfo="kasdlfa"

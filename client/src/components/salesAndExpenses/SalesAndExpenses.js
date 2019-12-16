@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import KpiBarChart from '../kpiBarChart';
+import ApiCallError from '../apiCallError';
 
 import { fetchAccountBalance } from '../../services/financialService';
 
@@ -33,6 +34,7 @@ const testData = [
 const SalesAndExpenses = () => {
   const [accountBalances, setAccountBalances] = useState(null);
   const [graphData, setGraphData] = useState(testData);
+  const [error, setError] = useState(false);
 
   const updateGraph = () => {
     // both sales and expenses should have an equal amount of months,
@@ -52,21 +54,27 @@ const SalesAndExpenses = () => {
     }
   };
 
-  const fetchData = async () => {
-    const salesResponse = await fetchAccountBalance(accountCodes.sales, true);
-    const expensesResponse = await fetchAccountBalance(
-      accountCodes.expenses,
-      true,
-    );
-    setAccountBalances({
-      sales: salesResponse.data,
-      expenses: expensesResponse.data,
-    });
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const salesResponse = await fetchAccountBalance(
+          accountCodes.sales,
+          true,
+        );
+        const expensesResponse = await fetchAccountBalance(
+          accountCodes.expenses,
+          true,
+        );
+        setAccountBalances({
+          sales: salesResponse.data,
+          expenses: expensesResponse.data,
+        });
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -74,7 +82,9 @@ const SalesAndExpenses = () => {
     // eslint-disable-next-line
   }, [accountBalances]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Sales vs Expenses" />
+  ) : (
     <KpiBarChart
       title="Sales vs Expenses"
       overlay="gemp gemp gemp"

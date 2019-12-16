@@ -4,20 +4,29 @@ import { connect } from 'react-redux';
 import KpiValue from '../kpiValue';
 
 import { fetchEbit } from '../../services/financialService';
+import ApiCallError from '../apiCallError';
 
 const Ebit = ({ year }) => {
   const [ebit, setEbit] = useState(0);
-
-  const fetchData = async () => {
-    const { data } = await fetchEbit(year);
-    setEbit(data);
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const fetchData = async () => {
+      setError(false);
 
-  return (
+      try {
+        const { data } = await fetchEbit(year);
+        setEbit(data);
+      } catch (error) {
+        setError(true);
+      }
+    };
+    fetchData();
+  }, [year]);
+
+  return error ? (
+    <ApiCallError title="EBIT" />
+  ) : (
     <KpiValue
       title="EBIT"
       unit="€"

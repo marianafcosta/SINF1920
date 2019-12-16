@@ -3,21 +3,32 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import KpiValue from '../kpiValue';
+import ApiCallError from '../apiCallError';
+
 import { fetchAccountBalance } from '../../services/financialService';
 
 const DebtToSuppliers = ({ year }) => {
   const [debtToSuppliers, setDebtToSuppliers] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchAccountBalance('22', year, false);
-      setDebtToSuppliers(data.totalCredit - data.totalDebit);
+      setError(false);
+
+      try {
+        const { data } = await fetchAccountBalance('22', year, false);
+        setDebtToSuppliers(data.totalCredit - data.totalDebit);
+      } catch (error) {
+        setError(true);
+      }
     };
 
     fetchData();
-  }, []);
+  }, [year]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Debt To Suppliers" />
+  ) : (
     <KpiValue
       title="Debt To Suppliers"
       overlayInfo="something something gemp something"

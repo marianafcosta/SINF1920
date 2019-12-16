@@ -2,20 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { fetchProductBacklog } from '../../services/purchasesService';
 
 import KpiValue from '../kpiValue';
+import ApiCallError from '../apiCallError';
 
 const ProductBacklog = () => {
   const [productBacklog, setProductBacklog] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchProductBacklog();
-      setProductBacklog(data);
+      setError(false);
+      try {
+        const { data } = await fetchProductBacklog();
+        setProductBacklog(data);
+      } catch (error) {
+        setError(true);
+      }
     };
 
     fetchData();
   }, []);
 
-  return (
+  return error ? (
+    <ApiCallError title="Product Backlog" />
+  ) : (
     <KpiValue
       title="Product Backlog"
       overlayInfo="something something gemp something"

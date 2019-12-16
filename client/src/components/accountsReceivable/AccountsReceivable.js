@@ -4,20 +4,28 @@ import { connect } from 'react-redux';
 import { fetchAccountsReceivable } from '../../services/financialService';
 
 import KpiValue from '../kpiValue';
+import ApiCallError from '../apiCallError';
 
 const AccountsReceivable = ({ year }) => {
   const [accountsReceivable, setAccountsReceivable] = useState(0);
-
-  const fetchData = async () => {
-    const { data } = await fetchAccountsReceivable(year);
-    setAccountsReceivable(data);
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchAccountsReceivable(year);
+        setAccountsReceivable(data);
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchData();
-  }, []);
+  }, [year]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Accounts Receivable" />
+  ) : (
     <KpiValue
       title="Accounts Receivable"
       overlayInfo="something something gemp something"

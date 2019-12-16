@@ -4,20 +4,29 @@ import numeral from 'numeral';
 import { fetchTotalPurchased } from '../../services/supplierService';
 
 import KpiValue from '../kpiValue';
+import ApiCallError from '../apiCallError';
 
 const SupplierTotalPurchased = ({ id }) => {
   const [totalPurchased, setTotalPurchased] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchTotalPurchased(id, 2019);
-      setTotalPurchased(data);
+      setError(false);
+      try {
+        const { data } = await fetchTotalPurchased(id, 2019);
+        setTotalPurchased(data);
+      } catch (error) {
+        setError(true);
+      }
     };
 
     fetchData();
   }, [id]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Total Purchased" />
+  ) : (
     <KpiValue
       title="Total Purchased"
       overlayInfo="something something gemp something"

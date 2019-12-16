@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import numeral from 'numeral';
 
 import KpiTable from '../kpiTable';
+import ApiCallError from '../apiCallError';
 
 import { fetchPurchases } from '../../services/customerService';
 
@@ -15,22 +16,31 @@ const headers = [
 
 const CustomerPurchases = ({ customerId }) => {
   const [purchases, setPurchases] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchPurchases(customerId, 2019);
-      setPurchases(
-        data.map(item => ({
-          ...item,
-          units: numeral(item.units).format('0a'),
-          value: numeral(item.value).format('0.000a'),
-        })),
-      );
+      setError(false);
+
+      try {
+        const { data } = await fetchPurchases(customerId, 2019);
+        setPurchases(
+          data.map(item => ({
+            ...item,
+            units: numeral(item.units).format('0a'),
+            value: numeral(item.value).format('0.000a'),
+          })),
+        );
+      } catch (error) {
+        setError(true);
+      }
     };
     fetchData();
   }, [customerId]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Purchases" />
+  ) : (
     <KpiTable
       title="Purchases"
       overlayInfo="dkfngçsdasfsd"

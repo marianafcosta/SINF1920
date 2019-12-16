@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import KpiTable from '../kpiTable';
+import ApiCallError from '../apiCallError';
 
 import { fetchTopClients } from '../../services/salesService';
 
@@ -15,6 +16,7 @@ const headers = [
 const TopCustomers = ({ year }) => {
   const [topAccounts, setTopAccounts] = useState(null);
   const [tableData, setTableData] = useState([]);
+  const [error, setError] = useState(false);
 
   const updateTable = () => {
     if (topAccounts) {
@@ -30,24 +32,29 @@ const TopCustomers = ({ year }) => {
     }
   };
 
-  const fetchData = async () => {
-    const res = await fetchTopClients(year);
-    setTopAccounts({
-      clients: res.data,
-    });
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const res = await fetchTopClients(year);
+        setTopAccounts({
+          clients: res.data,
+        });
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchData();
-    // eslint-disable-next-line
-  }, []);
+  }, [year]);
 
   useEffect(() => {
     updateTable();
     // eslint-disable-next-line
   }, [topAccounts]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Top customers" />
+  ) : (
     <KpiTable
       title="Top customers"
       overlayInfo="lskdfa"

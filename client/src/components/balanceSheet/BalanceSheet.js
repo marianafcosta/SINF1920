@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import KpiAccountList from '../kpiAccountList';
+import ApiCallError from '../apiCallError';
 
 import { fetchBalanceSheet } from '../../services/financialService';
 
@@ -18,6 +19,7 @@ const sections = [
 const BalanceSheet = () => {
   const [balanceSheet, setBalanceSheet] = useState(null);
   const [listData, setListData] = useState([]);
+  const [error, setError] = useState(false);
 
   const updateTable = () => {
     const updatedListData = [];
@@ -71,24 +73,27 @@ const BalanceSheet = () => {
     }
   };
 
-  const fetchData = async () => {
-    const { data } = await fetchBalanceSheet();
-    console.log(data);
-    setBalanceSheet(data);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchBalanceSheet();
+        setBalanceSheet(data);
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     updateTable();
-    console.log(balanceSheet);
     // eslint-disable-next-line
   }, [balanceSheet]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Balance sheet" />
+  ) : (
     <KpiAccountList
       title="Balance sheet"
       overlayInfo="dfadsf"

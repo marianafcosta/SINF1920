@@ -2,22 +2,31 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import KpiTable from '../kpiTable';
+import ApiCallError from '../apiCallError';
 
 import { fetchProducts } from '../../services/inventoryService';
 
 const Products = ({ headers, title }) => {
   const [tableData, setTableData] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getProducts = async () => {
-      const { data } = await fetchProducts();
-      setTableData(data);
+      setError(false);
+      try {
+        const { data } = await fetchProducts();
+        setTableData(data);
+      } catch (error) {
+        setError(true);
+      }
     };
     getProducts();
     // eslint-disable-next-line
   }, []);
 
-  return (
+  return error ? (
+    <ApiCallError title={title} />
+  ) : (
     <KpiTable
       title={title}
       overlay="testing"

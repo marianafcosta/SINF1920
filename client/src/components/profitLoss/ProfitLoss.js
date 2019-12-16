@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import KpiAccountList from '../kpiAccountList';
+import ApiCallError from '../apiCallError';
 
 import { fetchProfitLoss } from '../../services/financialService';
 
@@ -13,6 +14,7 @@ const sections = [
 const ProfitLoss = () => {
   const [profitLoss, setProfitLoss] = useState(null);
   const [listData, setListData] = useState([]);
+  const [error, setError] = useState(false);
 
   const updateTable = () => {
     const updatedListData = [];
@@ -50,15 +52,18 @@ const ProfitLoss = () => {
     }
   };
 
-  const fetchData = async () => {
-    const { data } = await fetchProfitLoss();
-    console.log(data);
-    setProfitLoss(data);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchProfitLoss();
+        setProfitLoss(data);
+      } catch (error) {
+        setError(true);
+      }
+    };
+
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -67,7 +72,9 @@ const ProfitLoss = () => {
     // eslint-disable-next-line
   }, [profitLoss]);
 
-  return (
+  return error ? (
+    <ApiCallError title="Profit and loss statement" />
+  ) : (
     <KpiAccountList
       title="Profit and loss statement"
       overlayInfo="ahhh como é que vou fazer as merdas todas a tempo"

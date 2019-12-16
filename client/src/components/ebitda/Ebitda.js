@@ -4,20 +4,28 @@ import { connect } from 'react-redux';
 import { fetchEbitda } from '../../services/financialService';
 
 import KpiValue from '../kpiValue';
+import ApiCallError from '../apiCallError';
 
 const Ebitda = ({ year }) => {
   const [ebitda, setEbitda] = useState(0);
-
-  const fetchData = async () => {
-    const ebitdaData = await fetchEbitda(year);
-    setEbitda(ebitdaData.data.ebitda);
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const ebitdaData = await fetchEbitda(year);
+        setEbitda(ebitdaData.data.ebitda);
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchData();
-  }, []);
+  }, [year]);
 
-  return (
+  return error ? (
+    <ApiCallError title="EBITDA" />
+  ) : (
     <KpiValue
       title="EBITDA"
       overlayInfo="something something gemp something"

@@ -2,20 +2,28 @@ import React, { useEffect, useState } from 'react';
 import KpiValue from '../kpiValue';
 
 import { fetchGrossProfitMargin } from '../../services/financialService';
+import ApiCallError from '../apiCallError';
 
 const GrossProfitMargin = () => {
   const [margin, setMargin] = useState(null);
-
-  const fetchData = async () => {
-    const response = await fetchGrossProfitMargin();
-    setMargin(response.data);
-  };
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const response = await fetchGrossProfitMargin();
+        setMargin(response.data);
+      } catch (error) {
+        setError(true);
+      }
+    };
     fetchData();
   }, []);
 
-  return (
+  return error ? (
+    <ApiCallError title="Gross profit margin" />
+  ) : (
     <KpiValue
       value={margin ? `${(margin * 100).toFixed(2)}` : '0'}
       unit="%"

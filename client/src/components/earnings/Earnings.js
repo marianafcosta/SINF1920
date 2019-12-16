@@ -4,20 +4,29 @@ import { connect } from 'react-redux';
 import KpiValue from '../kpiValue';
 
 import { fetchEarnings } from '../../services/financialService';
+import ApiCallError from '../apiCallError';
 
 const Earnings = ({ year }) => {
   const [earnings, setEarnings] = useState(0);
+  const [error, setError] = useState(false);
 
   const fetchData = async () => {
-    const { data } = await fetchEarnings(year);
-    setEarnings(data);
+    setError(false);
+    try {
+      const { data } = await fetchEarnings(year);
+      setEarnings(data);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     fetchData();
   });
 
-  return (
+  return error ? (
+    <ApiCallError title="Earnings" />
+  ) : (
     <KpiValue
       value={earnings}
       unit="€"
