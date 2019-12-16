@@ -15,7 +15,7 @@ import CustomCard from '../CustomCard';
 
 import styles from './KpiBarChart.module.css';
 
-const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
+const KpiBarChart = ({ title, overlayInfo, bars, data, error, loading }) => {
   const renderLegend = (value, entry) => {
     const { color } = entry;
 
