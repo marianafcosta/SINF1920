@@ -12,9 +12,11 @@ const KpiValue = ({ value, unit, title, overlayInfo, format, error }) => (
     overlayInfo={overlayInfo}
     error={error}
   >
-    <h1 className={styles.value}>
-      {format ? numeral(value).format(format) : value}
-    </h1>
+    <div className={styles.valueWrapper}>
+      <h1 className={styles.value}>
+        {format ? numeral(value).format(format) : value}
+      </h1>
+    </div>
   </CustomCard>
 );
 
