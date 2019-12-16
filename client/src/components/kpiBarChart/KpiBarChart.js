@@ -23,7 +23,12 @@ const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
   };
 
   return (
-    <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
+    <CustomCard
+      title={title}
+      overlayInfo={overlayInfo}
+      error={error}
+      loading={loading}
+    >
       <div className={styles.chartWrapper}>
         <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
           <CartesianGrid strokeDasharray="3 3" />
