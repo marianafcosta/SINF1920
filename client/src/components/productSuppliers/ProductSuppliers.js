@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
 
-import CustomCard from '../CustomCard';
-import TableCard from '../TableCard';
+import KpiTable from '../kpiTable';
 
 import { fetchProductSuppliers } from '../../services/productService';
 
@@ -33,9 +32,12 @@ const ProductSuppliers = ({ productId }) => {
   }, [productId]);
 
   return (
-    <CustomCard title="Product suppliers" overlay="adflksdofhsd">
-      <TableCard headers={headers} data={tableData} />
-    </CustomCard>
+    <KpiTable
+      title="Product suppliers"
+      overlayInfo="aksjdflsdf"
+      headers={headers}
+      data={tableData}
+    />
   );
 };
 

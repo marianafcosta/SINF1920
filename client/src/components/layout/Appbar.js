@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import Switch from '@material-ui/core/Switch';
 import Menu from '@material-ui/core/Menu';
 import './layout.css';
@@ -110,17 +111,18 @@ const Appbar = ({
         >
           {pageName}
         </Typography>
+        <div className={classes.yearIndicator}>
+          <CalendarTodayIcon className={classes.yearIndicatorIcon} />
+          <Typography variant="h6" color="inherit" noWrap>
+            {year}
+          </Typography>
+        </div>
         <YellowSwitch
           checked={isOverlaySet}
           onChange={handleOverlaySwitch}
           value="checkedA"
           inputProps={{ 'aria-label': 'secondary checkbox' }}
         />
-        <div>
-          <Typography variant="h6" color="inherit" noWrap>
-            {year}
-          </Typography>
-        </div>
         <div>
           <IconButton
             aria-label="account of current user"

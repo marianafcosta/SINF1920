@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import CustomCard from '../CustomCard';
-import TableCard from '../TableCard';
+import KpiTable from '../kpiTable';
 
 import {
   fetchWorkingCapital,
@@ -51,9 +50,12 @@ const LiquidityRatios = () => {
     }
   }, [ratios]);
   return (
-    <CustomCard title="Liquidity Ratios" overlayInfo="G E M P">
-      <TableCard headers={headers} data={tableData} />
-    </CustomCard>
+    <KpiTable
+      title="Liquidity ratios"
+      overlayInfo="G E M P"
+      headers={headers}
+      data={tableData}
+    />
   );
 };
 

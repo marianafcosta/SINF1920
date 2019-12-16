@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import CustomCard from '../CustomCard';
-import TableCard from '../TableCard';
+
+import KpiTable from '../kpiTable';
 import { fetchSalesByLocation } from '../../services/salesService';
 
 const headers = [
@@ -43,9 +43,12 @@ const SalesLocation = ({ year }) => {
   }, [locations]);
 
   return (
-    <CustomCard title="Sales by location" overlayInfo="oh not gemp">
-      <TableCard headers={headers} data={tableData} />
-    </CustomCard>
+    <KpiTable
+      title="Sales by location"
+      overlayInfo="knfalsdjfa"
+      headers={headers}
+      data={tableData}
+    />
   );
 };
 

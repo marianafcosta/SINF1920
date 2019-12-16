@@ -35,3 +35,21 @@
 .fontSize {
   font-size: 40px !important;
 }
+
+.calendarSpacing {
+  margin-right: 0.5em;
+}
+
+.year {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fffba1;
+  border-radius: 50px;
+  padding: 5px 15px;
+  color: #262626;
+}
+
+.year svg {
+  color: #262626;
+}
