@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import KpiValue from '../kpiValue';
-import ApiCallError from '../apiCallError';
 
 import { fetchAccountBalance } from '../../services/financialService';
 
@@ -26,15 +25,14 @@ const DebtToSuppliers = ({ year }) => {
     fetchData();
   }, [year]);
 
-  return error ? (
-    <ApiCallError title="Debt To Suppliers" />
-  ) : (
+  return (
     <KpiValue
       title="Debt To Suppliers"
       overlayInfo="something something gemp something"
       value={debtToSuppliers}
       unit="€"
       format="0.0a"
+      error={error}
     />
   );
 };

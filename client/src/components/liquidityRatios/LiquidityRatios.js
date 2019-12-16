@@ -7,7 +7,6 @@ import {
   fetchCashRatio,
   fetchCurrentRatio,
 } from '../../services/financialService';
-import ApiCallError from '../apiCallError';
 
 const headers = [
   { name: 'cash', label: 'Cash ratio' },
@@ -56,14 +55,13 @@ const LiquidityRatios = () => {
     }
   }, [ratios]);
 
-  return error ? (
-    <ApiCallError title="Liquidity ratios" />
-  ) : (
+  return (
     <KpiTable
       title="Liquidity ratios"
       overlayInfo="G E M P"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { fetchPurchases } from '../../services/purchasesService';
 
 import KpiBarChart from '../kpiBarChart';
-import ApiCallError from '../apiCallError';
 
 const monthNames = [
   'Jan',
@@ -42,14 +41,13 @@ const MonthlyPurchases = () => {
     fetchData();
   }, []);
 
-  return error ? (
-    <ApiCallError title="Purchases" />
-  ) : (
+  return (
     <KpiBarChart
       title="Purchases"
       overlayInfo="Number of units purchased in each month in a year."
       bars={[{ dataKey: 'purchases', fill: '#fffba1' }]}
       data={monthlyPurchases}
+      error={error}
     />
   );
 };

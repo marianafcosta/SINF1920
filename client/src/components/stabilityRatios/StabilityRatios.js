@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import KpiTable from '../kpiTable';
-import ApiCallError from '../apiCallError';
 
 import {
   fetchAssets,
@@ -53,14 +52,13 @@ const StabilityRatios = () => {
     }
   }, [values]);
 
-  return error ? (
-    <ApiCallError title="Stability ratios" />
-  ) : (
+  return (
     <KpiTable
       title="Stability ratios"
       overlayInfo="lajsdfkaosdf"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

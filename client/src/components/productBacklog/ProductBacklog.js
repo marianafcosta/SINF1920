@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { fetchProductBacklog } from '../../services/purchasesService';
 
 import KpiValue from '../kpiValue';
-import ApiCallError from '../apiCallError';
 
 const ProductBacklog = () => {
   const [productBacklog, setProductBacklog] = useState(0);
@@ -22,15 +21,14 @@ const ProductBacklog = () => {
     fetchData();
   }, []);
 
-  return error ? (
-    <ApiCallError title="Product Backlog" />
-  ) : (
+  return (
     <KpiValue
       title="Product Backlog"
       overlayInfo="something something gemp something"
       value={productBacklog}
       unit="€"
       format="0.0a"
+      error={error}
     />
   );
 };

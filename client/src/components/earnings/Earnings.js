@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import KpiValue from '../kpiValue';
 
 import { fetchEarnings } from '../../services/financialService';
-import ApiCallError from '../apiCallError';
 
 const Earnings = ({ year }) => {
   const [earnings, setEarnings] = useState(0);
@@ -24,15 +23,14 @@ const Earnings = ({ year }) => {
     fetchData();
   }, [year]);
 
-  return error ? (
-    <ApiCallError title="Earnings" />
-  ) : (
+  return (
     <KpiValue
       value={earnings}
       unit="€"
       title="Net income"
       overlayInfo="nem sei se isto é relevante"
       format="0.000a"
+      error={error}
     />
   );
 };

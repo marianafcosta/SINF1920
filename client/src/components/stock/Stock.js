@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { fetchStock } from '../../services/inventoryService';
 
 import KpiValue from '../kpiValue';
-import ApiCallError from '../apiCallError';
 
 const Stock = () => {
   const [stock, setStock] = useState(0);
@@ -22,15 +21,14 @@ const Stock = () => {
     fetchData();
   }, []);
 
-  return error ? (
-    <ApiCallError title="Stock" />
-  ) : (
+  return (
     <KpiValue
       title="Stock"
       overlayInfo="something something gemp something"
       value={stock}
       unit="€"
       format="0.0a"
+      error={error}
     />
   );
 };

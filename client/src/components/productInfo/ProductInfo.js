@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { fetchProductInfo } from '../../services/productService';
 
 import KpiInfoList from '../kpiInfoList';
-import ApiCallError from '../apiCallError';
 
 const ProductInfo = ({ productId }) => {
   const [info, setInfo] = useState([]);
@@ -30,13 +29,12 @@ const ProductInfo = ({ productId }) => {
     fetchData();
   }, [productId]);
 
-  return error ? (
-    <ApiCallError title="Product information" />
-  ) : (
+  return (
     <KpiInfoList
       title="Product information"
       overlayInfo="ah finalmente estamos a fazer alguma coisa"
       data={info}
+      error={error}
     />
   );
 };

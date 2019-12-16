@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import KpiTable from '../kpiTable';
-import ApiCallError from '../apiCallError';
 
 import { fetchTopClients } from '../../services/salesService';
 
@@ -52,14 +51,13 @@ const TopCustomers = ({ year }) => {
     // eslint-disable-next-line
   }, [topAccounts]);
 
-  return error ? (
-    <ApiCallError title="Top customers" />
-  ) : (
+  return (
     <KpiTable
       title="Top customers"
       overlayInfo="lskdfa"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

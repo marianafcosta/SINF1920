@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import numeral from 'numeral';
 
 import KpiTable from '../kpiTable';
-import ApiCallError from '../apiCallError';
 
 import { fetchPurchases } from '../../services/customerService';
 
@@ -38,14 +37,13 @@ const CustomerPurchases = ({ customerId }) => {
     fetchData();
   }, [customerId]);
 
-  return error ? (
-    <ApiCallError title="Purchases" />
-  ) : (
+  return (
     <KpiTable
       title="Purchases"
       overlayInfo="dkfngçsdasfsd"
       headers={headers}
       data={purchases}
+      error={error}
     />
   );
 };

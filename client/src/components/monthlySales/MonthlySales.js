@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import KpiBarChart from '../kpiBarChart';
 
 import { fetchAccountBalance } from '../../services/financialService';
-import ApiCallError from '../apiCallError';
 
 const monthNames = [
   'Jan',
@@ -43,14 +42,13 @@ const MonthlySales = () => {
     fetchData();
   }, []);
 
-  return error ? (
-    <ApiCallError title="Sales" />
-  ) : (
+  return (
     <KpiBarChart
       title="Sales"
       overlayInfo="Number of units purchased in each month in a year."
       bars={[{ dataKey: 'sales', fill: '#fffba1' }]}
       data={monthlySales}
+      error={error}
     />
   );
 };

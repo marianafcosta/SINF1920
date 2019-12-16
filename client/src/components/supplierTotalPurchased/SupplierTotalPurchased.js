@@ -4,7 +4,6 @@ import numeral from 'numeral';
 import { fetchTotalPurchased } from '../../services/supplierService';
 
 import KpiValue from '../kpiValue';
-import ApiCallError from '../apiCallError';
 
 const SupplierTotalPurchased = ({ id }) => {
   const [totalPurchased, setTotalPurchased] = useState(0);
@@ -24,14 +23,13 @@ const SupplierTotalPurchased = ({ id }) => {
     fetchData();
   }, [id]);
 
-  return error ? (
-    <ApiCallError title="Total Purchased" />
-  ) : (
+  return (
     <KpiValue
       title="Total Purchased"
       overlayInfo="something something gemp something"
       value={numeral(totalPurchased).format('0.0a')}
       unit="€"
+      error={error}
     />
   );
 };

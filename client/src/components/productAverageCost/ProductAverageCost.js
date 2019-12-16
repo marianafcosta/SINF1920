@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import KpiValue from '../kpiValue';
-import ApiCallError from '../apiCallError';
 
 import { fetchProductAverageCost } from '../../services/productService';
 
@@ -22,15 +21,14 @@ const ProductAverageCost = ({ productId }) => {
     fetchData();
   }, [productId]);
 
-  return error ? (
-    <ApiCallError title="Average Cost" />
-  ) : (
+  return (
     <KpiValue
       title="Average Cost"
       overlayInfo="something something gemp something"
       value={averageCost}
       unit="€"
       format="0.0a"
+      error={error}
     />
   );
 };

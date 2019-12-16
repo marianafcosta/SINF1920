@@ -149,7 +149,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const KpiTable = ({ title, overlayInfo, headers, data }) => {
+const KpiTable = ({ title, overlayInfo, headers, data, error }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
@@ -211,7 +211,7 @@ const KpiTable = ({ title, overlayInfo, headers, data }) => {
     rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
   return (
-    <CustomCard title={title} overlayInfo={overlayInfo}>
+    <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
       <div className={classes.root}>
         <Paper className={classes.paper}>
           <div className={classes.tableWrapper}>
@@ -281,6 +281,10 @@ const KpiTable = ({ title, overlayInfo, headers, data }) => {
   );
 };
 
+KpiTable.defaultProps = {
+  error: false,
+};
+
 KpiTable.propTypes = {
   title: PropTypes.string.isRequired,
   overlayInfo: PropTypes.string.isRequired,
@@ -293,5 +297,6 @@ KpiTable.propTypes = {
     }),
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+  error: PropTypes.bool,
 };
 export default KpiTable;

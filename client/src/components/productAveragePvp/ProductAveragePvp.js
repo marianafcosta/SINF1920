@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { fetchProductAveragePvp } from '../../services/productService';
 import KpiValue from '../kpiValue';
-import ApiCallError from '../apiCallError';
 
 const ProductAveragePvp = ({ productId }) => {
   const [averagePvp, setAveragePvp] = useState(0);
@@ -25,15 +24,14 @@ const ProductAveragePvp = ({ productId }) => {
     fetchData();
   }, [productId]);
 
-  return error ? (
-    <ApiCallError title="Average Cost" />
-  ) : (
+  return (
     <KpiValue
       title="Product average PVP"
       overlayInfo="hmmmmmmmm"
       value={averagePvp}
       unit="€/unit"
       format="0.000a"
+      error={error}
     />
   );
 };

@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './CustomCard.css';
 
+import ApiCallError from '../apiCallError';
+
 const useStyles = makeStyles({
   card: {
     minWidth: 275,
@@ -36,6 +38,7 @@ const CustomCard = ({
   isOverlaySet,
   animation,
   padding,
+  error,
 }) => {
   const classes = useStyles();
   const [isOverlayAnimationRunning, setIsOverlayAnimationRunning] = useState(
@@ -65,7 +68,7 @@ const CustomCard = ({
           </Card>
         )}
         <h1 className={classes.cardTitle}>{title}</h1>
-        {children}
+        {error ? <ApiCallError /> : children}
       </Card>
     </div>
   );
@@ -78,6 +81,7 @@ CustomCard.defaultProps = {
   isOverlaySet: false,
   animation: true,
   padding: '',
+  error: false,
 };
 
 CustomCard.propTypes = {
@@ -87,6 +91,7 @@ CustomCard.propTypes = {
   isOverlaySet: PropTypes.bool,
   animation: PropTypes.bool,
   padding: PropTypes.string,
+  error: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({

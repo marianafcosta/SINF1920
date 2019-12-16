@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import KpiBarChart from '../kpiBarChart';
-import ApiCallError from '../apiCallError';
 
 import { fetchProductUnitsSold } from '../../services/productService';
 
@@ -50,14 +49,13 @@ const ProductSales = ({ productId }) => {
     fetchData();
   }, [productId]);
 
-  return error ? (
-    <ApiCallError title="Product sales" />
-  ) : (
+  return (
     <KpiBarChart
       title="Product sales"
       overlayInfo="Number of units sold per month in a year."
       bars={[{ dataKey: 'sales', fill: '#fffba1' }]}
       data={graphData}
+      error={error}
     />
   );
 };

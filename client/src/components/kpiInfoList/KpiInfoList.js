@@ -5,9 +5,9 @@ import CustomCard from '../CustomCard';
 
 import styles from './KpiInfoList.module.css';
 
-const KpiInfoList = ({ title, overlayInfo, data }) => {
+const KpiInfoList = ({ title, overlayInfo, data, error }) => {
   return (
-    <CustomCard title={title} overlayInfo={overlayInfo}>
+    <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
       <ul className={styles.list}>
         {data.map(
           item =>
@@ -25,6 +25,10 @@ const KpiInfoList = ({ title, overlayInfo, data }) => {
   );
 };
 
+KpiInfoList.defaultProps = {
+  error: false,
+};
+
 KpiInfoList.propTypes = {
   title: PropTypes.string.isRequired,
   overlayInfo: PropTypes.string.isRequired,
@@ -34,6 +38,7 @@ KpiInfoList.propTypes = {
       description: PropTypes.string,
     }),
   ).isRequired,
+  error: PropTypes.bool,
 };
 
 export default KpiInfoList;

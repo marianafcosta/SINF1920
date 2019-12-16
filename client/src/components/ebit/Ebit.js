@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import KpiValue from '../kpiValue';
 
 import { fetchEbit } from '../../services/financialService';
-import ApiCallError from '../apiCallError';
 
 const Ebit = ({ year }) => {
   const [ebit, setEbit] = useState(0);
@@ -24,15 +23,14 @@ const Ebit = ({ year }) => {
     fetchData();
   }, [year]);
 
-  return error ? (
-    <ApiCallError title="EBIT" />
-  ) : (
+  return (
     <KpiValue
       title="EBIT"
       unit="€"
       overlayInfo="GEEEEEEEEEEEMMMMPPPP"
       value={ebit}
       format="0.000a"
+      error={error}
     />
   );
 };

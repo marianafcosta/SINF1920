@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import ApiCallError from '../apiCallError';
 import KpiValue from '../kpiValue';
 import { fetchUnitsInStock } from '../../services/productService';
 
@@ -24,15 +23,14 @@ const UnitsInStock = ({ productId }) => {
     }
   }, [productId]);
 
-  return error ? (
-    <ApiCallError title="Units in stock" />
-  ) : (
+  return (
     <KpiValue
       value={unitsInStock}
       title="Units in stock"
       unit="units"
       overlayInfo="AHHHHHHHHHH"
       format="0.000a"
+      error={error}
     />
   );
 };

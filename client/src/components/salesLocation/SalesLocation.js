@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import KpiTable from '../kpiTable';
-import ApiCallError from '../apiCallError';
 
 import { fetchSalesByLocation } from '../../services/salesService';
 
@@ -50,14 +49,13 @@ const SalesLocation = ({ year }) => {
     updateTable();
   }, [locations]);
 
-  return error ? (
-    <ApiCallError title="Sales by location" />
-  ) : (
+  return (
     <KpiTable
       title="Sales by location"
       overlayInfo="knfalsdjfa"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import numeral from 'numeral';
 
 import KpiTable from '../kpiTable';
-import ApiCallError from '../apiCallError';
 
 import { fetchWarehouses } from '../../services/inventoryService';
 
@@ -35,14 +34,13 @@ const Warehouses = () => {
     fetchData();
   }, []);
 
-  return error ? (
-    <ApiCallError title="Warehouses" />
-  ) : (
+  return (
     <KpiTable
       title="Warehouses"
       overlayInfo="ksadjf"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

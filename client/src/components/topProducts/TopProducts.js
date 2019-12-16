@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import KpiTable from '../kpiTable';
-import ApiCallError from '../apiCallError';
 
 import { fetchTopProducts } from '../../services/salesService';
 
@@ -23,14 +22,13 @@ const TopProducts = ({ headers }) => {
     getTopProducts();
   }, []);
 
-  return error ? (
-    <ApiCallError title="Top products" />
-  ) : (
+  return (
     <KpiTable
       title="Top products"
       overlayInfo="sdasdf"
       headers={headers}
       data={tableData}
+      error={error}
     />
   );
 };

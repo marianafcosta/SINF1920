@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import KpiAccountList from '../kpiAccountList';
-import ApiCallError from '../apiCallError';
 
 import { fetchProfitLoss } from '../../services/financialService';
 
@@ -71,14 +70,13 @@ const ProfitLoss = () => {
     // eslint-disable-next-line
   }, [profitLoss]);
 
-  return error ? (
-    <ApiCallError title="Profit and loss statement" />
-  ) : (
+  return (
     <KpiAccountList
       title="Profit and loss statement"
       overlayInfo="ahhh como é que vou fazer as merdas todas a tempo"
       sections={sections}
       data={listData}
+      error={error}
     />
   );
 };

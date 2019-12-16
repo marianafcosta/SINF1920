@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import KpiTable from '../kpiTable';
-import ApiCallError from '../apiCallError';
 
 import { fetchPendingPurchases } from '../../services/supplierService';
 
@@ -30,14 +29,13 @@ const SupplierPendingPurchases = ({ id }) => {
     fetchData();
   }, [id]);
 
-  return error ? (
-    <ApiCallError title="Pending purchases" />
-  ) : (
+  return (
     <KpiTable
       title="Pending purchases"
       overlayInfo="kajsdhfs"
       headers={headers}
       data={pendingPurchases}
+      error={error}
     />
   );
 };

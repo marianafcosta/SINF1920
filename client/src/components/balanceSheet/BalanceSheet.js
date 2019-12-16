@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import KpiAccountList from '../kpiAccountList';
-import ApiCallError from '../apiCallError';
 
 import { fetchBalanceSheet } from '../../services/financialService';
 
@@ -91,14 +90,13 @@ const BalanceSheet = () => {
     // eslint-disable-next-line
   }, [balanceSheet]);
 
-  return error ? (
-    <ApiCallError title="Balance sheet" />
-  ) : (
+  return (
     <KpiAccountList
       title="Balance sheet"
       overlayInfo="dfadsf"
       sections={sections}
       data={listData}
+      error={error}
     />
   );
 };

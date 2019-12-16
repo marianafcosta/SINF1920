@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import KpiBarChart from '../kpiBarChart';
-import ApiCallError from '../apiCallError';
 
 import { fetchAccountBalance } from '../../services/financialService';
 
@@ -80,9 +79,7 @@ const SalesAndExpenses = () => {
     // eslint-disable-next-line
   }, [accountBalances]);
 
-  return error ? (
-    <ApiCallError title="Sales vs Expenses" />
-  ) : (
+  return (
     <KpiBarChart
       title="Sales vs Expenses"
       overlay="gemp gemp gemp"
@@ -91,6 +88,7 @@ const SalesAndExpenses = () => {
         { dataKey: 'expenses', fill: '#BE6E46' },
       ]}
       data={graphData}
+      error={error}
     />
   );
 };
