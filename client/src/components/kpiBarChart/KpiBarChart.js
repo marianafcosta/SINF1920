@@ -46,6 +46,7 @@ const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
 
 KpiBarChart.defaultProps = {
   error: false,
+  loading: false,
 };
 
 KpiBarChart.propTypes = {
@@ -59,6 +60,7 @@ KpiBarChart.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
   error: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default KpiBarChart;

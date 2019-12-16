@@ -8,14 +8,18 @@ import { fetchEarnings } from '../../services/financialService';
 const Earnings = ({ year }) => {
   const [earnings, setEarnings] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchEarnings(year);
+        setLoading(false);
         setEarnings(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -31,6 +35,7 @@ const Earnings = ({ year }) => {
       overlayInfo="nem sei se isto é relevante"
       format="0.000a"
       error={error}
+      loading={loading}
     />
   );
 };

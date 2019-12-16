@@ -14,12 +14,15 @@ const headers = [
 const Warehouses = () => {
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchWarehouses();
+        setLoading(false);
         setTableData(
           data.map(({ id, name, amount }) => ({
             id,
@@ -28,6 +31,7 @@ const Warehouses = () => {
           })),
         );
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -41,6 +45,7 @@ const Warehouses = () => {
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };

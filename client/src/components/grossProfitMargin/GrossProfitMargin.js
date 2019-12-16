@@ -6,14 +6,18 @@ import { fetchGrossProfitMargin } from '../../services/financialService';
 const GrossProfitMargin = () => {
   const [margin, setMargin] = useState(null);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const response = await fetchGrossProfitMargin();
+        setLoading(false);
         setMargin(response.data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -28,6 +32,7 @@ const GrossProfitMargin = () => {
       overlayInfo="akjfnlakdjhfals"
       format="0.000a"
       error={error}
+      loading={loading}
     />
   );
 };

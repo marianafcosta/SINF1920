@@ -8,14 +8,18 @@ import { fetchProducts } from '../../services/inventoryService';
 const Products = ({ headers, title }) => {
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getProducts = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchProducts();
+        setLoading(false);
         setTableData(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -30,6 +34,7 @@ const Products = ({ headers, title }) => {
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };

@@ -34,6 +34,7 @@ const SalesAndExpenses = () => {
   const [accountBalances, setAccountBalances] = useState(null);
   const [graphData, setGraphData] = useState(testData);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const updateGraph = () => {
     // both sales and expenses should have an equal amount of months,
@@ -55,6 +56,7 @@ const SalesAndExpenses = () => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const salesResponse = await fetchAccountBalance(
           accountCodes.sales,
           true,
@@ -63,11 +65,13 @@ const SalesAndExpenses = () => {
           accountCodes.expenses,
           true,
         );
+        setLoading(false);
         setAccountBalances({
           sales: salesResponse.data,
           expenses: expensesResponse.data,
         });
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -89,6 +93,7 @@ const SalesAndExpenses = () => {
       ]}
       data={graphData}
       error={error}
+      loading={loading}
     />
   );
 };
