@@ -14,8 +14,8 @@ const Ebitda = ({ year }) => {
     const fetchData = async () => {
       setError(false);
       try {
-        const ebitdaData = await fetchEbitda(year);
-        setEbitda(ebitdaData.data.ebitda);
+        const { data } = await fetchEbitda(year);
+        setEbitda(data);
       } catch (e) {
         setError(true);
       }

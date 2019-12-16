@@ -1020,83 +1020,6 @@ const processTaxonomySumViaTransactions = (taxonomy, accounts, journals) => {
   return results;
 };
 
-const calculateEbitda = accounts => {
-  const earningsSales = processJournalEntries(accounts, '71', false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', false); // TODO date
-  const expensesCogs = processJournalEntries(accounts, '61', false); // TODO date
-  const expensesServices = processJournalEntries(accounts, '62', false); // TODO date
-  const expensesPersonnel = processJournalEntries(accounts, '63', false); // TODO date
-
-  const earningsSalesValue =
-    earningsSales.totalCredit - earningsSales.totalDebit;
-  const earningsServicesValue =
-    earningsServices.totalCredit - earningsServices.totalDebit;
-  const expensesCogsValue = expensesCogs.totalDebit - expensesCogs.totalCredit;
-  const expensesServicesValue =
-    expensesServices.totalDebit - expensesServices.totalCredit;
-  const expensesPersonnelValue =
-    expensesPersonnel.totalDebit - expensesPersonnel.totalCredit;
-
-  return (
-    earningsSalesValue +
-    earningsServicesValue -
-    (expensesCogsValue + expensesServicesValue + expensesPersonnelValue)
-  ).toFixed(2);
-};
-
-const calculateEbit = accounts => {
-  // USING THE SUM OF THE TRANSACTIONS
-
-  const earningsSales = processJournalEntries(accounts, '71', false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', false); // TODO date
-  const expensesCogs = processJournalEntries(accounts, '61', false); // TODO date
-  const expensesServices = processJournalEntries(accounts, '62', false); // TODO date
-  const expensesPersonnel = processJournalEntries(accounts, '63', false); // TODO date
-  const expensesDepreciationAmortization = processJournalEntries(
-    accounts,
-    '64',
-    false,
-  ); // TODO date
-
-  const earningsSalesValue =
-    earningsSales.totalCredit - earningsSales.totalDebit;
-  const earningsServicesValue =
-    earningsServices.totalCredit - earningsServices.totalDebit;
-  const expensesCogsValue = expensesCogs.totalDebit - expensesCogs.totalCredit;
-  const expensesServicesValue =
-    expensesServices.totalDebit - expensesServices.totalCredit;
-  const expensesPersonnelValue =
-    expensesPersonnel.totalDebit - expensesPersonnel.totalCredit;
-  const expensesDepreciationAmortizationValue =
-    expensesDepreciationAmortization.totalDebit -
-    expensesDepreciationAmortization.totalCredit;
-
-  return (
-    earningsSalesValue +
-    earningsServicesValue -
-    (expensesCogsValue +
-      expensesServicesValue +
-      expensesPersonnelValue +
-      expensesDepreciationAmortizationValue)
-  ).toFixed(2);
-};
-
-const calculateEarnings = accounts => {
-  const earningsSales = processJournalEntries(accounts, '71', false); // TODO date
-  const earningsServices = processJournalEntries(accounts, '72', false); // TODO date
-  const expenses = processJournalEntries(accounts, '6', false); // TODO date
-
-  const earningsSalesValue =
-    earningsSales.totalCredit - earningsSales.totalDebit;
-  const earningsServicesValue =
-    earningsServices.totalCredit - earningsServices.totalDebit;
-  const expensesValue = expenses.totalDebit - expenses.totalCredit;
-
-  return (earningsSalesValue + earningsServicesValue - expensesValue).toFixed(
-    2,
-  );
-};
-
 const processAccounts = (accounts, accountId) => {
   const totalBalance = {
     totalCredit: 0,
@@ -1873,48 +1796,37 @@ module.exports = (server, db) => {
     res.json(accountValues);
   });
 
-  /**
-   * @param year NOT USED FOR NOW
-   */
   server.get('/api/financial/ebitda', (req, res) => {
-    // USING MASTER DATA
-    // const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
-    // USING THE SUM OF THE TRANSACTIONS
-    const accounts = db.GeneralLedgerEntries.Journal;
-    res.json({ ebitda: Number(calculateEbitda(accounts)) });
+    const journals = db.GeneralLedgerEntries.Journal;
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json(calculateProfitLoss(journals, accounts).ebitda);
   });
 
-  /**
-   * @param year NOT USED FOR NOW
-   */
   server.get('/api/financial/ebit', (req, res) => {
-    // USING MASTER DATA
-    // const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
-    // USING THE SUM OF THE TRANSACTIONS
-    const accounts = db.GeneralLedgerEntries.Journal;
-    res.json(Number(calculateEbit(accounts)));
+    const journals = db.GeneralLedgerEntries.Journal;
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json(calculateProfitLoss(journals, accounts).ebit);
   });
 
-  /**
-   * @param year NOT USED FOR NOW
-   */
   server.get('/api/financial/earnings', (req, res) => {
-    // USING MASTER DATA
-    // const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
-    // USING THE SUM OF THE TRANSACTIONS
-    const accounts = db.GeneralLedgerEntries.Journal;
-    res.json(Number(calculateEarnings(accounts)));
+    const journals = db.GeneralLedgerEntries.Journal;
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    res.json(calculateProfitLoss(journals, accounts).netIncome);
   });
 
   server.get('/api/financial/accounts-receivable', (req, res) => {
-    const accounts = db.GeneralLedgerEntries.Journal;
-    const { totalCredit, totalDebit } = processJournalEntries(
-      accounts,
-      '21',
-      false,
-    ); // TODO date
-
-    res.json(Number((totalDebit - totalCredit).toFixed(2)));
+    const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
+    const assets = calculateAssets(accounts);
+    let i = 0;
+    // eslint-disable-next-line
+    for (i; i < assets.current.length; i++) {
+      if (assets.current[i].name === 'Clientes') {
+        break;
+      }
+    }
+    console.log(`accounts receivable: ${assets.current[i].value}`);
+    console.log(assets);
+    res.json(assets.current[i].value.toFixed(2));
   });
 
   server.get('/api/financial/equity', (req, res) => {
@@ -1982,7 +1894,7 @@ module.exports = (server, db) => {
   server.get('/api/financial/working-capital', (req, res) => {
     const accounts = db.MasterFiles.GeneralLedgerAccounts.Account;
     const currentAssets = calculateAssets(accounts).totalCurrent;
-    const currentLiabilities = calculateLiabilities(accounts).totalNonCurrent;
+    const currentLiabilities = calculateLiabilities(accounts).totalCurrent;
     res.json((currentAssets - currentLiabilities).toFixed(2));
   });
 
