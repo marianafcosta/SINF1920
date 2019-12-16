@@ -30,18 +30,20 @@ const KpiAccountList = ({ title, overlayInfo, sections, data, error }) => {
                 .filter(item => item.section === section.title)
                 .map(sectionItem => (
                   <li className={styles.listItem} key={sectionItem.label}>
-                    <strong className={styles.label}>{sectionItem.label}</strong>
+                    <strong className={styles.label}>
+                      {sectionItem.label}
+                    </strong>
                     <strong className={styles.description}>
                       {numeral(sectionItem.description).format(
                         sectionItem.format ? sectionItem.format : '€0,0.00',
                       )}{' '}
                       €
-                  </strong>
+                    </strong>
                   </li>
                 ))}
             </ul>
           </div>
-        )
+        );
       })}
     </CustomCard>
   );

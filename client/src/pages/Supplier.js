@@ -46,9 +46,9 @@ const Supplier = () => {
                     : {},
                   supplier.streetName
                     ? {
-                      label: 'Address',
-                      description: `${supplier.streetName} ${supplier.buildingNumber}`,
-                    }
+                        label: 'Address',
+                        description: `${supplier.streetName} ${supplier.buildingNumber}`,
+                      }
                     : {},
                   supplier.cityName
                     ? { label: 'City', description: `${supplier.cityName}` }
@@ -57,34 +57,43 @@ const Supplier = () => {
                     ? { label: 'Country', description: `${supplier.country}` }
                     : {},
                   supplier.postalZone
-                    ? { label: 'Postal Code', description: `${supplier.postalZone}` }
+                    ? {
+                        label: 'Postal Code',
+                        description: `${supplier.postalZone}`,
+                      }
                     : {},
                   supplier.telephone
                     ? {
-                      label: 'Telephone Number',
-                      description: `${supplier.telephone}`,
-                    }
+                        label: 'Telephone Number',
+                        description: `${supplier.telephone}`,
+                      }
                     : {},
                   supplier.name
                     ? { label: 'Fax Number', description: `${supplier.name}` }
                     : {},
                   supplier.electronicMail
-                    ? { label: 'E-mail', description: `${supplier.electronicMail}` }
+                    ? {
+                        label: 'E-mail',
+                        description: `${supplier.electronicMail}`,
+                      }
                     : {},
                   supplier.contactName
-                    ? { label: 'Fiscal Name', description: `${supplier.contactName}` }
+                    ? {
+                        label: 'Fiscal Name',
+                        description: `${supplier.contactName}`,
+                      }
                     : {},
                   supplier.companyTaxID
                     ? {
-                      label: 'Fiscal Number',
-                      description: `${supplier.companyTaxID}`,
-                    }
+                        label: 'Fiscal Number',
+                        description: `${supplier.companyTaxID}`,
+                      }
                     : {},
                   supplier.paymentMethod
                     ? {
-                      label: 'Payment Method',
-                      description: `${supplier.paymentMethodDescription}`,
-                    }
+                        label: 'Payment Method',
+                        description: `${supplier.paymentMethodDescription}`,
+                      }
                     : {},
                 ]}
               />

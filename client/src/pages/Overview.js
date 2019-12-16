@@ -50,7 +50,7 @@ const Overview = () => {
         </Grid>
       </div>
     </Layout>
-  )
+  );
 };
 
 export default Overview;

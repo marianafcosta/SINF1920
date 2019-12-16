@@ -26,10 +26,10 @@ const Purchases = () => {
           <Grid item sm={12} md={4}>
             <Grid container spacing={3}>
               <Grid item sm={12}>
-            <ProductBacklog />
+                <ProductBacklog />
               </Grid>
               <Grid item sm={12}>
-            <DebtToSuppliers />
+                <DebtToSuppliers />
               </Grid>
             </Grid>
           </Grid>
@@ -39,7 +39,7 @@ const Purchases = () => {
         </Grid>
       </div>
     </Layout>
-  )
+  );
 };
 
 export default Purchases;

@@ -38,7 +38,7 @@ const Sales = () => {
         </Grid>
       </div>
     </Layout>
-  )
+  );
 };
 
 export default Sales;

@@ -46,9 +46,9 @@ const Customer = () => {
                     : {},
                   customer.streetName
                     ? {
-                      label: 'Address',
-                      description: `${customer.streetName} ${customer.buildingNumber}`,
-                    }
+                        label: 'Address',
+                        description: `${customer.streetName} ${customer.buildingNumber}`,
+                      }
                     : {},
                   customer.cityName
                     ? { label: 'City', description: `${customer.cityName}` }
@@ -57,37 +57,46 @@ const Customer = () => {
                     ? { label: 'Country', description: `${customer.country}` }
                     : {},
                   customer.postalZone
-                    ? { label: 'Postal Code', description: `${customer.postalZone}` }
+                    ? {
+                        label: 'Postal Code',
+                        description: `${customer.postalZone}`,
+                      }
                     : {},
                   customer.telephone
                     ? {
-                      label: 'Telephone Number',
-                      description: `${customer.telephone}`,
-                    }
+                        label: 'Telephone Number',
+                        description: `${customer.telephone}`,
+                      }
                     : {},
                   customer.electronicMail
-                    ? { label: 'E-mail', description: `${customer.electronicMail}` }
+                    ? {
+                        label: 'E-mail',
+                        description: `${customer.electronicMail}`,
+                      }
                     : {},
                   customer.contactName
-                    ? { label: 'Fiscal Name', description: `${customer.contactName}` }
+                    ? {
+                        label: 'Fiscal Name',
+                        description: `${customer.contactName}`,
+                      }
                     : {},
                   customer.companyTaxID
                     ? {
-                      label: 'Fiscal Number',
-                      description: `${customer.companyTaxID}`,
-                    }
+                        label: 'Fiscal Number',
+                        description: `${customer.companyTaxID}`,
+                      }
                     : {},
                   customer.paymentMethod
                     ? {
-                      label: 'Payment Method',
-                      description: `${customer.paymentMethodDescription}`,
-                    }
+                        label: 'Payment Method',
+                        description: `${customer.paymentMethodDescription}`,
+                      }
                     : {},
                   customer.paymentTermDescription
                     ? {
-                      label: 'Payment Description',
-                      description: `${customer.paymentTermDescription}`,
-                    }
+                        label: 'Payment Description',
+                        description: `${customer.paymentTermDescription}`,
+                      }
                     : {},
                 ]}
               />

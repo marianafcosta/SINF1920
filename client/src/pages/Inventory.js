@@ -31,7 +31,7 @@ const Inventory = () => {
         </Grid>
       </div>
     </Layout>
-  )
+  );
 };
 
 export default Inventory;

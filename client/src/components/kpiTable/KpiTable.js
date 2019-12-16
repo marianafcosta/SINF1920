@@ -107,7 +107,6 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     width: '100%',
-    boxShadow: 'none',
     backgroundColor: 'inherit',
     maxHeight: 'inherit',
     boxShadow: 'none !important',

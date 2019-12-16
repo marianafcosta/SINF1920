@@ -48,10 +48,13 @@ const Financial = () => {
           <Grid item sm={12}>
             <ProfitLoss />
           </Grid>
+          <Grid item sm={12}>
+            <BalanceSheet />
+          </Grid>
         </Grid>
       </div>
     </Layout>
-  )
+  );
 };
 
 export default Financial;
