@@ -19,6 +19,7 @@ const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
 
     return <span style={{ color }}>{value}</span>;
   };
+  let key = 0;
 
   return (
     <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
@@ -31,10 +32,11 @@ const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
           wrapperStyle={{ color: 'white' }}
           formatter={value => numeral(value).format('0.0a')}
         />
-        <Legend formatter={renderLegend} />
-        {bars.map(bar => (
-          <Bar dataKey={bar.dataKey} key={bar.dataKey} fill={bar.fill} />
-        ))}
+        <Legend className="fullwitdh" formatter={renderLegend} />
+        {bars.map(bar => {
+          key += 1;
+          return <Bar key={key} dataKey={bar.dataKey} fill={bar.fill} />;
+        })}
       </BarChart>
     </CustomCard>
   );

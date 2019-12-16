@@ -8,37 +8,41 @@ import CustomCard from '../CustomCard';
 import styles from './KpiAccountList.module.css';
 
 const KpiAccountList = ({ title, overlayInfo, sections, data, error }) => {
+  let key = 1;
   return (
     <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
-      {sections.map(section => (
-        <>
-          <div className={styles.sectionTitleWrapper}>
-            <h2
-              className={classNames(
-                styles.sectionTitle,
-                section.highlight ? styles.highlight : '',
-              )}
-            >
-              {section.title}
-            </h2>
-          </div>
-          <ul className={styles.list}>
-            {data
-              .filter(item => item.section === section.title)
-              .map(sectionItem => (
-                <li className={styles.listItem} key={sectionItem.label}>
-                  <strong className={styles.label}>{sectionItem.label}</strong>
-                  <strong className={styles.description}>
-                    {numeral(sectionItem.description).format(
-                      sectionItem.format ? sectionItem.format : '€0,0.00',
-                    )}{' '}
-                    €
+      {sections.map(section => {
+        key += 1;
+        return (
+          <div key={key}>
+            <div className={styles.sectionTitleWrapper}>
+              <h2
+                className={classNames(
+                  styles.sectionTitle,
+                  section.highlight ? styles.highlight : '',
+                )}
+              >
+                {section.title}
+              </h2>
+            </div>
+            <ul className={styles.list}>
+              {data
+                .filter(item => item.section === section.title)
+                .map(sectionItem => (
+                  <li className={styles.listItem} key={sectionItem.label}>
+                    <strong className={styles.label}>{sectionItem.label}</strong>
+                    <strong className={styles.description}>
+                      {numeral(sectionItem.description).format(
+                        sectionItem.format ? sectionItem.format : '€0,0.00',
+                      )}{' '}
+                      €
                   </strong>
-                </li>
-              ))}
-          </ul>
-        </>
-      ))}
+                  </li>
+                ))}
+            </ul>
+          </div>
+        )
+      })}
     </CustomCard>
   );
 };
@@ -59,7 +63,7 @@ KpiAccountList.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
-      description: PropTypes.string,
+      description: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       format: PropTypes.string,
       section: PropTypes.string,
     }),

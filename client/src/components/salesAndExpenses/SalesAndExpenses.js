@@ -82,7 +82,7 @@ const SalesAndExpenses = () => {
   return (
     <KpiBarChart
       title="Sales vs Expenses"
-      overlay="gemp gemp gemp"
+      overlayInfo="gemp gemp gemp"
       bars={[
         { dataKey: 'sales', fill: '#fffba1' },
         { dataKey: 'expenses', fill: '#BE6E46' },
