@@ -20,18 +20,6 @@ import Appbar from './Appbar';
 import Page from '../common/Page';
 import './layout.css';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="primary" align="center">
-      Copyright ©{' '}
-      <Link color="inherit" href="/">
-        EEC - 360º Company Dashboard
-      </Link>{' '}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
-}
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -213,7 +201,6 @@ const Layout = ({ children, user, pageName }) => {
           <Container maxWidth="lg" className={classes.container}>
             {children}
           </Container>
-          <Copyright />
         </main>
       </div>
     </Page>
