@@ -8,14 +8,18 @@ import KpiValue from '../kpiValue';
 const Ebitda = ({ year }) => {
   const [ebitda, setEbitda] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchEbitda(year);
+        setLoading(false);
         setEbitda(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -30,6 +34,7 @@ const Ebitda = ({ year }) => {
       unit="€"
       format="0.000a"
       error={error}
+      loading={loading}
     />
   );
 };

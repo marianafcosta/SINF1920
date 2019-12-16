@@ -21,12 +21,15 @@ const monthNames = [
 const MonthlyPurchases = () => {
   const [monthlyPurchases, setMonthlyPurchases] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchPurchases(true);
+        setLoading(false);
         setMonthlyPurchases(
           data.map((month, index) => ({
             name: monthNames[index],
@@ -34,6 +37,7 @@ const MonthlyPurchases = () => {
           })),
         );
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -48,6 +52,7 @@ const MonthlyPurchases = () => {
       bars={[{ dataKey: 'purchases', fill: '#fffba1' }]}
       data={monthlyPurchases}
       error={error}
+      loading={loading}
     />
   );
 };
