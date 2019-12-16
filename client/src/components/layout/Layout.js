@@ -13,7 +13,6 @@ import FlashOnIcon from '@material-ui/icons/FlashOn';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Sidebar from './Sidebar';
 import Appbar from './Appbar';

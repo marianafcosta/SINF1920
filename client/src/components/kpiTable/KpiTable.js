@@ -138,6 +138,9 @@ const useStyles = makeStyles(theme => ({
     color: 'inherit',
     padding: '7px 3px 7px 1em',
     borderBottom: '1px solid #FFFBA1',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   cells: {
     backgroundColor: '#262626',
@@ -145,6 +148,9 @@ const useStyles = makeStyles(theme => ({
     padding: '7px 3px 7px 1em',
     border: 'none',
     textAlign: 'end',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   pagination: {
     backgroundColor: '#262626',
@@ -258,7 +264,7 @@ const KpiTable = ({ title, overlayInfo, headers, data, error }) => {
                 {emptyRows > 0 && data.length > rowsPerPage && (
                   <TableRow
                     style={{
-                      height: 43 * emptyRows,
+                      height: 39 * emptyRows,
                       backgroundColor: '#262626',
                     }}
                   >
