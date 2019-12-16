@@ -22,10 +22,10 @@ const Overview = () => {
           <Grid item sm={12}>
             <SalesExpenses />
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={6}>
             <Products />
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={6}>
             <TopProducts
               headers={[
                 {
