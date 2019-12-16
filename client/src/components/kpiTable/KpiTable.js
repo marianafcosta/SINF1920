@@ -198,7 +198,7 @@ const KpiTable = ({ title, overlayInfo, headers, data }) => {
       );
     }
     if (number) {
-      return <>{numeral(row[name]).format(format ? format : '0.0a')}</>;
+      return <>{numeral(row[name]).format(format || '0.0a')}</>;
     }
 
     if (date) {
