@@ -9,6 +9,7 @@ import LiquidityRatios from '../components/liquidityRatios';
 import SalesAndExpenses from '../components/salesAndExpenses';
 import Earnings from '../components/earnings';
 import ProfitLoss from '../components/profitLoss';
+import BalanceSheet from '../components/balanceSheet';
 
 const Financial = () => (
   <Layout pageName="Finances">
@@ -20,6 +21,7 @@ const Financial = () => (
     <LiquidityRatios />
     <SalesAndExpenses />
     <ProfitLoss />
+    <BalanceSheet />
   </Layout>
 );
 

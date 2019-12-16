@@ -9,8 +9,8 @@ const Ebitda = ({ year }) => {
   const [ebitda, setEbitda] = useState(0);
 
   const fetchData = async () => {
-    const ebitdaData = await fetchEbitda(year);
-    setEbitda(ebitdaData.data.ebitda);
+    const { data } = await fetchEbitda(year);
+    setEbitda(data);
   };
 
   useEffect(() => {
