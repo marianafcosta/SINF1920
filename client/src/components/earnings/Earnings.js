@@ -10,19 +10,19 @@ const Earnings = ({ year }) => {
   const [earnings, setEarnings] = useState(0);
   const [error, setError] = useState(false);
 
-  const fetchData = async () => {
-    setError(false);
-    try {
-      const { data } = await fetchEarnings(year);
-      setEarnings(data);
-    } catch (error) {
-      setError(true);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setError(false);
+      try {
+        const { data } = await fetchEarnings(year);
+        setEarnings(data);
+      } catch (error) {
+        setError(true);
+      }
+    };
+
     fetchData();
-  });
+  }, []);
 
   return error ? (
     <ApiCallError title="Earnings" />

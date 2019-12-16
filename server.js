@@ -56,7 +56,7 @@ const loginPrimavera = () => {
 
 loginPrimavera();
 
-SalesController(server, db);
+SalesController(server, db, basePrimaveraUrl);
 FinancialController(server, db);
 ProductController(server, db, basePrimaveraUrl);
 InventoryController(server, basePrimaveraUrl);

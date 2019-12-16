@@ -39,18 +39,16 @@ const SalesAndExpenses = () => {
   const updateGraph = () => {
     // both sales and expenses should have an equal amount of months,
     // so you can use either one as a map
-    if (accountBalances) {
-      if (accountBalances.sales.error === null) {
-        setGraphData(
-          accountBalances.sales.totalCredit.map((monthly, index) => {
-            return {
-              name: monthNames[index],
-              sales: monthly,
-              expenses: accountBalances.expenses.totalDebit[index],
-            };
-          }),
-        );
-      }
+    if (accountBalances && !accountBalances.sales.error) {
+      setGraphData(
+        accountBalances.sales.totalCredit.map((monthly, index) => {
+          return {
+            name: monthNames[index],
+            sales: monthly,
+            expenses: accountBalances.expenses.totalDebit[index],
+          };
+        }),
+      );
     }
   };
 
