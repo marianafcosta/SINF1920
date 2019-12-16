@@ -13,6 +13,8 @@ import PropTypes from 'prop-types';
 
 import CustomCard from '../CustomCard';
 
+import styles from './KpiBarChart.module.css';
+
 const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
   const renderLegend = (value, entry) => {
     const { color } = entry;
@@ -22,20 +24,22 @@ const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
 
   return (
     <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
-      <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis tickFormatter={tick => numeral(tick).format('0.0a')} />
-        <Tooltip
-          contentStyle={{ backgroundColor: '#262626' }}
-          wrapperStyle={{ color: 'white' }}
-          formatter={value => numeral(value).format('0.0a')}
-        />
-        <Legend formatter={renderLegend} />
-        {bars.map(bar => (
-          <Bar dataKey={bar.dataKey} key={bar.dataKey} fill={bar.fill} />
-        ))}
-      </BarChart>
+      <div className={styles.chartWrapper}>
+        <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis tickFormatter={tick => numeral(tick).format('0.0a')} />
+          <Tooltip
+            contentStyle={{ backgroundColor: '#262626' }}
+            wrapperStyle={{ color: 'white' }}
+            formatter={value => numeral(value).format('0.0a')}
+          />
+          <Legend formatter={renderLegend} />
+          {bars.map(bar => (
+            <Bar dataKey={bar.dataKey} key={bar.dataKey} fill={bar.fill} />
+          ))}
+        </BarChart>
+      </div>
     </CustomCard>
   );
 };
