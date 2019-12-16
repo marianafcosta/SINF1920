@@ -8,14 +8,18 @@ import { fetchTopProducts } from '../../services/salesService';
 const TopProducts = ({ headers }) => {
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getTopProducts = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchTopProducts();
+        setLoading(false);
         setTableData(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -29,6 +33,7 @@ const TopProducts = ({ headers }) => {
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };

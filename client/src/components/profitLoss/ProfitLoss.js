@@ -14,6 +14,7 @@ const ProfitLoss = () => {
   const [profitLoss, setProfitLoss] = useState(null);
   const [listData, setListData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const updateTable = () => {
     const updatedListData = [];
@@ -55,9 +56,12 @@ const ProfitLoss = () => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchProfitLoss();
+        setLoading(false);
         setProfitLoss(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -77,6 +81,7 @@ const ProfitLoss = () => {
       sections={sections}
       data={listData}
       error={error}
+      loading={loading}
     />
   );
 };

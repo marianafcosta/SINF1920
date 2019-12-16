@@ -19,6 +19,7 @@ const BalanceSheet = () => {
   const [balanceSheet, setBalanceSheet] = useState(null);
   const [listData, setListData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const updateTable = () => {
     const updatedListData = [];
@@ -76,9 +77,12 @@ const BalanceSheet = () => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchBalanceSheet();
+        setLoading(false);
         setBalanceSheet(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -97,6 +101,7 @@ const BalanceSheet = () => {
       sections={sections}
       data={listData}
       error={error}
+      loading={loading}
     />
   );
 };

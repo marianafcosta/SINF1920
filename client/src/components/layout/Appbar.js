@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,7 +21,10 @@ import { withStyles } from '@material-ui/core/styles';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 // import BootstrapInput from '../common/BootstrapInput';
 import { logout } from '../../actions/authActions';
-import changeOverlayStatus from '../../actions/overlayActions';
+import {
+  changeOverlayStatus,
+  setFirstToggle,
+} from '../../actions/overlayActions';
 
 const YellowSwitch = withStyles({
   switchBase: {
@@ -46,10 +49,14 @@ const Appbar = ({
   isOverlaySet,
   // eslint-disable-next-line
   changeOverlayStatus,
+  // eslint-disable-next-line
+  setFirstToggle,
+  firstToggle,
   user,
   year,
 }) => {
   const history = useHistory();
+  const location = useLocation();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   // const [date, setDate] = React.useState('');
@@ -70,7 +77,14 @@ const Appbar = ({
 
   const handleOverlaySwitch = () => {
     changeOverlayStatus();
+    if (!firstToggle) {
+      setFirstToggle(true);
+    }
   };
+
+  useEffect(() => {
+    setFirstToggle(false);
+  }, [location]);
 
   return (
     <AppBar
@@ -181,6 +195,8 @@ Appbar.propTypes = {
   doLogout: PropTypes.func.isRequired,
   isOverlaySet: PropTypes.bool.isRequired,
   changeOverlayStatus: PropTypes.func.isRequired,
+  setFirstToggle: PropTypes.func.isRequired,
+  firstToggle: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     role: PropTypes.string,
   }),
@@ -189,12 +205,14 @@ Appbar.propTypes = {
 
 const mapStateToProps = ({ overlay, year }) => ({
   isOverlaySet: overlay.isSet,
+  firstToggle: overlay.firstToggle,
   year,
 });
 
 const mapDispatchToProps = {
   doLogout: logout,
   changeOverlayStatus,
+  setFirstToggle,
 };
 
 export default connect(

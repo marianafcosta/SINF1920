@@ -8,14 +8,18 @@ import KpiValue from '../kpiValue';
 const AccountsReceivable = ({ year }) => {
   const [accountsReceivable, setAccountsReceivable] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchAccountsReceivable(year);
+        setLoading(false);
         setAccountsReceivable(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -30,6 +34,7 @@ const AccountsReceivable = ({ year }) => {
       unit="€"
       format="0.000a"
       error={error}
+      loading={loading}
     />
   );
 };

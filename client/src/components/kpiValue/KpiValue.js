@@ -6,15 +6,26 @@ import CustomCard from '../CustomCard';
 
 import styles from './KpiValue.module.css';
 
-const KpiValue = ({ value, unit, title, overlayInfo, format, error }) => (
+const KpiValue = ({
+  value,
+  unit,
+  title,
+  overlayInfo,
+  format,
+  error,
+  loading,
+}) => (
   <CustomCard
     title={`${title}${unit !== null ? ` (${unit})` : ''}`}
     overlayInfo={overlayInfo}
     error={error}
+    loading={loading}
   >
-    <h1 className={styles.value}>
-      {format ? numeral(value).format(format) : value}
-    </h1>
+    <div className={styles.valueWrapper}>
+      <h1 className={styles.value}>
+        {format ? numeral(value).format(format) : value}
+      </h1>
+    </div>
   </CustomCard>
 );
 
@@ -22,6 +33,7 @@ KpiValue.defaultProps = {
   unit: null,
   format: null,
   error: false,
+  loading: false,
 };
 
 KpiValue.propTypes = {
@@ -31,6 +43,7 @@ KpiValue.propTypes = {
   overlayInfo: PropTypes.string.isRequired,
   format: PropTypes.string,
   error: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default KpiValue;
