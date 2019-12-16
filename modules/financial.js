@@ -1005,7 +1005,7 @@ const processTaxonomySumViaTransactions = (taxonomy, accounts, journals) => {
 
   accountCodes.forEach(code => {
     // get transaction sum
-    currentAccount = processJournalEntries(journals, code, 2019, false);
+    currentAccount = processJournalEntries(journals, code, false);
     balance =
       Number(currentAccount.totalDebit) - Number(currentAccount.totalCredit);
     results.push({
@@ -1788,6 +1788,7 @@ const calculateProfitLoss = (journals, accounts) => {
     expensesInterest -
     pl.taxes.reduce((acc, curr) => acc + curr.value, 0);
 
+  console.log(pl);
   return pl;
 };
 
