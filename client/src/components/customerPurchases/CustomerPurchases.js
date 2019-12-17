@@ -9,7 +9,7 @@ const headers = [
   { name: 'id', label: 'ID', link: 'products' },
   { name: 'name', label: 'Name' },
   { name: 'units', label: 'Units', number: true },
-  { name: 'value', label: 'Value', number: true, format: '0.000a' },
+  { name: 'value', label: 'Value', number: true, format: '0.00a' },
 ];
 
 const CustomerPurchases = ({ customerId }) => {

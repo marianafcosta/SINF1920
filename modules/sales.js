@@ -27,10 +27,14 @@ const calculateSalesByLocation = sales => {
 };
 
 const processSalesForCustomerId = (customerId, sales) => {
+  const validTypes = ['FT', 'FS', 'FR', 'VD'];
   const purchases = {};
   if (Array.isArray(sales)) {
     sales.forEach(invoice => {
-      if (invoice.CustomerID === customerId) {
+      if (
+        invoice.CustomerID === customerId &&
+        validTypes.includes(invoice.InvoiceType)
+      ) {
         if (Array.isArray(invoice.Line)) {
           invoice.Line.forEach(line => {
             if (purchases[line.ProductCode]) {
@@ -60,7 +64,10 @@ const processSalesForCustomerId = (customerId, sales) => {
         }
       }
     });
-  } else if (sales.CustomerID === customerId) {
+  } else if (
+    sales.CustomerID === customerId &&
+    validTypes.includes(sales.InvoiceType)
+  ) {
     if (Array.isArray(sales.Line)) {
       sales.Line.forEach(line => {
         if (purchases[line.ProductCode]) {
@@ -144,14 +151,49 @@ module.exports = (server, db, basePrimaveraUrl) => {
 
   server.get('/api/sales/topClients', (req, res) => {
     const salesInvoices = db.SourceDocuments.SalesInvoices.Invoice;
+    const validTypes = ['FT', 'FS', 'FR', 'VD'];
 
     const clients = [];
 
     if (Array.isArray(salesInvoices)) {
       salesInvoices.forEach(invoice => {
-        const customerID = invoice.CustomerID;
-        let purchased = 0;
+        console.log(invoice.InvoiceType);
+        if (validTypes.includes(invoice.InvoiceType)) {
+          const customerID = invoice.CustomerID;
+          let purchased = 0;
 
+          if (Array.isArray(invoice.Line)) {
+            invoice.Line.forEach(line => {
+              const { UnitPrice, Quantity } = line;
+              purchased += UnitPrice * Quantity;
+            });
+          } else {
+            purchased = invoice.Line.UnitPrice * invoice.Line.Quantity;
+          }
+          let exists = false;
+          for (let i = 0; i < clients.length; i += 1) {
+            if (clients[i].id === customerID) {
+              exists = true;
+              clients[i].nPurchases += 1;
+              clients[i].totalPurchased += purchased;
+              break;
+            }
+          }
+          if (!exists) {
+            clients.push({
+              id: customerID,
+              totalPurchased: purchased,
+              nPurchases: 1,
+            });
+          }
+        }
+      });
+    } else {
+      const invoice = salesInvoices;
+      const customerID = invoice.CustomerID;
+      let purchased = 0;
+
+      if (validTypes.includes(invoice.InvoiceType)) {
         if (Array.isArray(invoice.Line)) {
           invoice.Line.forEach(line => {
             const { UnitPrice, Quantity } = line;
@@ -176,35 +218,6 @@ module.exports = (server, db, basePrimaveraUrl) => {
             nPurchases: 1,
           });
         }
-      });
-    } else {
-      const invoice = salesInvoices;
-      const customerID = invoice.CustomerID;
-      let purchased = 0;
-
-      if (Array.isArray(invoice.Line)) {
-        invoice.Line.forEach(line => {
-          const { UnitPrice, Quantity } = line;
-          purchased += UnitPrice * Quantity;
-        });
-      } else {
-        purchased = invoice.Line.UnitPrice * invoice.Line.Quantity;
-      }
-      let exists = false;
-      for (let i = 0; i < clients.length; i += 1) {
-        if (clients[i].id === customerID) {
-          exists = true;
-          clients[i].nPurchases += 1;
-          clients[i].totalPurchased += purchased;
-          break;
-        }
-      }
-      if (!exists) {
-        clients.push({
-          id: customerID,
-          totalPurchased: purchased,
-          nPurchases: 1,
-        });
       }
     }
 

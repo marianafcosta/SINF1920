@@ -37,7 +37,8 @@ KpiValue.defaultProps = {
 };
 
 KpiValue.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  // eslint-disable-next-line
+  value: PropTypes.any.isRequired,
   unit: PropTypes.string,
   title: PropTypes.string.isRequired,
   overlayInfo: PropTypes.string.isRequired,

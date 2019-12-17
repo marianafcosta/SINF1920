@@ -28,7 +28,7 @@ const Overview = () => {
                 {
                   name: 'id',
                   label: 'ID',
-                  link: true,
+                  link: 'products',
                 },
                 {
                   name: 'name',
@@ -38,6 +38,7 @@ const Overview = () => {
                   name: 'value',
                   label: 'Value (€)',
                   number: true,
+                  format: '0.00a',
                 },
               ]}
             />

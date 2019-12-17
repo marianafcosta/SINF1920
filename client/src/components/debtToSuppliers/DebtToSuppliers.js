@@ -35,7 +35,7 @@ const DebtToSuppliers = ({ year }) => {
       overlayInfo="Capital owed to the suppliers"
       value={debtToSuppliers}
       unit="€"
-      format="0.0a"
+      format="0.00a"
       error={error}
       loading={loading}
     />

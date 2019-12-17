@@ -31,7 +31,7 @@ const ProductAverageCost = ({ productId }) => {
       overlayInfo="Average cost of a product"
       value={averageCost}
       unit="€"
-      format="0.0a"
+      format="0.00a"
       error={error}
       loading={loading}
     />

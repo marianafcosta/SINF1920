@@ -29,10 +29,10 @@ const AccountsReceivable = ({ year }) => {
   return (
     <KpiValue
       title="Accounts Receivable"
-      overlayInfo="AR is any amount of money owed by customers for purchases made on credit.﻿"
+      overlayInfo="AR is any amount of money owed by customers for purchases made on credit."
       value={accountsReceivable}
       unit="€"
-      format="0.000a"
+      format="0.00a"
       error={error}
       loading={loading}
     />

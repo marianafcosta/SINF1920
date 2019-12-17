@@ -8,8 +8,8 @@ import { fetchProductSuppliers } from '../../services/productService';
 const headers = [
   { name: 'id', label: 'ID', link: 'suppliers' },
   { name: 'name', label: 'Name' },
-  { name: 'value', label: 'Value (€)', number: true },
-  { name: 'units', label: 'Units', number: true },
+  { name: 'value', label: 'Value (€)', number: true, format: '0.00a' },
+  { name: 'units', label: 'Units', number: true, format: '0.00a' },
 ];
 
 const ProductSuppliers = ({ productId }) => {

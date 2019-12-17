@@ -57,6 +57,7 @@ TopProducts.defaultProps = {
       name: 'value',
       label: 'Value (€)',
       number: true,
+      format: '0.00a',
     },
   ],
 };

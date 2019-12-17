@@ -8,7 +8,7 @@ import { fetchPendingPurchases } from '../../services/supplierService';
 const headers = [
   { name: 'id', label: 'Reference' },
   { name: 'date', label: 'Purchase Date', date: true },
-  { name: 'value', label: 'Value (€)', number: true },
+  { name: 'value', label: 'Value (€)', number: true, format: '0.00a' },
 ];
 
 const SupplierPendingPurchases = ({ id }) => {

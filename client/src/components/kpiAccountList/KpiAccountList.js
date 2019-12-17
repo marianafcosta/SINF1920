@@ -78,7 +78,8 @@ KpiAccountList.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
-      description: PropTypes.string,
+      // eslint-disable-next-line
+      description: PropTypes.any,
       format: PropTypes.string,
       section: PropTypes.string,
     }),

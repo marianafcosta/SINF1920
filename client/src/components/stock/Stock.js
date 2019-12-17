@@ -31,7 +31,7 @@ const Stock = () => {
       overlayInfo="Value of the products in Stock"
       value={stock}
       unit="€"
-      format="0.0a"
+      format="0.00a"
       error={error}
       loading={loading}
     />

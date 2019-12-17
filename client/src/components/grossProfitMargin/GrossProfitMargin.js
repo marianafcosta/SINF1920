@@ -30,7 +30,7 @@ const GrossProfitMargin = () => {
       unit="%"
       title="Gross profit margin"
       overlayInfo="Gross profit margin in percentage"
-      format="0.000a"
+      format="0.00a"
       error={error}
       loading={loading}
     />

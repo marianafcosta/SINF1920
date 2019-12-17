@@ -11,7 +11,7 @@ const headers = [
     name: 'amount',
     label: 'Current amount (€)',
     number: true,
-    format: '0.000a',
+    format: '0.00a',
   },
 ];
 

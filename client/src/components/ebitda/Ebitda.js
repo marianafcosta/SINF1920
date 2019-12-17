@@ -32,7 +32,7 @@ const Ebitda = ({ year }) => {
       overlayInfo="Earnings before Interest, Taxes, Depreciation and Amortization."
       value={ebitda}
       unit="€"
-      format="0.000a"
+      format="0.00a"
       error={error}
       loading={loading}
     />
