@@ -20,16 +20,16 @@ const Sales = () => {
     <Layout pageName="Sales">
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item sm={12} md={8}>
+          <Grid item sm={12}>
             <MonthlySales />
           </Grid>
-          <Grid item sm={6} md={4}>
-            <GrossProfitMargin />
-          </Grid>
-          <Grid item sm={12} lg={5}>
+          <Grid item sm={12} md={9}>
             <TopCustomers />
           </Grid>
-          <Grid item sm={12} lg={7}>
+          <Grid item sm={12} md={3}>
+            <GrossProfitMargin />
+          </Grid>
+          <Grid item sm={12}>
             <TopProducts />
           </Grid>
           <Grid item sm={12}>

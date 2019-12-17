@@ -308,7 +308,7 @@ KpiTable.propTypes = {
     PropTypes.shape({
       name: PropTypes.string,
       label: PropTypes.string,
-      link: PropTypes.string,
+      link: PropTypes.bool,
       number: PropTypes.bool,
     }),
   ).isRequired,

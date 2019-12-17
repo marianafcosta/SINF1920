@@ -31,7 +31,7 @@ const ProductBacklog = () => {
       overlayInfo="Value of the product that are yet to arrive at a warehouse"
       value={productBacklog}
       unit="€"
-      format="0.0a"
+      format="0.00a"
       error={error}
       loading={loading}
     />

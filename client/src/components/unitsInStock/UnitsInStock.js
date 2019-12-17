@@ -33,7 +33,7 @@ const UnitsInStock = ({ productId }) => {
       title="Units in stock"
       unit="units"
       overlayInfo="Number of units in stock"
-      format="0.000a"
+      format="0.00a"
       error={error}
       loading={loading}
     />

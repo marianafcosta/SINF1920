@@ -8,7 +8,7 @@ import { fetchTopClients } from '../../services/salesService';
 
 const headers = [
   { name: 'id', label: 'Consumer', link: 'customers' },
-  { name: 'total', label: 'Total Spent (€)', number: true },
+  { name: 'total', label: 'Total Spent (€)', number: true, format: '0.00a' },
   { name: 'purchases', label: 'Purchases' },
 ];
 

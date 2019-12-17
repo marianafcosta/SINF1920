@@ -32,7 +32,7 @@ const Ebit = ({ year }) => {
       unit="€"
       overlayInfo="Earnings before Interest and Taxes."
       value={ebit}
-      format="0.000a"
+      format="0.00a"
       error={error}
       loading={loading}
     />

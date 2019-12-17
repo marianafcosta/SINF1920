@@ -53,11 +53,13 @@ Products.defaultProps = {
     {
       name: 'quantity',
       label: 'Quantity',
+      format: '0.00a',
       number: true,
     },
     {
       name: 'value',
       label: 'Value (€)',
+      format: '0.00a',
       number: true,
     },
   ],

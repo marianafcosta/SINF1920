@@ -31,7 +31,7 @@ const SupplierTotalPurchased = ({ id }) => {
     <KpiValue
       title="Total Purchased"
       overlayInfo="Total value purchased by a Supplier"
-      value={numeral(totalPurchased).format('0.0a')}
+      value={numeral(totalPurchased).format('0.00a')}
       unit="€"
       error={error}
       loading={loading}
