@@ -56,6 +56,7 @@ TopProducts.defaultProps = {
     {
       name: 'value',
       label: 'Value (€)',
+      number: true,
     },
   ],
 };

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import numeral from 'numeral';
 
 import KpiTable from '../kpiTable';
 
@@ -8,8 +7,8 @@ import { fetchSuppliers } from '../../services/purchasesService';
 const headers = [
   { name: 'id', label: 'ID', link: 'suppliers' },
   { name: 'name', label: 'Name' },
-  { name: 'value', label: 'Value (€)' },
-  { name: 'units', label: 'Units' },
+  { name: 'value', label: 'Value (€)', number: true },
+  { name: 'units', label: 'Units', number: true },
 ];
 
 const Suppliers = () => {
@@ -28,8 +27,8 @@ const Suppliers = () => {
           data.map(supplier => ({
             id: supplier.id,
             name: supplier.name,
-            value: numeral(supplier.value).format('0.0a'),
-            units: numeral(supplier.units).format('0.0a'),
+            value: supplier.value,
+            units: supplier.units,
           })),
         );
       } catch (e) {
