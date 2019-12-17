@@ -133,7 +133,7 @@ const Appbar = ({
           </Typography>
         </div>
 
-        <HelpOutlineIcon className="yellow" />
+        <HelpOutlineIcon htmlColor="#FFFBA1" />
         <YellowSwitch
           checked={isOverlaySet}
           onChange={handleOverlaySwitch}
