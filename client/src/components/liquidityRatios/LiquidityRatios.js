@@ -22,14 +22,17 @@ const LiquidityRatios = () => {
   });
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const cashResponse = await fetchCashRatio();
         const workingCapitalResponse = await fetchWorkingCapital();
         const currentResponse = await fetchCurrentRatio();
+        setLoading(false);
 
         setRatios({
           cash: cashResponse.data,
@@ -37,6 +40,7 @@ const LiquidityRatios = () => {
           current: currentResponse.data,
         });
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -58,10 +62,11 @@ const LiquidityRatios = () => {
   return (
     <KpiTable
       title="Liquidity ratios"
-      overlayInfo="G E M P"
+      overlayInfo="Cash ratio, Current ratio and Working Capital in euros"
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };

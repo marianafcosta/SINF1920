@@ -21,20 +21,24 @@ const StabilityRatios = () => {
   });
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const equityResponse = await fetchEquity();
         const assetsResponse = await fetchAssets();
         const liabilitiesResponse = await fetchLiabilities();
+        setLoading(false);
         setValues({
           equity: equityResponse.data,
           assets: assetsResponse.data,
           liabilities: liabilitiesResponse.data,
         });
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -55,10 +59,11 @@ const StabilityRatios = () => {
   return (
     <KpiTable
       title="Stability ratios"
-      overlayInfo="lajsdfkaosdf"
+      overlayInfo="Equity to assets and Debt to equity ratios"
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };

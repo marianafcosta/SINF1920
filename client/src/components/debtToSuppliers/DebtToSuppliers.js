@@ -9,15 +9,19 @@ import { fetchAccountBalance } from '../../services/financialService';
 const DebtToSuppliers = ({ year }) => {
   const [debtToSuppliers, setDebtToSuppliers] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
 
       try {
+        setLoading(true);
         const { data } = await fetchAccountBalance('22', year, false);
+        setLoading(false);
         setDebtToSuppliers(data.totalCredit - data.totalDebit);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -28,11 +32,12 @@ const DebtToSuppliers = ({ year }) => {
   return (
     <KpiValue
       title="Debt To Suppliers"
-      overlayInfo="something something gemp something"
+      overlayInfo="Capital owed to the suppliers"
       value={debtToSuppliers}
       unit="€"
       format="0.0a"
       error={error}
+      loading={loading}
     />
   );
 };

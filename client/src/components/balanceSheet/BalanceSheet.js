@@ -19,6 +19,7 @@ const BalanceSheet = () => {
   const [balanceSheet, setBalanceSheet] = useState(null);
   const [listData, setListData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const updateTable = () => {
     const updatedListData = [];
@@ -76,9 +77,12 @@ const BalanceSheet = () => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchBalanceSheet();
+        setLoading(false);
         setBalanceSheet(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -93,10 +97,11 @@ const BalanceSheet = () => {
   return (
     <KpiAccountList
       title="Balance sheet"
-      overlayInfo="dfadsf"
+      overlayInfo="A balance sheet is a financial statement that reports a company's assets, liabilities and shareholders' equity at a specific point in time"
       sections={sections}
       data={listData}
       error={error}
+      loading={loading}
     />
   );
 };

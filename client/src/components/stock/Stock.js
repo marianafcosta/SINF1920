@@ -6,14 +6,18 @@ import KpiValue from '../kpiValue';
 const Stock = () => {
   const [stock, setStock] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
-        const { data } = await fetchStock(); // TODO
+        setLoading(true);
+        const { data } = await fetchStock();
+        setLoading(false);
         setStock(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -24,11 +28,12 @@ const Stock = () => {
   return (
     <KpiValue
       title="Stock"
-      overlayInfo="something something gemp something"
+      overlayInfo="Value of the products in Stock"
       value={stock}
       unit="€"
       format="0.0a"
       error={error}
+      loading={loading}
     />
   );
 };

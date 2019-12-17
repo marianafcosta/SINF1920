@@ -8,14 +8,18 @@ import { fetchEarnings } from '../../services/financialService';
 const Earnings = ({ year }) => {
   const [earnings, setEarnings] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchEarnings(year);
+        setLoading(false);
         setEarnings(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -28,9 +32,10 @@ const Earnings = ({ year }) => {
       value={earnings}
       unit="€"
       title="Net income"
-      overlayInfo="nem sei se isto é relevante"
+      overlayInfo="Net income (NI), also called net earnings, is calculated as sales minus cost of goods sold, selling, general and administrative expenses, operating expenses, depreciation, interest, taxes, and other expenses."
       format="0.000a"
       error={error}
+      loading={loading}
     />
   );
 };

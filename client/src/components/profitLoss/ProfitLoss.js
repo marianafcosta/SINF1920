@@ -14,6 +14,7 @@ const ProfitLoss = () => {
   const [profitLoss, setProfitLoss] = useState(null);
   const [listData, setListData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const updateTable = () => {
     const updatedListData = [];
@@ -55,9 +56,12 @@ const ProfitLoss = () => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchProfitLoss();
+        setLoading(false);
         setProfitLoss(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -73,10 +77,11 @@ const ProfitLoss = () => {
   return (
     <KpiAccountList
       title="Profit and loss statement"
-      overlayInfo="ahhh como é que vou fazer as merdas todas a tempo"
+      overlayInfo="The profit and loss statement is a financial statement that summarizes the revenues, costs, and expenses incurred during a specified period"
       sections={sections}
       data={listData}
       error={error}
+      loading={loading}
     />
   );
 };

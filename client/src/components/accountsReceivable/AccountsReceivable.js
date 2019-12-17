@@ -8,14 +8,18 @@ import KpiValue from '../kpiValue';
 const AccountsReceivable = ({ year }) => {
   const [accountsReceivable, setAccountsReceivable] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchAccountsReceivable(year);
+        setLoading(false);
         setAccountsReceivable(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -25,11 +29,12 @@ const AccountsReceivable = ({ year }) => {
   return (
     <KpiValue
       title="Accounts Receivable"
-      overlayInfo="something something gemp something"
+      overlayInfo="AR is any amount of money owed by customers for purchases made on credit.﻿"
       value={accountsReceivable}
       unit="€"
       format="0.000a"
       error={error}
+      loading={loading}
     />
   );
 };

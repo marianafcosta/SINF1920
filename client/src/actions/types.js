@@ -9,4 +9,5 @@ export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 export const CHANGE_OVERLAY_STATUS = 'SET_OVERLAY';
+export const SET_FIRST_TOGGLE = 'SET_FIRST_TOGGLE';
 export const SET_FISCAL_YEAR = 'SET_FISCAL_YEAR';

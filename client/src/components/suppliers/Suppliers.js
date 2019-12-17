@@ -15,12 +15,15 @@ const headers = [
 const Suppliers = () => {
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchSuppliers();
+        setLoading(false);
         setTableData(
           data.map(supplier => ({
             id: supplier.id,
@@ -30,6 +33,7 @@ const Suppliers = () => {
           })),
         );
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -39,10 +43,11 @@ const Suppliers = () => {
   return (
     <KpiTable
       title="Suppliers"
-      overlayInfo="kasdlfa"
+      overlayInfo="Information about the Suppliers: Name, Value and number of Units"
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };

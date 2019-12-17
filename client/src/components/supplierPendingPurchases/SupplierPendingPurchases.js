@@ -14,14 +14,18 @@ const headers = [
 const SupplierPendingPurchases = ({ id }) => {
   const [pendingPurchases, setPendingPurchases] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchPendingPurchases(id);
+        setLoading(false);
         setPendingPurchases(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -32,10 +36,11 @@ const SupplierPendingPurchases = ({ id }) => {
   return (
     <KpiTable
       title="Pending purchases"
-      overlayInfo="kajsdhfs"
+      overlayInfo="Purchases pending from this Supplier"
       headers={headers}
       data={pendingPurchases}
       error={error}
+      loading={loading}
     />
   );
 };

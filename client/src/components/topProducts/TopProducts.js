@@ -8,14 +8,18 @@ import { fetchTopProducts } from '../../services/salesService';
 const TopProducts = ({ headers }) => {
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getTopProducts = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchTopProducts();
+        setLoading(false);
         setTableData(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -25,10 +29,11 @@ const TopProducts = ({ headers }) => {
   return (
     <KpiTable
       title="Top products"
-      overlayInfo="sdasdf"
+      overlayInfo="List of Top Products, their ID, Name and Value in euros"
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };

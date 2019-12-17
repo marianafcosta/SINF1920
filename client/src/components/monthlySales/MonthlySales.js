@@ -22,12 +22,15 @@ const monthNames = [
 const MonthlySales = () => {
   const [monthlySales, setMonthlySales] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchAccountBalance('71', true);
+        setLoading(false);
         setMonthlySales(
           data.totalCredit.map((monthly, index) => ({
             name: monthNames[index],
@@ -35,6 +38,7 @@ const MonthlySales = () => {
           })),
         );
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -45,10 +49,11 @@ const MonthlySales = () => {
   return (
     <KpiBarChart
       title="Sales"
-      overlayInfo="Number of units purchased in each month in a year."
+      overlayInfo="Number of units sold in each month in a year."
       bars={[{ dataKey: 'sales', fill: '#fffba1' }]}
       data={monthlySales}
       error={error}
+      loading={loading}
     />
   );
 };

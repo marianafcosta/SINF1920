@@ -16,13 +16,16 @@ const headers = [
 const CustomerPurchases = ({ customerId }) => {
   const [purchases, setPurchases] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
 
       try {
+        setLoading(true);
         const { data } = await fetchPurchases(customerId, 2019);
+        setLoading(false);
         setPurchases(
           data.map(item => ({
             ...item,
@@ -31,6 +34,7 @@ const CustomerPurchases = ({ customerId }) => {
           })),
         );
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -40,10 +44,11 @@ const CustomerPurchases = ({ customerId }) => {
   return (
     <KpiTable
       title="Purchases"
-      overlayInfo="dkfngçsdasfsd"
+      overlayInfo="Information about the purchases of this Customer"
       headers={headers}
       data={purchases}
       error={error}
+      loading={loading}
     />
   );
 };

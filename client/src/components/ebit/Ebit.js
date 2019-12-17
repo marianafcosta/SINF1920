@@ -8,13 +8,16 @@ import { fetchEbit } from '../../services/financialService';
 const Ebit = ({ year }) => {
   const [ebit, setEbit] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
 
       try {
+        setLoading(true);
         const { data } = await fetchEbit(year);
+        setLoading(false);
         setEbit(data);
       } catch (e) {
         setError(true);
@@ -27,10 +30,11 @@ const Ebit = ({ year }) => {
     <KpiValue
       title="EBIT"
       unit="€"
-      overlayInfo="GEEEEEEEEEEEMMMMPPPP"
+      overlayInfo="Earnings before Interest and Taxes."
       value={ebit}
       format="0.000a"
       error={error}
+      loading={loading}
     />
   );
 };

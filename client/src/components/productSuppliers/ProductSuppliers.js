@@ -16,12 +16,15 @@ const headers = [
 const ProductSuppliers = ({ productId }) => {
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchProductSuppliers(productId);
+        setLoading(false);
         setTableData(
           data.map(supplier => ({
             id: supplier.id,
@@ -40,10 +43,11 @@ const ProductSuppliers = ({ productId }) => {
   return (
     <KpiTable
       title="Product suppliers"
-      overlayInfo="aksjdflsdf"
+      overlayInfo="List of suppliers of this product and their informations"
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };

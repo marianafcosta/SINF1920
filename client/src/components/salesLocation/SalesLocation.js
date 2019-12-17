@@ -16,16 +16,19 @@ const SalesLocation = ({ year }) => {
   const [locations, setLocations] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchLocations = async () => {
       setError(false);
 
       try {
-        const locationsResponse = await fetchSalesByLocation(year);
-        const locationsData = locationsResponse.data;
-        setLocations(locationsData);
+        setLoading(true);
+        const { data } = await fetchSalesByLocation(year);
+        setLoading(false);
+        setLocations(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -52,10 +55,11 @@ const SalesLocation = ({ year }) => {
   return (
     <KpiTable
       title="Sales by location"
-      overlayInfo="knfalsdjfa"
+      overlayInfo="Net total of sales by Location"
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };

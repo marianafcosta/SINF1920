@@ -7,14 +7,18 @@ import { fetchProductAverageCost } from '../../services/productService';
 const ProductAverageCost = ({ productId }) => {
   const [averageCost, setAverageCost] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
-        const { data } = await fetchProductAverageCost(productId); // TODO
+        setLoading(true);
+        const { data } = await fetchProductAverageCost(productId);
+        setLoading(false);
         setAverageCost(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -24,11 +28,12 @@ const ProductAverageCost = ({ productId }) => {
   return (
     <KpiValue
       title="Average Cost"
-      overlayInfo="something something gemp something"
+      overlayInfo="Average cost of a product"
       value={averageCost}
       unit="€"
       format="0.0a"
       error={error}
+      loading={loading}
     />
   );
 };

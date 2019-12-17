@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { CircularProgress } from '@material-ui/core';
+
 import './CustomCard.css';
 
 import ApiCallError from '../apiCallError';
@@ -31,6 +33,16 @@ const useStyles = makeStyles({
     padding: '5px',
     marginBottom: '1em',
   },
+  loadingWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingIcon: {
+    margin: '0.5em 0',
+    color: '#fffba1',
+  },
 });
 
 const CustomCard = ({
@@ -38,9 +50,11 @@ const CustomCard = ({
   title,
   overlayInfo,
   isOverlaySet,
+  firstToggle,
   animation,
   padding,
   error,
+  loading,
 }) => {
   const classes = useStyles();
   const [isOverlayAnimationRunning, setIsOverlayAnimationRunning] = useState(
@@ -58,19 +72,33 @@ const CustomCard = ({
   return (
     <div className={classes.cardContainer}>
       <Card className={classNames(classes.card, padding)}>
-        {animation && (isOverlaySet || isOverlayAnimationRunning) && (
-          <Card
-            className={classNames('overlay', !isOverlaySet ? 'collapsing' : '')}
-            onAnimationEnd={handleOverlayAnimationStatus}
-          >
-            <p>
-              <strong>{title}: </strong>
-              {overlayInfo}
-            </p>
-          </Card>
-        )}
+        {animation &&
+          (isOverlaySet || isOverlayAnimationRunning) &&
+          firstToggle && (
+            <Card
+              className={classNames(
+                'overlay',
+                !isOverlaySet ? 'collapsing' : '',
+              )}
+              onAnimationEnd={handleOverlayAnimationStatus}
+            >
+              <p>
+                <strong>{title}: </strong>
+                {overlayInfo}
+              </p>
+            </Card>
+          )}
         <h1 className={classes.cardTitle}>{title}</h1>
-        {error ? <ApiCallError /> : children}
+        {// eslint-disable-next-line
+        error ? (
+          <ApiCallError />
+        ) : loading ? (
+          <div className={classes.loadingWrapper}>
+            <CircularProgress className={classes.loadingIcon} />
+          </div>
+        ) : (
+          children
+        )}
       </Card>
     </div>
   );
@@ -81,9 +109,11 @@ CustomCard.defaultProps = {
   title: '',
   overlayInfo: 'No description provided',
   isOverlaySet: false,
+  firstToggle: false,
   animation: true,
   padding: '',
   error: false,
+  loading: false,
 };
 
 CustomCard.propTypes = {
@@ -91,13 +121,16 @@ CustomCard.propTypes = {
   title: PropTypes.string,
   overlayInfo: PropTypes.string,
   isOverlaySet: PropTypes.bool,
+  firstToggle: PropTypes.bool,
   animation: PropTypes.bool,
   padding: PropTypes.string,
   error: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   isOverlaySet: state.overlay.isSet,
+  firstToggle: state.overlay.firstToggle,
 });
 
 export default connect(

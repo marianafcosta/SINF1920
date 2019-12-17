@@ -8,14 +8,18 @@ import KpiValue from '../kpiValue';
 const SupplierTotalPurchased = ({ id }) => {
   const [totalPurchased, setTotalPurchased] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const { data } = await fetchTotalPurchased(id, 2019);
+        setLoading(false);
         setTotalPurchased(data);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -26,10 +30,11 @@ const SupplierTotalPurchased = ({ id }) => {
   return (
     <KpiValue
       title="Total Purchased"
-      overlayInfo="something something gemp something"
+      overlayInfo="Total value purchased by a Supplier"
       value={numeral(totalPurchased).format('0.0a')}
       unit="€"
       error={error}
+      loading={loading}
     />
   );
 };

@@ -16,6 +16,7 @@ const TopCustomers = ({ year }) => {
   const [topAccounts, setTopAccounts] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const updateTable = () => {
     if (topAccounts) {
@@ -35,11 +36,14 @@ const TopCustomers = ({ year }) => {
     const fetchData = async () => {
       setError(false);
       try {
+        setLoading(true);
         const res = await fetchTopClients(year);
+        setLoading(false);
         setTopAccounts({
           clients: res.data,
         });
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };
@@ -54,10 +58,11 @@ const TopCustomers = ({ year }) => {
   return (
     <KpiTable
       title="Top customers"
-      overlayInfo="lskdfa"
+      overlayInfo="Information about the Top Customers"
       headers={headers}
       data={tableData}
       error={error}
+      loading={loading}
     />
   );
 };
