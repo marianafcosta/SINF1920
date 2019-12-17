@@ -37,6 +37,7 @@ const Overview = () => {
                 {
                   name: 'value',
                   label: 'Value (€)',
+                  number: true,
                 },
               ]}
             />

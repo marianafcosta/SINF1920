@@ -11,7 +11,12 @@ import {
 const headers = [
   { name: 'cash', label: 'Cash ratio' },
   { name: 'current', label: 'Current ratio' },
-  { name: 'workingCapital', label: 'Working capital (€)' },
+  {
+    name: 'workingCapital',
+    label: 'Working capital (€)',
+    number: true,
+    format: '0.000a',
+  },
 ];
 
 const LiquidityRatios = () => {
