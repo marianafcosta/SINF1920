@@ -36,7 +36,7 @@ const SupplierPendingPurchases = ({ id }) => {
   return (
     <KpiTable
       title="Pending purchases"
-      overlayInfo="kajsdhfs"
+      overlayInfo="Purchases pending from this Supplier"
       headers={headers}
       data={pendingPurchases}
       error={error}

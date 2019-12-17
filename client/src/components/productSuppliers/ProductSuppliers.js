@@ -43,7 +43,7 @@ const ProductSuppliers = ({ productId }) => {
   return (
     <KpiTable
       title="Product suppliers"
-      overlayInfo="aksjdflsdf"
+      overlayInfo="List of suppliers of this product and their informations"
       headers={headers}
       data={tableData}
       error={error}

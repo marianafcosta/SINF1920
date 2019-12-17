@@ -36,7 +36,7 @@ const ProductInfo = ({ productId }) => {
   return (
     <KpiInfoList
       title="Product information"
-      overlayInfo="ah finalmente estamos a fazer alguma coisa"
+      overlayInfo="Barcode, description and code of the product"
       data={info}
       error={error}
       loading={loading}
