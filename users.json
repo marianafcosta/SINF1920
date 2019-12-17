@@ -3,35 +3,35 @@
         "id": 1,
         "name": "Pedro Fernandes",
         "role": "CEO",
-        "password": "$2y$12$dWpkPa7210ruVWrtNpKC9.8u9.DL923kPMlDJVkUYvlbHUyYDB.e.",
-        "email": "test@test.com"
+        "password": "$2y$12$cZ9dTsPrOgDDr/XAD1916uqviq4U6KG10Ym2s/1KszRSemQ.m1lHS",
+        "email": "ceo@eec.com"
     },
     {
         "id": 2,
         "name": "Pedro Silva",
         "role": "Sales Manager",
-        "password": "$2y$12$0Uj9TusOyaPnylPxQJ9F7.T7yjX0pCtP7lAVlaeg6qQ.NAt2xZoHy",
-        "email": "test2@test.com"
+        "password": "$2y$12$RoUXzf6Ads2Qh1wgcpuaSuXtlP5xqR8SgZM0I0bG9jDbeC2icnc7C",
+        "email": "sales@eec.com"
     },
     {
         "id": 3,
         "name": "André Esteves",
         "role": "Purchases Manager",
-        "password": "$2y$12$lwmHybamrv5V5jbtzw7SaeU6VTaB.5RhihuWa/PF7oXBN6vlA3npi",
-        "email": "test3@test.com"
+        "password": "$2y$12$7PBo1ZXurpLJmz4S9NnWxOnKGlX6lmHQ0xV6HY0tQ68JOD9lfp/mK",
+        "email": "purchases@eec.com"
     },
     {
         "id": 4,
         "name": "Mariana Costa",
         "role": "Head of Finances",
-        "password": "$2y$12$HR4lvBXonmiYv3w1Q77iZudQkhKMdKY5UPFaPToVL44nfyviEVOdi",
-        "email": "test4@test.com"
+        "password": "$2y$12$VmtINol1mi5cyBxupjSlkeuGz5VxISg9giFPTOs8tobk66X1YSzIu",
+        "email": "finances@eec.com"
     },
     {
         "id": 5,
         "name": "Bruno Sousa",
         "role": "Inventory Manager",
-        "password": "$2y$12$iEYRGY8Xlw5oz6uun.XDEe91dQ1zJTIhwTXwUsMcTrWhcWYii/eLq",
-        "email": "test5@test.com"
+        "password": "$2y$12$6/9NEd9dEPmNVf6oTKKSRu3rkG4noPCd0DtMFAoXnGTZQqJBsB8Yi",
+        "email": "inventory@eec.com"
     }
 ]
