@@ -19,6 +19,8 @@ const useStyles = makeStyles({
     padding: '15px',
     height: '100%',
     position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
   },
   cardContainer: {
     border: '2px #fffba1',
@@ -31,13 +33,13 @@ const useStyles = makeStyles({
     margin: '0',
     color: 'white',
     padding: '5px',
-    marginBottom: '1em',
   },
   loadingWrapper: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    flexGrow: 1,
   },
   loadingIcon: {
     margin: '0.5em 0',
