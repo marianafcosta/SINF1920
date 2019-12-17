@@ -7,10 +7,22 @@ import CustomCard from '../CustomCard';
 
 import styles from './KpiAccountList.module.css';
 
-const KpiAccountList = ({ title, overlayInfo, sections, data, error }) => {
+const KpiAccountList = ({
+  title,
+  overlayInfo,
+  sections,
+  data,
+  error,
+  loading,
+}) => {
   let key = 1;
   return (
-    <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
+    <CustomCard
+      title={title}
+      overlayInfo={overlayInfo}
+      error={error}
+      loading={loading}
+    >
       {sections.map(section => {
         key += 1;
         return (
@@ -51,6 +63,7 @@ const KpiAccountList = ({ title, overlayInfo, sections, data, error }) => {
 
 KpiAccountList.defaultProps = {
   error: false,
+  loading: false,
 };
 
 KpiAccountList.propTypes = {
@@ -65,12 +78,13 @@ KpiAccountList.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
-      description: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      description: PropTypes.string,
       format: PropTypes.string,
       section: PropTypes.string,
     }),
   ).isRequired,
   error: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default KpiAccountList;

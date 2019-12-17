@@ -13,37 +13,45 @@ import PropTypes from 'prop-types';
 
 import CustomCard from '../CustomCard';
 
-const KpiBarChart = ({ title, overlayInfo, bars, data, error }) => {
+import styles from './KpiBarChart.module.css';
+
+const KpiBarChart = ({ title, overlayInfo, bars, data, error, loading }) => {
   const renderLegend = (value, entry) => {
     const { color } = entry;
 
     return <span style={{ color }}>{value}</span>;
   };
-  let key = 0;
 
   return (
-    <CustomCard title={title} overlayInfo={overlayInfo} error={error}>
-      <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis tickFormatter={tick => numeral(tick).format('0.0a')} />
-        <Tooltip
-          contentStyle={{ backgroundColor: '#262626' }}
-          wrapperStyle={{ color: 'white' }}
-          formatter={value => numeral(value).format('0.0a')}
-        />
-        <Legend className="fullwitdh" formatter={renderLegend} />
-        {bars.map(bar => {
-          key += 1;
-          return <Bar key={key} dataKey={bar.dataKey} fill={bar.fill} />;
-        })}
-      </BarChart>
+    <CustomCard
+      title={title}
+      overlayInfo={overlayInfo}
+      error={error}
+      loading={loading}
+    >
+      <div className={styles.chartWrapper}>
+        <BarChart width={730} height={250} data={data} styles={{ margin: '0' }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis tickFormatter={tick => numeral(tick).format('0.0a')} />
+          <Tooltip
+            contentStyle={{ backgroundColor: '#262626' }}
+            wrapperStyle={{ color: 'white' }}
+            formatter={value => numeral(value).format('0.0a')}
+          />
+          <Legend formatter={renderLegend} />
+          {bars.map(bar => (
+            <Bar dataKey={bar.dataKey} key={bar.dataKey} fill={bar.fill} />
+          ))}
+        </BarChart>
+      </div>
     </CustomCard>
   );
 };
 
 KpiBarChart.defaultProps = {
   error: false,
+  loading: false,
 };
 
 KpiBarChart.propTypes = {
@@ -57,6 +65,7 @@ KpiBarChart.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
   error: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default KpiBarChart;

@@ -36,7 +36,7 @@ const Customer = () => {
             {customer !== null && (
               <KpiInfoList
                 title="Customer information"
-                overlayInfo="Something happened"
+                overlayInfo="Information about the customer"
                 data={[
                   customer.partyKey
                     ? { label: 'ID', description: `${customer.partyKey}` }

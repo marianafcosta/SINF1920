@@ -16,7 +16,7 @@ const theme = createMuiTheme({
 const App = ({ initYear }) => {
   useEffect(() => {
     initYear();
-    // eslint-disable-next-year
+    // eslint-disable-next-line
   }, []);
 
   return (
