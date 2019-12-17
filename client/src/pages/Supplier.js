@@ -25,7 +25,7 @@ const Supplier = () => {
       {supplier !== null && (
         <KpiInfoList
           title="Supplier information"
-          overlayInfo="Something happened"
+          overlayInfo="Information about the Supplier"
           data={[
             supplier.partyKey
               ? { label: 'Supplier', description: `${supplier.partyKey}` }

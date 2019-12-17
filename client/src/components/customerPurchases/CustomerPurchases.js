@@ -44,7 +44,7 @@ const CustomerPurchases = ({ customerId }) => {
   return (
     <KpiTable
       title="Purchases"
-      overlayInfo="dkfngçsdasfsd"
+      overlayInfo="Information about the purchases of this Customer"
       headers={headers}
       data={purchases}
       error={error}

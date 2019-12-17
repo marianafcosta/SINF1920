@@ -14,12 +14,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import Switch from '@material-ui/core/Switch';
 import Menu from '@material-ui/core/Menu';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import './layout.css';
-// import { NativeSelect } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import FlashOnIcon from '@material-ui/icons/FlashOn';
-// import BootstrapInput from '../common/BootstrapInput';
 import { logout } from '../../actions/authActions';
 import {
   changeOverlayStatus,
@@ -83,7 +82,9 @@ const Appbar = ({
   };
 
   useEffect(() => {
-    setFirstToggle(false);
+    if (!isOverlaySet) {
+      setFirstToggle(false);
+    }
   }, [location]);
 
   return (
@@ -131,6 +132,8 @@ const Appbar = ({
             {year}
           </Typography>
         </div>
+
+        <HelpOutlineIcon htmlColor="#FFFBA1" />
         <YellowSwitch
           checked={isOverlaySet}
           onChange={handleOverlaySwitch}

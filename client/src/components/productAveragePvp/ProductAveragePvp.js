@@ -31,7 +31,7 @@ const ProductAveragePvp = ({ productId }) => {
   return (
     <KpiValue
       title="Product average PVP"
-      overlayInfo="hmmmmmmmm"
+      overlayInfo="Product average retail price"
       value={averagePvp}
       unit="€/unit"
       format="0.000a"
