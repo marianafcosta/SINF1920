@@ -28,7 +28,7 @@ const ProductBacklog = () => {
   return (
     <KpiValue
       title="Product Backlog"
-      overlayInfo="Value of the product backlog"
+      overlayInfo="Value of the product that are yet to arrive at a warehouse"
       value={productBacklog}
       unit="€"
       format="0.0a"

@@ -56,7 +56,7 @@ const ProductSales = ({ productId }) => {
   return (
     <KpiBarChart
       title="Product sales"
-      overlayInfo="Number of units sold per month in a year."
+      overlayInfo="Value of units sold per month in a year."
       bars={[{ dataKey: 'sales', fill: '#fffba1' }]}
       data={graphData}
       error={error}

@@ -82,7 +82,7 @@ const Appbar = ({
   };
 
   useEffect(() => {
-    if(!isOverlaySet) {
+    if (!isOverlaySet) {
       setFirstToggle(false);
     }
   }, [location]);
