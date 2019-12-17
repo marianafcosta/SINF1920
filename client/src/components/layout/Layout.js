@@ -13,24 +13,11 @@ import FlashOnIcon from '@material-ui/icons/FlashOn';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Sidebar from './Sidebar';
 import Appbar from './Appbar';
 import Page from '../common/Page';
 import './layout.css';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="primary" align="center">
-      Copyright ©{' '}
-      <Link color="inherit" href="/">
-        EEC - 360º Company Dashboard
-      </Link>{' '}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
-}
 
 const drawerWidth = 240;
 
@@ -213,7 +200,6 @@ const Layout = ({ children, user, pageName }) => {
           <Container maxWidth="lg" className={classes.container}>
             {children}
           </Container>
-          <Copyright />
         </main>
       </div>
     </Page>

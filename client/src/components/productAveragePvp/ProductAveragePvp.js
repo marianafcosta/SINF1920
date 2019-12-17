@@ -17,7 +17,7 @@ const ProductAveragePvp = ({ productId }) => {
           setLoading(true);
           const { data } = await fetchProductAveragePvp(productId);
           setLoading(false);
-          setAveragePvp(data);
+          setAveragePvp(data || 0);
         }
       } catch (e) {
         setLoading(false);
