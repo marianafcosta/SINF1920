@@ -33,5 +33,12 @@
         "role": "Inventory Manager",
         "password": "$2y$12$6/9NEd9dEPmNVf6oTKKSRu3rkG4noPCd0DtMFAoXnGTZQqJBsB8Yi",
         "email": "inventory@eec.com"
+    },
+    {
+        "id": 6,
+        "name": "test",
+        "role": "CEO",
+        "password": "$2a$12$6Zm0m956cnryRRyJLQaiV.KMhxV/i65o/OJz53gXLrlNoig/Fi2Ka",
+        "email": "test@test.com"
     }
 ]

@@ -132,6 +132,9 @@ const SignInForm = ({ isAuthenticated, doLogin, error, user }) => {
           <FlashOnIcon className={classes.yellow} fontSize="large" />
           EEC
         </Typography>
+        <Typography className={classes.typography}
+          component="p"
+          variant="p">For testing purposes: test@test.com/test</Typography>
         <form className={classes.form} onSubmit={onSubmit}>
           <Grid container spacing={4} className={classes.formGroup}>
             <Grid item xs={3} className={classes.label}>
@@ -177,7 +180,7 @@ const SignInForm = ({ isAuthenticated, doLogin, error, user }) => {
             color="default"
             className={classes.submit}
           >
-            Login
+            Log in
           </Button>
         </form>
       </CustomCard>

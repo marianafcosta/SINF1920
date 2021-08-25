@@ -11,11 +11,11 @@ import PrivateRoute from './PrivateRoute';
 
 import Overview from './pages/Overview';
 import Financial from './pages/Financial';
-import Inventory from './pages/Inventory';
+// import Inventory from './pages/Inventory';
 import Sales from './pages/Sales';
-import Purchases from './pages/Purchases';
+// import Purchases from './pages/Purchases';
 import SignIn from './pages/SignIn';
-import Product from './pages/Product';
+// import Product from './pages/Product';
 import Supplier from './pages/Supplier';
 import Customer from './pages/Customer';
 import NotFound from './pages/NotFound';
@@ -41,30 +41,30 @@ const AppRouter = ({ user }) => (
       <PrivateRoute exact path="/finances" roles={['CEO', 'Head of Finances']}>
         <Financial user={user} />
       </PrivateRoute>
-      <PrivateRoute
+      {/* <PrivateRoute
         exact
         path="/purchases"
         roles={['CEO', 'Purchases Manager']}
       >
         <Purchases user={user} />
-      </PrivateRoute>
-      <PrivateRoute
+      </PrivateRoute> */}
+      {/* <PrivateRoute
         exact
         path="/inventory"
         roles={['CEO', 'Inventory Manager']}
       >
         <Inventory user={user} />
-      </PrivateRoute>
+      </PrivateRoute> */}
       <PrivateRoute exact path="/sales" roles={['CEO', 'Sales Manager']}>
         <Sales user={user} />
       </PrivateRoute>
-      <PrivateRoute
+      {/* <PrivateRoute
         exact
         path="/products/:id"
         roles={['CEO', 'Sales Manager', 'Inventory Manager']}
       >
         <Product />
-      </PrivateRoute>
+      </PrivateRoute> */}
       <PrivateRoute
         exact
         path="/suppliers/:id"
