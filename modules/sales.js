@@ -244,22 +244,22 @@ module.exports = (server, db, basePrimaveraUrl) => {
     res.json(customerPurchases);
   });
 
-  server.get('/api/sales/customers/:id', (req, res) => {
-    const { id } = req.params;
-    const options = {
-      method: 'GET',
-      url: `${basePrimaveraUrl}/salescore/customerParties/${id}`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+  // server.get('/api/sales/customers/:id', (req, res) => {
+  //   const { id } = req.params;
+  //   const options = {
+  //     method: 'GET',
+  //     url: `${basePrimaveraUrl}/salescore/customerParties/${id}`,
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   };
 
-    if (!global.primaveraRequests)
-      return res.json({ msg: 'Primavera token missing' });
+  //   if (!global.primaveraRequests)
+  //     return res.json({ msg: 'Primavera token missing' });
 
-    return global.primaveraRequests(options, function(error, response, body) {
-      if (error) throw new Error(error);
-      res.json(JSON.parse(body));
-    });
-  });
+  //   return global.primaveraRequests(options, function(error, response, body) {
+  //     if (error) throw new Error(error);
+  //     res.json(JSON.parse(body));
+  //   });
+  // });
 };

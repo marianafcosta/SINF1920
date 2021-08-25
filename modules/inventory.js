@@ -45,27 +45,27 @@ const processWarehouses = items => {
 };
 
 module.exports = (server, basePrimaveraUrl) => {
-  server.get('/api/inventory/products', (req, res) => {
-    const options = {
-      method: 'GET',
-      url: `${basePrimaveraUrl}/materialsCore/materialsItems`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+  // server.get('/api/inventory/products', (req, res) => {
+  //   const options = {
+  //     method: 'GET',
+  //     url: `${basePrimaveraUrl}/materialsCore/materialsItems`,
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   };
 
-    if (!global.primaveraRequests)
-      return res.json({ msg: 'Primavera token missing' });
+  //   if (!global.primaveraRequests)
+  //     return res.json({ msg: 'Primavera token missing' });
 
-    return global.primaveraRequests(options, function(error, response, body) {
-      if (error) throw new Error(error);
-      let products = [];
-      if (!JSON.parse(body).message) {
-        products = processProducts(JSON.parse(body));
-      }
-      res.json(products);
-    });
-  });
+  //   return global.primaveraRequests(options, function(error, response, body) {
+  //     if (error) throw new Error(error);
+  //     let products = [];
+  //     if (!JSON.parse(body).message) {
+  //       products = processProducts(JSON.parse(body));
+  //     }
+  //     res.json(products);
+  //   });
+  // });
 
   server.get('/api/inventory/stock', (req, res) => {
     const options = {
